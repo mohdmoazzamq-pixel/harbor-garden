@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="contactus.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <h1>MY GARDEN</h1>
+    </header>
+
+    <main class="contact-page">
+      <section>
+        <h2>Contact Us</h2>
+        <p>
+          Have a question about gardening or need help with your garden? We
+          would love to hear from you. Get in touch with us using the contact
+          details or form below.
+        </p>
+      </section>
+
+      <section>
+        <h2>Get in Touch</h2>
+        <div class="contact-info">
+          <p>
+            <strong>Address:</strong> 123 Green Garden Road, Haldwani, India
+          </p>
+          <p><strong>Phone:</strong> +91 98765 43210</p>
+          <p><strong>Email:</strong> info@mygarden.com</p>
+          <p>
+            <strong>Working Hours:</strong> Monday - Saturday, 9:00 AM - 6:00 PM
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Send Us a Message</h2>
+
+        <form>
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            required
+          />
+
+          <br /><br />
+
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+
+          <br /><br />
+
+          <label for="mobile">Mobile Number</label>
+          <input
+            type="tel"
+            id="mobile"
+            name="mobile"
+            placeholder="Enter your mobile number"
+            maxlength="10"
+            pattern="[0-9]{10}"
+            required
+          />
+
+          <br /><br />
+
+          <label for="service">Select Service</label>
+
+          <select id="service" name="service" required>
+            <option value="">-- Select a Service --</option>
+            <option value="garden-design">Garden Design</option>
+            <option value="planting">Planting Services</option>
+            <option value="maintenance">Garden Maintenance</option>
+            <option value="lawn-care">Lawn Care</option>
+            <option value="plant-care">Tree and Plant Care</option>
+            <option value="organic-gardening">Organic Gardening</option>
+          </select>
+
+          <br /><br />
+
+          <label for="message">Message</label>
+          <br />
+
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            cols="40"
+            placeholder="Write your message here..."
+            required
+          ></textarea>
+
+          <br /><br />
+
+          <button type="submit">Send Message</button>
+
+          <button type="reset">Clear</button>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <div>
+        <h2>My Garden</h2>
+        <p>
+          Bringing nature closer to your home with beautiful plants, healthy
+          gardens, and eco-friendly gardening solutions.
+        </p>
+      </div>
+
+      <div>
+        <h3>Quick Links</h3>
+
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+
+      <div>
+        <h3>Contact Us</h3>
+
+        <p>Email: info@mygarden.com</p>
+        <p>Phone: +91 98765 43210</p>
+        <p>Haldwani, India</p>
+      </div>
+
+      <div>
+        <h3>Follow Us</h3>
+
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+      </div>
+
+      <hr />
+
+      <p>&copy; 2026 My Garden. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

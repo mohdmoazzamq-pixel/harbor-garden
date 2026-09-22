@@ -1,0 +1,448 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&display=swap');
+
+:root {
+  --ink: #2F4238;
+  --sage: #5C7C63;
+  --sage-light: #E7EFE6;
+  --blush: #C97B84;
+  --cream: #FBF6EE;
+  --card-shadow: 0 14px 34px -18px rgba(47, 66, 56, 0.35);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', Arial, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.7;
+}
+
+/* ===== Header ===== */
+header {
+  position: relative;
+  text-align: center;
+  padding: 34px 20px 70px;
+  background: linear-gradient(180deg, var(--sage-light) 0%, var(--cream) 100%);
+  overflow: hidden;
+}
+
+header::before {
+  content: "❀";
+  display: block;
+  font-size: 1.6rem;
+  color: var(--blush);
+  margin-bottom: 14px;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+header h1::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 3px;
+  background: var(--blush);
+  margin: 22px auto 0;
+  border-radius: 2px;
+}
+
+/* ===== Nav ===== */
+header nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 34px;
+  margin-bottom: 46px;
+}
+
+header nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--blush);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+header nav a:hover {
+  color: var(--blush);
+}
+
+header nav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ===== Page layout ===== */
+main.contact-page {
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 60px 24px 90px;
+}
+
+main.contact-page section {
+  margin-bottom: 56px;
+}
+
+main.contact-page section:last-child {
+  margin-bottom: 0;
+}
+
+main.contact-page h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--ink);
+  margin-bottom: 16px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+main.contact-page h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 46px;
+  height: 3px;
+  background: var(--blush);
+  border-radius: 2px;
+}
+
+main.contact-page section > p {
+  font-size: 1rem;
+  color: #4A5C50;
+  max-width: 640px;
+}
+
+/* ===== Contact info block ===== */
+.contact-info {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: var(--card-shadow);
+}
+
+.contact-info p {
+  font-size: 0.95rem;
+  color: #4A5C50;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--sage-light);
+}
+
+.contact-info p:last-child {
+  border-bottom: none;
+}
+
+.contact-info strong {
+  color: var(--ink);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* ============================================
+   Plain form styling
+   Targets the form exactly as written: bare
+   <label>, <input>, <select>, <textarea>,
+   spaced with <br><br>, no wrapper classes needed.
+   ============================================ */
+
+section form {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px 28px;
+  box-shadow: var(--card-shadow);
+  max-width: 520px;
+}
+
+section form label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+section form input,
+section form select,
+section form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #DCE4DA;
+  border-radius: 8px;
+  font-family: 'Lato', Arial, sans-serif;
+  font-size: 0.94rem;
+  color: var(--ink);
+  outline: none;
+  background: var(--cream);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+section form textarea {
+  resize: vertical;
+}
+
+section form input:focus,
+section form select:focus,
+section form textarea:focus {
+  border-color: var(--blush);
+  box-shadow: 0 0 0 4px rgba(201, 123, 132, 0.14);
+  background: #ffffff;
+}
+
+/* Select needs its own arrow treatment since browsers
+   style <select> differently from text inputs by default */
+section form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235C7C63' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* ============================================
+   Service dropdown, targeted directly by ID so
+   it's styled no matter what markup surrounds it
+   (doesn't rely on being inside section form).
+   ============================================ */
+
+#service {
+  width: 100%;
+  padding: 12px 40px 12px 14px;
+  border: 1px solid #DCE4DA;
+  border-radius: 8px;
+  font-family: 'Lato', Arial, sans-serif;
+  font-size: 0.94rem;
+  color: var(--ink);
+  background-color: var(--cream);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235C7C63' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#service:hover {
+  border-color: var(--sage);
+}
+
+#service:focus {
+  border-color: var(--blush);
+  box-shadow: 0 0 0 4px rgba(201, 123, 132, 0.14);
+  background-color: #ffffff;
+}
+
+/* Styling individual <option> elements has very limited
+   browser support (mostly ignored in Chrome/Edge/Safari) -
+   this is a best-effort fallback for browsers that do allow it. */
+#service option {
+  color: var(--ink);
+  background-color: #ffffff;
+  padding: 8px;
+}
+
+/* ===== Buttons ===== */
+section form button {
+  padding: 13px 30px;
+  border-radius: 30px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  margin-right: 14px;
+  margin-top: 6px;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+section form button[type="submit"] {
+  background: var(--ink);
+  color: #ffffff;
+}
+
+section form button[type="submit"]:hover {
+  background: var(--blush);
+  transform: translateY(-2px);
+}
+
+section form button[type="reset"] {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--sage);
+}
+
+section form button[type="reset"]:hover {
+  background: var(--sage-light);
+  transform: translateY(-2px);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 700px) {
+  header nav {
+    gap: 20px;
+    margin-bottom: 34px;
+  }
+
+  main.contact-page {
+    padding: 50px 20px 70px;
+  }
+
+  main.contact-page section {
+    margin-bottom: 42px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-info,
+  section form {
+    padding: 22px 20px;
+  }
+
+  section form button {
+    display: block;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+}
+/* ============================================
+   Footer
+   ============================================ */
+ 
+footer {
+  background: var(--ink);
+  color: #D9E4DC;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding: 60px clamp(24px, 8vw, 120px) 30px;
+}
+ 
+footer h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+ 
+footer h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 16px;
+  position: relative;
+  padding-bottom: 10px;
+}
+ 
+footer h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--blush);
+  border-radius: 2px;
+}
+ 
+footer > div:first-child p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #B9CABF;
+  max-width: 280px;
+}
+ 
+footer > div a {
+  display: block;
+  color: #B9CABF;
+  text-decoration: none;
+  font-size: 0.88rem;
+  margin-bottom: 10px;
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: fit-content;
+}
+ 
+footer > div a:hover {
+  color: var(--blush);
+  transform: translateX(3px);
+}
+ 
+footer > div p {
+  font-size: 0.88rem;
+  color: #B9CABF;
+  margin-bottom: 8px;
+}
+ 
+footer hr {
+  grid-column: 1 / -1;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 40px 0 20px;
+}
+ 
+footer > p {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #8FA398;
+}
+ 
+/* ===== Footer responsive ===== */
+@media (max-width: 900px) {
+  footer {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 34px;
+  }
+}
+ 
+@media (max-width: 560px) {
+  footer {
+    grid-template-columns: 1fr;
+    padding: 50px 20px 26px;
+  }
+ 
+  footer > div:first-child p {
+    max-width: none;
+  }
+}
+ 
