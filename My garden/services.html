@@ -1,167 +1,463 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Services</title>
-    <link rel="stylesheet" href="services.css" />
-  </head>
-  <body>
-    <header>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <h1>MY GARDEN</h1>
-    </header>
-    <main>
-      <div>
-        <section>
-          <h1>Our Gardening Services</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services &bull; Harbor &bull; My Garden</title>
+  <link rel="stylesheet" href="harbor-theme.css" />
+  <style>
+    .services-grid-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
 
-          <p>
-            We provide a variety of gardening services to help you create and
-            maintain a beautiful, healthy, and green garden.
-          </p>
-        </section>
+    .service-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--harbor-card-shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
 
-        <section>
-          <h2>Our Services</h2>
+    .service-card:hover {
+      border-color: var(--harbor-border-hover);
+      box-shadow: 0 24px 50px -12px rgba(25, 40, 32, 0.15), var(--harbor-glow-shadow);
+      transform: translateY(-5px);
+    }
 
-          <article>
-            <h3>Garden Design</h3>
-            <img
-              src="https://media.istockphoto.com/id/164963728/photo/beautiful-summer-garden.jpg?b=1&s=612x612&w=0&k=20&c=om8DPBSzGPA7KzSCk06rPy55LjNapE0LYXtAMJsK1ss="
-              alt="garden picture"
-            />
+    .service-card-img-box {
+      height: 220px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
 
-            <p>
-              We help you design beautiful gardens according to your space,
-              preferences, and lifestyle.
-            </p>
-          </article>
+    .service-card-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-          <article>
-            <h3>Planting Services</h3>
-            <img
-              src="https://images.pexels.com/photos/5830973/pexels-photo-5830973.jpeg"
-              alt="plant services"
-            />
-            <p>
-              We select and plant suitable flowers, trees, herbs, and other
-              plants for your garden.
-            </p>
-          </article>
+    .service-card:hover .service-card-img-box img {
+      transform: scale(1.08);
+    }
 
-          <article>
-            <h3>Garden Maintenance</h3>
-            <img
-              src="https://media.istockphoto.com/id/1352450355/photo/trimming-hedge-with-power-saw.jpg?b=1&s=612x612&w=0&k=20&c=kKrjAfvaV9wgrg_rMRq0fJo4UVy0aJ4fy3tilGNqPuk="
-              alt="maintenance"
-            />
-            <p>
-              We provide regular garden maintenance, including watering,
-              pruning, weeding, and cleaning.
-            </p>
-          </article>
-                 </div>
-             <div>
-          <article>
-            <h3>Lawn Care</h3>
-            <img
-              src="https://images.pexels.com/photos/7031593/pexels-photo-7031593.jpeg"
-              alt="lawn-care"
-            />
-            <p>
-              We take care of lawns through regular mowing, watering,
-              fertilizing, and removing unwanted weeds.
-            </p>
-          </article>
-              
-          <article>
-            <h3>Tree and Plant Care</h3>
-            <img
-              src="https://media.istockphoto.com/id/1188009316/photo/tree-cutting-tree-care.jpg?b=1&s=612x612&w=0&k=20&c=28Lu97xVmSqT7et8I8UvxStWnzP5xY2dPw2RRm4l5cc="
-              alt="tree care"
-            />
-            <p>
-              We provide proper care for trees and plants by checking their
-              growth, soil conditions, and overall health.
-            </p>
-          </article>
+    .service-card-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--harbor-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
 
-          <article>
-            <h3>Organic Gardening</h3>
-            <img src="https://images.pexels.com/photos/36812277/pexels-photo-36812277.jpeg" alt="organic gardening"/>
-            <p>
-              We encourage eco-friendly gardening using natural compost, organic
-              fertilizers, and sustainable practices.
-            </p>
-          </article>
-        </section>
+    .service-card-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      color: var(--harbor-text-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .service-card-desc {
+      font-size: 0.92rem;
+      color: var(--harbor-text-muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .service-card-footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-book-service {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: #d1fae5;
+      border: 1px solid var(--harbor-emerald);
+      border-radius: 8px;
+      color: #065f46;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .btn-book-service:hover {
+      background: var(--harbor-emerald);
+      color: #ffffff;
+      box-shadow: 0 2px 12px rgba(5, 150, 105, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Why Choose Us Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: var(--harbor-card-shadow);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      border-color: var(--harbor-cyan);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      color: var(--harbor-cyan);
+      margin-bottom: 12px;
+    }
+
+    .feature-card h4 {
+      font-size: 1.05rem;
+      color: var(--harbor-text-main);
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      font-size: 0.85rem;
+      color: var(--harbor-text-muted);
+      line-height: 1.55;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="harbor-header">
+    <div class="harbor-nav-container">
+      <a href="index.html" class="harbor-brand">
+        <div class="harbor-logo-badge">🌿</div>
+        <div class="harbor-brand-text">
+          <div class="harbor-brand-title">HARBOR <span>GARDEN</span></div>
+          <div class="harbor-brand-subtitle">Botanical Living</div>
+        </div>
+      </a>
+
+      <button class="harbor-menu-toggle" id="harborMenuToggle" aria-label="Toggle navigation">&#9776;</button>
+
+      <ul class="harbor-nav-links" id="harborNavLinks">
+        <li><a href="index.html" class="harbor-nav-link">Home</a></li>
+        <li><a href="about.html" class="harbor-nav-link">About</a></li>
+        <li><a href="services.html" class="harbor-nav-link active">Services</a></li>
+        <li><a href="contact.html" class="harbor-nav-link">Contact</a></li>
+        <li><a href="database.html" class="harbor-nav-link">Database</a></li>
+        <li><a href="portal.html" class="harbor-nav-link">Security Portal</a></li>
+      </ul>
+
+      <div class="harbor-nav-actions">
+        <a href="database.html" class="btn-nav-database">
+          <span>📊</span> Inquiries DB
+        </a>
+        <div id="harborNavAuth"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="harbor-hero">
+    <div class="harbor-badge-pill">
+      <span>❀</span> Professional Botanical Solutions
+    </div>
+    <h1>Comprehensive <em>Gardening &amp; Landscape</em> Services</h1>
+    <p>
+      From bespoke terrace design to seasonal organic soil enrichment, we deliver customized botanical care backed by verified digital records.
+    </p>
+  </section>
+
+  <!-- Main Services Grid -->
+  <main style="max-width: 1240px; margin: 0 auto; padding: 0 24px 80px;">
+    
+    <div class="services-grid-wrapper">
       
-        <section>
-          <h2>Why Choose Our Services?</h2>
-          <ul>
-            <li>Experienced gardening support</li>
-            <li>Quality plants and gardening practices</li>
-            <li>Regular garden maintenance</li>
-            <li>Eco-friendly gardening solutions</li>
-            <li>Services designed according to your garden's needs</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Get in Touch</h2>
-
-          <p>
-            Need help with your garden? Contact us today and let us help you
-            create a beautiful and healthy garden.
+      <!-- 1. Garden Design -->
+      <article class="service-card">
+        <div class="service-card-img-box">
+          <img
+            src="https://media.istockphoto.com/id/164963728/photo/beautiful-summer-garden.jpg?b=1&s=612x612&w=0&k=20&c=om8DPBSzGPA7KzSCk06rPy55LjNapE0LYXtAMJsK1ss="
+            alt="Garden Design"
+            loading="lazy"
+          />
+          <span class="service-card-badge">Architecture</span>
+        </div>
+        <div class="service-card-body">
+          <h2 class="service-card-title">Garden Design</h2>
+          <p class="service-card-desc">
+            We help you architect beautiful, sustainable gardens aligned with your topography, sunlight orientation, and lifestyle preferences. Full blueprints for rooftop terraces, estate courtyards, and cottage borders.
           </p>
+          <div class="service-card-footer">
+            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Custom Blueprint</span>
+            <a href="contact.html?service=garden-design" class="btn-book-service">
+              <span>📅</span> Request Design &rarr;
+            </a>
+          </div>
+        </div>
+      </article>
 
-          <a href="contact.html" class="btn-contact">Contact Us</a>
-        </section>
+      <!-- 2. Planting Services -->
+      <article class="service-card">
+        <div class="service-card-img-box">
+          <img
+            src="https://images.pexels.com/photos/5830973/pexels-photo-5830973.jpeg"
+            alt="Planting Services"
+            loading="lazy"
+          />
+          <span class="service-card-badge">Horticulture</span>
+        </div>
+        <div class="service-card-body">
+          <h2 class="service-card-title">Planting Services</h2>
+          <p class="service-card-desc">
+            We curate and plant climate-resilient flowers, ornamental trees, therapeutic herbs, and perennial bulbs suited to local soil chemistry and microclimates.
+          </p>
+          <div class="service-card-footer">
+            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Certified Stems</span>
+            <a href="contact.html?service=planting" class="btn-book-service">
+              <span>📅</span> Book Planting &rarr;
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Garden Maintenance -->
+      <article class="service-card">
+        <div class="service-card-img-box">
+          <img
+            src="https://media.istockphoto.com/id/1352450355/photo/trimming-hedge-with-power-saw.jpg?b=1&s=612x612&w=0&k=20&c=kKrjAfvaV9wgrg_rMRq0fJo4UVy0aJ4fy3tilGNqPuk="
+            alt="Garden Maintenance"
+            loading="lazy"
+          />
+          <span class="service-card-badge">Routine Care</span>
+        </div>
+        <div class="service-card-body">
+          <h2 class="service-card-title">Garden Maintenance</h2>
+          <p class="service-card-desc">
+            Reliable scheduled maintenance packages covering deep root hydration, precision pruning, weed eradication, and seasonal bed cleaning to keep your property immaculate.
+          </p>
+          <div class="service-card-footer">
+            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Monthly / Weekly</span>
+            <a href="contact.html?service=maintenance" class="btn-book-service">
+              <span>📅</span> Schedule Care &rarr;
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. Lawn Care -->
+      <article class="service-card">
+        <div class="service-card-img-box">
+          <img
+            src="https://images.pexels.com/photos/7031593/pexels-photo-7031593.jpeg"
+            alt="Lawn Care"
+            loading="lazy"
+          />
+          <span class="service-card-badge">Turf Management</span>
+        </div>
+        <div class="service-card-body">
+          <h2 class="service-card-title">Lawn Care &amp; Turf Revitalization</h2>
+          <p class="service-card-desc">
+            We nurture lush, uniform emerald lawns through precision blade mowing, deep core aeration, slow-release bio-fertilization, and gentle moss &amp; weed removal.
+          </p>
+          <div class="service-card-footer">
+            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Deep Aeration</span>
+            <a href="contact.html?service=lawn-care" class="btn-book-service">
+              <span>📅</span> Revitalize Lawn &rarr;
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. Tree and Plant Care -->
+      <article class="service-card">
+        <div class="service-card-img-box">
+          <img
+            src="https://media.istockphoto.com/id/1188009316/photo/tree-cutting-tree-care.jpg?b=1&s=612x612&w=0&k=20&c=28Lu97xVmSqT7et8I8UvxStWnzP5xY2dPw2RRm4l5cc="
+            alt="Tree Care"
+            loading="lazy"
+          />
+          <span class="service-card-badge">Arboriculture</span>
+        </div>
+        <div class="service-card-body">
+          <h2 class="service-card-title">Tree and Plant Care</h2>
+          <p class="service-card-desc">
+            Expert diagnostic tree health assessments, structural crown thinning, root flare remediation, and fungal treatment for mature heritage shade trees and fruit orchards.
+          </p>
+          <div class="service-card-footer">
+            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Certified Arborists</span>
+            <a href="contact.html?service=plant-care" class="btn-book-service">
+              <span>📅</span> Tree Inspection &rarr;
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. Organic Gardening -->
+      <article class="service-card">
+        <div class="service-card-img-box">
+          <img
+            src="https://images.pexels.com/photos/36812277/pexels-photo-36812277.jpeg"
+            alt="Organic Gardening"
+            loading="lazy"
+          />
+          <span class="service-card-badge">Eco-Certified</span>
+        </div>
+        <div class="service-card-body">
+          <h2 class="service-card-title">Organic Gardening</h2>
+          <p class="service-card-desc">
+            Zero chemical synthetic pesticides. We pioneer closed-loop composting, companion planting, natural worm castings, and rainwater conservation systems.
+          </p>
+          <div class="service-card-footer">
+            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">100% Bio-Friendly</span>
+            <a href="contact.html?service=organic-gardening" class="btn-book-service">
+              <span>📅</span> Book Organic Care &rarr;
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Why Choose Our Services -->
+    <section style="margin-top: 40px;">
+      <h2 style="font-family: var(--font-serif); font-size: 2rem; color: #ffffff; margin-bottom: 8px;">
+        Why Entrust Your Landscape to Harbor Garden?
+      </h2>
+      <p style="font-size: 1rem; color: var(--harbor-text-muted); margin-bottom: 24px;">
+        Every client engagement is tracked with transparent records, certified horticultural standards, and responsive support.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🌿</div>
+          <h4>Master Horticulturalists</h4>
+          <p>Decades of collective experience working with Himalayan and subtropical perennial flora.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h4>Local Data Security</h4>
+          <p>Your property address, service history, and notes are securely stored on your local device.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌱</div>
+          <h4>Eco-Certified Materials</h4>
+          <p>We strictly utilize organic compost, non-invasive species, and biologically active soil inoculants.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <h4>Predictable Schedules</h4>
+          <p>Punctual seasonal maintenance with timely progress reports and digital status updates.</p>
+        </div>
       </div>
-    </main>
-    <footer>
-      <div>
-        <h2>My Garden</h2>
+    </section>
+
+    <!-- Bottom CTA Banner -->
+    <div style="margin-top: 60px; text-align: center; background: var(--harbor-bg-glass-card); border: 1px solid var(--harbor-border); border-radius: 18px; padding: 44px 28px;">
+      <h3 style="font-size: 1.6rem; color: #ffffff; margin-bottom: 10px;">Ready to Elevate Your Garden?</h3>
+      <p style="color: var(--harbor-text-muted); max-width: 580px; margin: 0 auto 24px;">
+        Send us your property specifications and we will formulate a personalized proposal within 24 hours.
+      </p>
+      <a href="contact.html" class="btn-primary" style="font-size: 0.95rem; padding: 13px 30px;">
+        Contact Our Garden Specialists &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="harbor-footer">
+    <div class="harbor-footer-grid">
+      <div class="harbor-footer-col">
+        <h3>Harbor Garden</h3>
         <p>
-          Bringing nature closer to your home with beautiful plants, healthy
-          gardens, and eco-friendly gardening solutions.
+          Bringing nature closer to your home with healthy perennials, eco-friendly garden architecture, and enterprise-grade data management.
         </p>
+        <div class="harbor-footer-security-badge">
+          <span class="icon">🛡️</span>
+          <div>
+            Connected to Harbor Security Portal
+            <small>Local Storage Persistence &bull; 2FA Support</small>
+          </div>
+        </div>
       </div>
 
-      <div>
+      <div class="harbor-footer-col">
         <h3>Quick Links</h3>
-
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
+        <a href="about.html">About My Garden</a>
+        <a href="services.html">Services &amp; Care</a>
         <a href="contact.html">Contact Us</a>
+        <a href="database.html">Local Database</a>
       </div>
 
-      <div>
-        <h3>Contact Us</h3>
-
-        <p>Email: info@mygarden.com</p>
-        <p>Phone: +91 98765 43210</p>
-        <p>Haldwani, India</p>
+      <div class="harbor-footer-col">
+        <h3>Contact Info</h3>
+        <p><strong>Address:</strong> 123 Green Garden Road, Haldwani, Uttarakhand, India</p>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+        <p><strong>Email:</strong> info@mygarden.com</p>
       </div>
 
-      <div>
-        <h3>Follow Us</h3>
-
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
+      <div class="harbor-footer-col">
+        <h3>Security &amp; Portal</h3>
+        <a href="login.html">Sign In to Portal</a>
+        <a href="login.html?mode=signup">Create Account</a>
+        <a href="forgot-password.html">Forgot Password Recovery</a>
+        <a href="database.html">Inquiries Management DB</a>
       </div>
+    </div>
 
-      <hr />
+    <div class="harbor-footer-bottom">
+      <p>&copy; 2026 Harbor &bull; My Garden. All Rights Reserved.</p>
+      <div style="display: flex; gap: 16px;">
+        <a href="login.html" style="color: var(--harbor-emerald);">Portal Login</a>
+        <a href="forgot-password.html" style="color: var(--harbor-cyan);">Forgot Password</a>
+      </div>
+    </div>
+  </footer>
 
-      <p>&copy; 2026 My Garden. All Rights Reserved.</p>
-    </footer>
-  </body>
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="auth.js"></script>
+</body>
 </html>

@@ -1,200 +1,992 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MY GARDEN</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <h1>MY GARDEN</h1>
-    </header>
-    <main>
-      <img
-        src="https://hips.hearstapps.com/clv.h-cdn.co/assets/17/13/1490640739-gettyimages-126026586.jpg?crop=0.5357277882797731xw:1xh;center,top"
-        width="400"
-        height="400"
-        alt="Peony"
-      />
-      <p>
-        <b>Name :</b> Peony
-        <br />
-        <b>When it blooms:</b> Late spring to early summer <br /><br />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Garden &bull; Harbor Royal Botanical Collection</title>
+  <link rel="stylesheet" href="harbor-theme.css" />
+  <style>
+    /* Flower Gallery & Plant Listing Styles */
+    .catalog-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
 
-        <b>Why we love them:</b> These eye-catching perennials are the queens of
-        the garden with magnificent form and scent. They're extremely long-lived
-        plants, surviving for decades. Don't worry about any visiting ants,
-        which are not hurting the plant but only coming to sip the nectar.
-      </p>
+    .gallery-filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
 
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/sunflowers-blooming-against-sky-royalty-free-image-1573171826.jpg?crop=0.8xw:1xh;center,top"
-        alt="Sunflower"
-        width="400"
-      />
-      <p>
-        <b>Name :</b> Sunflower
-        <br />
-        <b>When it blooms:</b> Late summer to early fall <br /><br />
+    .filter-pill {
+      padding: 7px 18px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--harbor-border);
+      color: var(--harbor-text-muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
 
-        <b>Why we love them:</b> They're fun and come in every color and size
-        from tiny to gigantic! Plus, they're easy to grow from seed, though you
-        may need to protect the seeds and seedlings from birds and rodents with
-        a chicken wire cage formed around them.
-      </p>
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/full-frame-shot-of-yellow-flowering-plants-columbus-royalty-free-image-1709658257.jpg?crop=1xw:0.9375xh;center,top"
-        width="400"
-        alt="Black-Eyed Susan"
-      />
-      <p>
-        <b>Name :</b> Black-Eyed Susan
-        <br />
-        <b>When it blooms: </b>Late summer to early fall <br /><br />
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: rgba(230, 202, 101, 0.15);
+      border-color: var(--harbor-gold);
+      color: var(--harbor-gold-light);
+      box-shadow: 0 0 16px rgba(230, 202, 101, 0.2);
+    }
 
-        <b>Why we love it:</b> This sunny flower will make you smile, plus it
-        doesn't need babied because it's drought tolerant and blooms for weeks
-        and weeks. Be sure to choose a perennial type if you want it to come
-        back (there are also annual types).
-      </p>
+    .btn-add-plant-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: linear-gradient(135deg, var(--harbor-emerald) 0%, var(--harbor-emerald-dark) 100%);
+      color: #031309;
+      font-weight: 800;
+      font-size: 0.86rem;
+      border-radius: 30px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
+      transition: var(--transition);
+    }
 
-      <img
-        src="https://hips.hearstapps.com/clv.h-cdn.co/assets/16/18/tulip.jpg?crop=0.536xw:1.00xh;0.0182xw,0"
-        width="400"
-        alt="Tulip"
-      />
-      <p>
-        <b>Name :</b> Tulip
-        <br />
-        <b> When they bloom:</b> Early to late spring<br /><br />
+    .btn-add-plant-cta:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+      filter: brightness(1.1);
+    }
 
-        <b>Why we love them:</b> Their stately blooms announce that spring has
-        arrived! Plant the bulbs in the fall, but be aware that they're often
-        iffy about coming back in subsequent years. Treat them as annuals and
-        replant new bulbs the next fall.
-      </p>
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/spring-snowdrops-galanthus-nivalis-royalty-free-image-1709587839.jpg?crop=0.53358xw:1xh;center,top"
-        alt="Snowdrop"
-      />
-      <p>
-        <b>Name :</b> Snowdrop
-        <br />
-        <b>When it blooms: </b>Late winter <br /><br />
-        <b>Why we love it:</b> Charming, nodding little heads pop up when snow
-        still is on the ground in northern climates. These darling flowers,
-        which are fall-planted bulbs, are deer and rabbit-resistant, too.
-      </p>
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/flowering-snakeshead-lily-royalty-free-image-1709589246.jpg?crop=0.557xw:1.00xh;0.383xw,0"
-        alt="Fritillaria"
-      />
-      <p>
-        <b>Name :</b> Fritillaria
-        <br />
-        <b>When it blooms:</b> Mid-spring <br /><br />
-        <b>Why we love it:</b> Fun bell-shaped flowers nod atop long, grassy
-        foliage on these unique spring bloomers. Plant the bulbs in fall for
-        spring color. Big plus: rodents tend to leave these bulbs alone.
-      </p>
+    /* Reactive Flower Cards Grid */
+    .flower-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 32px;
+      margin-bottom: 70px;
+    }
 
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/close-up-of-pink-azalea-flowers-filling-frame-royalty-free-image-1709656178.jpg?crop=0.53333xw:1xh;center,top"
-        alt="Azalea"
-      />
+    .flower-card {
+      background: var(--harbor-bg-glass-card);
+      border: 1px solid var(--harbor-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--harbor-card-shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
 
-      <p>
-        <b>Name :</b> Azalea
-        <br />
-        <b>When it blooms:</b> Spring <br /><br />
-        <b>Why we love them:</b> These pretty shrubs tell you spring is in full
-        swing. They're gorgeous when planted in masses with other
-        spring-flowering perennials. Some types bloom again later in the season.
-      </p>
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/white-tiarella-spring-symphony-foam-flower-in-bloom-royalty-free-image-1709589477.jpg?crop=0.536xw:1.00xh;0.336xw,0"
-        alt="Foam Flower"
-      />
-      <p>
-        <b>Name :</b> Foam Flower
-        <br />
-        <b>When it blooms:</b> Spring to summer <br /><br />
-        <b>Why we love it:</b> Masses of frilly white flower spikes make this
-        perennial a lovely addition to the spring garden. Evergreen foliage adds
-        interest in the off-season.
-      </p>
+    .flower-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(230, 202, 101, 0.35), transparent);
+    }
 
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/beautiful-pink-flowers-of-astrantia-major-a-summer-royalty-free-image-1709585164.jpg?crop=0.802xw:1.00xh;0.150xw,0"
-        alt="Astrantia"
-      />
-      <p>
-        <b>Name :</b> Astrantia
-        <br />
-        <b>When it blooms:</b> Spring to summer
-        <br />
-        <br />
-        <b>Why we love it:</b> This lesser-known perennial actually is an
-        old-fashioned cottage garden favorite. Its pretty blooms last a long
-        time and attract tons of pollinators.
+    .flower-card:hover {
+      border-color: var(--harbor-gold-border);
+      box-shadow: 0 28px 56px -15px rgba(0, 0, 0, 0.85), var(--harbor-gold-shadow);
+      transform: translateY(-8px) scale(1.015);
+    }
+
+    .flower-image-container {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+    }
+
+    .flower-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .flower-card:hover .flower-image-container img {
+      transform: scale(1.08);
+    }
+
+    .flower-season-tag {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      background: rgba(7, 11, 19, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--harbor-gold-border);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--harbor-gold-light);
+      letter-spacing: 0.04em;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .badge-custom-listed {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9));
+      color: #031309;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .flower-card-body {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .flower-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .flower-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .flower-card-scientific {
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--harbor-gold);
+      font-weight: 600;
+    }
+
+    .flower-card-season-text {
+      font-size: 0.84rem;
+      color: var(--harbor-text-dim);
+      margin-bottom: 14px;
+    }
+
+    .flower-card-season-text strong {
+      color: var(--harbor-cyan);
+    }
+
+    .flower-card-quote {
+      font-size: 0.93rem;
+      color: var(--harbor-text-muted);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      flex: 1;
+    }
+
+    .flower-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 16px;
+      gap: 12px;
+    }
+
+    .btn-grow-guide {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(230, 202, 101, 0.12);
+      border: 1px solid var(--harbor-gold-border);
+      border-radius: 10px;
+      color: var(--harbor-gold-light);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-grow-guide:hover {
+      background: var(--harbor-gold);
+      color: #070b13;
+      box-shadow: var(--harbor-gold-shadow);
+      transform: translateY(-2px);
+    }
+
+    .btn-delete-plant {
+      background: none;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: var(--harbor-danger);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-delete-plant:hover {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: var(--harbor-danger);
+    }
+
+    /* Preset Image Pickers in Form */
+    .preset-images-picker {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .preset-img-thumb {
+      width: 54px;
+      height: 54px;
+      border-radius: 10px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: var(--transition);
+      opacity: 0.75;
+    }
+
+    .preset-img-thumb:hover,
+    .preset-img-thumb.selected {
+      border-color: var(--harbor-gold);
+      opacity: 1;
+      transform: scale(1.08);
+      box-shadow: 0 0 12px var(--harbor-gold);
+    }
+
+    /* Plant Details / Grow Guide Drawer Modal */
+    .guide-banner-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .guide-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .guide-spec-box {
+      background: #f8faf8;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .guide-spec-box .icon { font-size: 1.3rem; margin-bottom: 4px; }
+    .guide-spec-box .label { font-size: 0.7rem; color: var(--harbor-text-dim); text-transform: uppercase; }
+    .guide-spec-box .val { font-size: 0.82rem; font-weight: 700; color: var(--harbor-text-main); }
+
+    .guide-text-block {
+      background: #f8faf8;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .guide-text-block h4 {
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--harbor-gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .guide-text-block p {
+      font-size: 0.92rem;
+      color: var(--harbor-text-main);
+      line-height: 1.75;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="harbor-header">
+    <div class="harbor-nav-container">
+      <a href="index.html" class="harbor-brand">
+        <div class="harbor-logo-badge">🌿</div>
+        <div class="harbor-brand-text">
+          <div class="harbor-brand-title">HARBOR <span>GARDEN</span></div>
+          <div class="harbor-brand-subtitle">Royal Botanical Living</div>
+        </div>
+      </a>
+
+      <button class="harbor-menu-toggle" id="harborMenuToggle" aria-label="Toggle navigation">&#9776;</button>
+
+      <ul class="harbor-nav-links" id="harborNavLinks">
+        <li><a href="index.html" class="harbor-nav-link active">Home</a></li>
+        <li><a href="about.html" class="harbor-nav-link">About</a></li>
+        <li><a href="services.html" class="harbor-nav-link">Services</a></li>
+        <li><a href="contact.html" class="harbor-nav-link">Contact</a></li>
+        <li><a href="database.html" class="harbor-nav-link">Database</a></li>
+        <li><a href="portal.html" class="harbor-nav-link">Security Portal</a></li>
+      </ul>
+
+      <div class="harbor-nav-actions">
+        <a href="database.html" class="btn-nav-database">
+          <span>📊</span> Inquiries DB
+        </a>
+        <div id="harborNavAuth"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="harbor-hero">
+    <div class="harbor-badge-pill">
+      <span>❀</span> Harbor Royal Flora Sanctuary
+    </div>
+    <h1>Curating Nature's <em>Masterpieces</em> with Enterprise Care</h1>
+    <p>
+      Discover timeless perennial blooms, expert landscape architecture, and certified eco-friendly solutions protected by the Harbor management portal.
+    </p>
+    <div class="harbor-hero-actions">
+      <button type="button" class="btn-primary" id="btnOpenAddPlantModal">
+        <span>🌿</span> List New Plant / Flower &rarr;
+      </button>
+      <a href="services.html" class="btn-secondary">
+        Explore Gardening Services
+      </a>
+    </div>
+  </section>
+
+  <!-- Main Botanical Catalog Section -->
+  <main style="max-width: 1280px; margin: 0 auto; padding: 0 28px 80px;">
+    
+    <!-- Top Filter & Action Bar -->
+    <div class="catalog-top-bar" id="plantListingSection">
+      <div class="gallery-filter-bar">
+        <button class="filter-pill active" data-filter="all">All Botanical Species (<span id="totalPlantsCount">10</span>)</button>
+        <button class="filter-pill" data-filter="spring">Spring Bloomers</button>
+        <button class="filter-pill" data-filter="summer">Summer &amp; Fall Bloomers</button>
+        <button class="filter-pill" data-filter="custom">Custom Listed</button>
+      </div>
+
+      <button type="button" class="btn-add-plant-cta" id="btnQuickAddPlant">
+        <span>+</span> List New Plant
+      </button>
+    </div>
+
+    <!-- Flower Cards Grid (Dynamically Populated from HarborDB) -->
+    <div class="flower-grid" id="flowerGrid">
+      <!-- Populated dynamically by JavaScript -->
+    </div>
+
+    <!-- Luxury Botanical CTA Banner -->
+    <div class="harbor-card" style="text-align: center; padding: 50px 32px; background: linear-gradient(135deg, rgba(230, 202, 101, 0.08), rgba(16, 185, 129, 0.08)); border-color: var(--harbor-gold-border);">
+      <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--harbor-text-main); margin-bottom: 12px;">
+        Architect Your Private Garden Paradise
+      </h2>
+      <p style="color: var(--harbor-text-muted); max-width: 640px; margin: 0 auto 26px; font-size: 1.05rem;">
+        Whether introducing heirloom peonies, cultivating organic herbs, or scheduling seasonal turf revitalization, our team brings botanical dreams to life.
       </p>
-      <img
-        src="https://hips.hearstapps.com/hmg-prod/images/rhs-garden-wisley-surrey-allium-globemaster-onion-royalty-free-image-1709590587.jpg?crop=0.536xw:1.00xh;0.315xw,0"
-        alt="Allium"
-      />
-      <p>
-        <b>Name :</b> Allium
-        <br />
-        <b>When it blooms: </b>Spring to summer <br /><br />
-        <b>Why we love it:</b> Giant balls of purple, pink and white flowers make
-        a statement in any garden. These ornamental onions also are deer and
-        rodent resistant.
+      <a href="contact.html" class="btn-primary" style="font-size: 0.95rem; padding: 14px 34px;">
+        Book a Complimentary Garden Consultation &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: ADD NEW PLANT / FLOWER LISTING
+       ========================================================================== -->
+  <div class="harbor-modal-overlay" id="addPlantModal">
+    <div class="harbor-modal-card">
+      <div class="harbor-modal-header">
+        <div>
+          <h3><span>🌿</span> List New Plant / Tree in Collection</h3>
+          <div id="authorModalStatusPill" style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 800; color: #92400e; background: #fef3c7; border: 1px solid var(--harbor-gold); padding: 3px 10px; border-radius: 20px;">
+            👑 Author Publishing Clearance
+          </div>
+        </div>
+        <button type="button" class="harbor-modal-close" id="btnClosePlantModal">&times;</button>
+      </div>
+
+      <form id="addPlantForm">
+        
+        <!-- 1. Flower Name -->
+        <div class="form-group">
+          <label class="harbor-label" for="plantName">Flower / Plant Name *</label>
+          <div class="harbor-input-wrapper has-icon">
+            <span class="harbor-input-icon">🌸</span>
+            <input 
+              type="text" 
+              id="plantName" 
+              class="harbor-input" 
+              placeholder="e.g. Lavender, English Rose, White Jasmine" 
+              required 
+            />
+          </div>
+        </div>
+
+        <!-- Botanical Scientific Name -->
+        <div class="form-group">
+          <label class="harbor-label" for="plantScientific">Botanical / Scientific Title</label>
+          <div class="harbor-input-wrapper has-icon">
+            <span class="harbor-input-icon">🔬</span>
+            <input 
+              type="text" 
+              id="plantScientific" 
+              class="harbor-input" 
+              placeholder="e.g. Lavandula angustifolia" 
+            />
+          </div>
+        </div>
+
+        <!-- 2. Flower Image URL + Preset Thumbnails -->
+        <div class="form-group">
+          <label class="harbor-label" for="plantImage">Flower Image URL *</label>
+          <div class="harbor-input-wrapper has-icon">
+            <span class="harbor-input-icon">🖼️</span>
+            <input 
+              type="url" 
+              id="plantImage" 
+              class="harbor-input" 
+              placeholder="https://images.pexels.com/... or click a preset below" 
+              required 
+            />
+          </div>
+
+          <!-- Quick pick preset botanical images -->
+          <div style="font-size: 0.72rem; color: var(--harbor-text-dim); margin-top: 8px;">
+            Quick Pick Preset Image:
+          </div>
+          <div class="preset-images-picker" id="presetPicker">
+            <img 
+              src="https://images.pexels.com/photos/1086178/pexels-photo-1086178.jpeg" 
+              alt="Rose" 
+              class="preset-img-thumb" 
+              title="Red Rose"
+            />
+            <img 
+              src="https://images.pexels.com/photos/207518/pexels-photo-207518.jpeg" 
+              alt="Lavender" 
+              class="preset-img-thumb" 
+              title="French Lavender"
+            />
+            <img 
+              src="https://images.pexels.com/photos/1028723/pexels-photo-1028723.jpeg" 
+              alt="Orchid" 
+              class="preset-img-thumb" 
+              title="Exotic Orchid"
+            />
+            <img 
+              src="https://images.pexels.com/photos/56866/garden-rose-red-pink-56866.jpeg" 
+              alt="English Rose" 
+              class="preset-img-thumb" 
+              title="Pink Garden Rose"
+            />
+            <img 
+              src="https://images.pexels.com/photos/1408221/pexels-photo-1408221.jpeg" 
+              alt="Jasmine" 
+              class="preset-img-thumb" 
+              title="White Jasmine"
+            />
+          </div>
+        </div>
+
+        <!-- 3. When it Blooms & Category -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="harbor-label" for="plantBloom">When It Blooms *</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">🗓️</span>
+              <input 
+                type="text" 
+                id="plantBloom" 
+                class="harbor-input" 
+                placeholder="e.g. Mid-summer to autumn" 
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="plantSeasonCategory">Season Filter</label>
+            <select id="plantSeasonCategory" class="harbor-input">
+              <option value="spring">Spring</option>
+              <option value="summer">Summer</option>
+              <option value="fall">Autumn / Fall</option>
+              <option value="winter">Winter</option>
+              <option value="all">Year-Round</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 4. Flower Speciality -->
+        <div class="form-group">
+          <label class="harbor-label" for="plantSpeciality">Flower Speciality (Why We Love It) *</label>
+          <textarea 
+            id="plantSpeciality" 
+            class="harbor-input" 
+            rows="3" 
+            placeholder="Describe what makes this flower unique: intoxicating scent, bee &amp; butterfly attraction, rare petals, longevity..." 
+            required
+          ></textarea>
+        </div>
+
+        <!-- 5. How to Grow that Plant Guide -->
+        <div class="form-group">
+          <label class="harbor-label" for="plantGrowGuide">How to Grow that Plant Guide *</label>
+          <textarea 
+            id="plantGrowGuide" 
+            class="harbor-input" 
+            rows="5" 
+            placeholder="Step-by-step growing instructions: soil type &amp; pH, sunlight requirements, watering frequency, pruning, seasonal care..." 
+            required
+          ></textarea>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px;">
+          <button type="button" class="btn-secondary" id="btnCancelPlant">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnSavePlantSubmit">
+            <span>💾</span> Save Plant to Collection
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: HOW TO GROW THAT PLANT GUIDE
+       ========================================================================== -->
+  <div class="harbor-modal-overlay" id="guideModal">
+    <div class="harbor-modal-card">
+      <div class="harbor-modal-header">
+        <div>
+          <h3 id="guidePlantName" style="font-size: 1.6rem; color: var(--harbor-text-main);">Plant Name</h3>
+          <span id="guideScientificName" style="font-style: italic; font-size: 0.85rem; color: var(--harbor-gold);">Scientific Name</span>
+        </div>
+        <button type="button" class="harbor-modal-close" id="btnCloseGuideModal">&times;</button>
+      </div>
+
+      <img id="guidePlantImg" src="" alt="Flower Preview" class="guide-banner-img" />
+
+      <!-- Quick Specs Grid -->
+      <div class="guide-specs-grid">
+        <div class="guide-spec-box">
+          <div class="icon">🗓️</div>
+          <div class="label">Bloom Period</div>
+          <div class="val" id="guideBloomSeason">Spring</div>
+        </div>
+        <div class="guide-spec-box">
+          <div class="icon">☀️</div>
+          <div class="label">Sunlight</div>
+          <div class="val">6-8 Hours Sun</div>
+        </div>
+        <div class="guide-spec-box">
+          <div class="icon">💧</div>
+          <div class="label">Hydration</div>
+          <div class="val">Deep Weekly</div>
+        </div>
+      </div>
+
+      <!-- Speciality Block -->
+      <div class="guide-text-block">
+        <h4><span>✨</span> Botanical Speciality &amp; Charm</h4>
+        <p id="guideSpecialityText"></p>
+      </div>
+
+      <!-- Step-by-Step Growing Guide Block -->
+      <div class="guide-text-block" style="border-color: var(--harbor-gold-border);">
+        <h4 style="color: var(--harbor-gold-light);"><span>🌱</span> Step-by-Step Growing Guide</h4>
+        <p id="guideGrowingStepsText"></p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <span style="font-size: 0.78rem; color: var(--harbor-text-dim);">Harbor Certified Horticultural Practice</span>
+        <a href="contact.html" class="btn-primary" style="font-size: 0.86rem; padding: 9px 20px;">
+          Consult Garden Specialist &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: AUTHOR PRIVILEGE REQUIRED NOTIFICATION
+       ========================================================================== -->
+  <div class="harbor-modal-overlay" id="authorOnlyModal">
+    <div class="harbor-modal-card" style="max-width: 520px; text-align: center;">
+      <div style="width: 72px; height: 72px; margin: 0 auto 18px; border-radius: 20px; background: #fef3c7; border: 1.5px solid var(--harbor-gold); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #92400e; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.2);">
+        👑
+      </div>
+      <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 12px; color: var(--harbor-text-main);">
+        Author Privilege Required
+      </h3>
+      <p id="authorOnlyNoticeText" style="color: var(--harbor-text-muted); font-size: 0.94rem; line-height: 1.65; margin-bottom: 24px;">
+        Listing new flowers and trees is strictly restricted to <strong>Author</strong> accounts. Regular Members and Guests are not authorized to publish new botanical species.
       </p>
-    </main>
-    <footer>
-      <div>
-        <h2>My Garden</h2>
+      <div style="background: #f8faf8; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 14px 18px; margin-bottom: 24px; text-align: left; font-size: 0.82rem; color: var(--harbor-text-muted);">
+        <div style="font-weight: 700; color: var(--harbor-text-main); margin-bottom: 4px;">Role Access Rules:</div>
+        <div>&bull; <strong>Author:</strong> Full access to list flowers/trees, inquiries database, audit logs.</div>
+        <div>&bull; <strong>User / Member:</strong> Browsing and contact inquiries only.</div>
+      </div>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button type="button" class="btn-outline" id="btnCloseAuthorOnlyModal">Continue Browsing</button>
+        <a href="login.html" class="btn-primary" style="font-size: 0.88rem; padding: 11px 24px;">
+          <span>👑</span> Sign In as Author &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="harbor-footer">
+    <div class="harbor-footer-grid">
+      <div class="harbor-footer-col">
+        <h3>Harbor Garden</h3>
         <p>
-          Bringing nature closer to your home with beautiful plants, healthy
-          gardens, and eco-friendly gardening solutions.
+          Bringing nature closer to your home with healthy perennials, eco-friendly garden architecture, and enterprise-grade data management.
         </p>
+        <div class="harbor-footer-security-badge">
+          <span class="icon">🛡️</span>
+          <div>
+            Connected to Harbor Security Portal
+            <small>Local Storage Persistence &bull; 2FA Support</small>
+          </div>
+        </div>
       </div>
 
-      <div>
+      <div class="harbor-footer-col">
         <h3>Quick Links</h3>
-
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
+        <a href="about.html">About My Garden</a>
+        <a href="services.html">Services &amp; Care</a>
         <a href="contact.html">Contact Us</a>
+        <a href="database.html">Local Database</a>
       </div>
 
-      <div>
-        <h3>Contact Us</h3>
-
-        <p>Email: info@mygarden.com</p>
-        <p>Phone: +91 98765 43210</p>
-        <p>Haldwani, India</p>
+      <div class="harbor-footer-col">
+        <h3>Contact Info</h3>
+        <p><strong>Address:</strong> 123 Green Garden Road, Haldwani, Uttarakhand, India</p>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+        <p><strong>Email:</strong> info@mygarden.com</p>
       </div>
 
-      <div>
-        <h3>Follow Us</h3>
-
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
+      <div class="harbor-footer-col">
+        <h3>Security &amp; Portal</h3>
+        <a href="login.html">Sign In to Portal</a>
+        <a href="login.html?mode=signup">Create Account</a>
+        <a href="forgot-password.html">Forgot Password Recovery</a>
+        <a href="database.html">Inquiries Management DB</a>
       </div>
+    </div>
 
-      <hr />
+    <div class="harbor-footer-bottom">
+      <p>&copy; 2026 Harbor &bull; My Garden. All Rights Reserved.</p>
+      <div style="display: flex; gap: 16px;">
+        <a href="login.html" style="color: var(--harbor-gold);">Portal Login</a>
+        <a href="forgot-password.html" style="color: var(--harbor-cyan);">Forgot Password</a>
+      </div>
+    </div>
+  </footer>
 
-      <p>&copy; 2026 My Garden. All Rights Reserved.</p>
-    </footer>
-  </body>
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const flowerGrid = document.getElementById('flowerGrid');
+      const totalPlantsCount = document.getElementById('totalPlantsCount');
+      const filterPills = document.querySelectorAll('.filter-pill');
+      let currentFilter = 'all';
+
+      // Modals
+      const addPlantModal = document.getElementById('addPlantModal');
+      const guideModal = document.getElementById('guideModal');
+      const btnOpenAddPlantModal = document.getElementById('btnOpenAddPlantModal');
+      const btnQuickAddPlant = document.getElementById('btnQuickAddPlant');
+      const btnClosePlantModal = document.getElementById('btnClosePlantModal');
+      const btnCancelPlant = document.getElementById('btnCancelPlant');
+      const btnCloseGuideModal = document.getElementById('btnCloseGuideModal');
+      const addPlantForm = document.getElementById('addPlantForm');
+
+      // Render Flower Cards dynamically
+      function renderFlowerGrid() {
+        const plants = HarborDB.getPlants();
+        const isAuthor = HarborDB.isAuthor();
+
+        totalPlantsCount.textContent = plants.length;
+
+        let filtered = plants;
+        if (currentFilter === 'spring') {
+          filtered = plants.filter(p => p.seasonCategory === 'spring' || (p.bloomSeason && p.bloomSeason.toLowerCase().includes('spring')));
+        } else if (currentFilter === 'summer') {
+          filtered = plants.filter(p => p.seasonCategory === 'summer' || (p.bloomSeason && (p.bloomSeason.toLowerCase().includes('summer') || p.bloomSeason.toLowerCase().includes('fall') || p.bloomSeason.toLowerCase().includes('autumn'))));
+        } else if (currentFilter === 'custom') {
+          filtered = plants.filter(p => p.isCustom);
+        }
+
+        if (!filtered.length) {
+          flowerGrid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+              <div style="font-size: 2.5rem; margin-bottom: 12px;">🌿</div>
+              <h3 style="color: #ffffff; margin-bottom: 8px;">No plants found in this category</h3>
+              <p style="color: var(--harbor-text-muted);">Try selecting "All Botanical Species" or add a new plant to the collection.</p>
+            </div>
+          `;
+          return;
+        }
+
+        flowerGrid.innerHTML = filtered.map(plant => `
+          <article class="flower-card" data-id="${plant.id}">
+            <div class="flower-image-container">
+              <img src="${plant.image}" alt="${plant.name}" loading="lazy" />
+              <span class="flower-season-tag">${plant.bloomSeason}</span>
+              ${plant.isCustom ? `<span class="badge-custom-listed">Custom Added</span>` : ''}
+            </div>
+            <div class="flower-card-body">
+              <div class="flower-card-header">
+                <h2 class="flower-card-title">${plant.name}</h2>
+                <span class="flower-card-scientific">${plant.scientific || ''}</span>
+              </div>
+              <div class="flower-card-season-text">
+                Blooms: <strong>${plant.bloomSeason}</strong>
+              </div>
+              <p class="flower-card-quote">
+                ${plant.speciality}
+              </p>
+              <div class="flower-card-footer">
+                <button type="button" class="btn-grow-guide" data-id="${plant.id}">
+                  <span>🌱</span> How to Grow Guide &rarr;
+                </button>
+                ${(plant.isCustom && isAuthor) ? `
+                  <button type="button" class="btn-delete-plant" data-id="${plant.id}" title="Remove custom plant">
+                    Delete
+                  </button>
+                ` : `
+                  <a href="contact.html?service=planting" style="color: var(--harbor-gold); font-size: 0.8rem; font-weight: 700; text-decoration: none;">
+                    Inquire Planting &rarr;
+                  </a>
+                `}
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        // Attach Grow Guide listeners
+        document.querySelectorAll('.btn-grow-guide').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const pid = e.currentTarget.getAttribute('data-id');
+            const target = HarborDB.getPlants().find(p => p.id === pid);
+            if (target) openGuideModal(target);
+          });
+        });
+
+        // Attach Delete listeners (for Authors on custom plants)
+        document.querySelectorAll('.btn-delete-plant').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const pid = e.currentTarget.getAttribute('data-id');
+            if (confirm('Are you sure you want to remove this plant from the botanical collection?')) {
+              try {
+                HarborDB.deletePlant(pid);
+                HarborAuth.showToast('Plant removed from collection.', 'info', 'Plant Deleted');
+                renderFlowerGrid();
+              } catch (err) {
+                HarborAuth.showToast(err.message, 'error', 'Permission Denied');
+              }
+            }
+          });
+        });
+      }
+
+      // Open Guide Modal
+      function openGuideModal(plant) {
+        document.getElementById('guidePlantName').textContent = plant.name;
+        document.getElementById('guideScientificName').textContent = plant.scientific || '';
+        document.getElementById('guidePlantImg').src = plant.image;
+        document.getElementById('guideBloomSeason').textContent = plant.bloomSeason;
+        document.getElementById('guideSpecialityText').textContent = plant.speciality;
+        document.getElementById('guideGrowingStepsText').textContent = plant.growGuide;
+
+        guideModal.classList.add('active');
+      }
+
+      btnCloseGuideModal.addEventListener('click', () => guideModal.classList.remove('active'));
+      guideModal.addEventListener('click', (e) => {
+        if (e.target === guideModal) guideModal.classList.remove('active');
+      });
+
+      // Filter handling
+      filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          filterPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentFilter = pill.getAttribute('data-filter');
+          renderFlowerGrid();
+        });
+      });
+
+      const authorOnlyModal = document.getElementById('authorOnlyModal');
+      const btnCloseAuthorOnlyModal = document.getElementById('btnCloseAuthorOnlyModal');
+      const authorOnlyNoticeText = document.getElementById('authorOnlyNoticeText');
+      const authorModalStatusPill = document.getElementById('authorModalStatusPill');
+
+      function updateAuthorUI() {
+        const isAuthor = HarborDB.isAuthor();
+        const user = HarborDB.getCurrentUser();
+
+        if (isAuthor) {
+          if (btnOpenAddPlantModal) {
+            btnOpenAddPlantModal.innerHTML = `<span>🌿</span> List New Plant / Tree &rarr;`;
+            btnOpenAddPlantModal.title = `Author Publishing Clearance Active (${user ? user.name : 'Author'})`;
+          }
+          if (btnQuickAddPlant) {
+            btnQuickAddPlant.innerHTML = `<span>+</span> List New Plant / Tree`;
+          }
+          if (authorModalStatusPill) {
+            authorModalStatusPill.innerHTML = `👑 Verified Author Clearance: ${user ? user.name : 'Alex Morgan'}`;
+          }
+        } else {
+          if (btnOpenAddPlantModal) {
+            btnOpenAddPlantModal.innerHTML = `<span>🔒</span> List Plant (Author Only)`;
+            btnOpenAddPlantModal.title = `Listing flowers & trees is strictly reserved for Author accounts`;
+          }
+          if (btnQuickAddPlant) {
+            btnQuickAddPlant.innerHTML = `<span>🔒</span> List Plant (Author Only)`;
+          }
+        }
+      }
+
+      function openAuthorOnlyModal(message) {
+        if (authorOnlyNoticeText && message) {
+          authorOnlyNoticeText.innerHTML = message;
+        }
+        authorOnlyModal.classList.add('active');
+      }
+
+      if (btnCloseAuthorOnlyModal) {
+        btnCloseAuthorOnlyModal.addEventListener('click', () => {
+          authorOnlyModal.classList.remove('active');
+        });
+      }
+      if (authorOnlyModal) {
+        authorOnlyModal.addEventListener('click', (e) => {
+          if (e.target === authorOnlyModal) authorOnlyModal.classList.remove('active');
+        });
+      }
+
+      // Open Add Plant Modal (strictly Author Only)
+      function openAddModal() {
+        if (!HarborDB.isAuthor()) {
+          const user = HarborDB.getCurrentUser();
+          const userStatus = user 
+            ? `You are currently logged in as a <strong>Member (${user.name})</strong>.` 
+            : `You are currently browsing as a <strong>Guest</strong>.`;
+          
+          openAuthorOnlyModal(`
+            ${userStatus} Under Harbor Botanical rules, <strong>only registered Authors</strong> have permission to publish new flowers or trees into the collection.<br/><br/>
+            Please sign in with an Author account to contribute new botanical listings.
+          `);
+          return;
+        }
+
+        addPlantForm.reset();
+        addPlantModal.classList.add('active');
+        document.getElementById('plantName').focus();
+      }
+
+      if (btnOpenAddPlantModal) btnOpenAddPlantModal.addEventListener('click', openAddModal);
+      if (btnQuickAddPlant) btnQuickAddPlant.addEventListener('click', openAddModal);
+      if (btnClosePlantModal) btnClosePlantModal.addEventListener('click', () => addPlantModal.classList.remove('active'));
+      if (btnCancelPlant) btnCancelPlant.addEventListener('click', () => addPlantModal.classList.remove('active'));
+      addPlantModal.addEventListener('click', (e) => {
+        if (e.target === addPlantModal) addPlantModal.classList.remove('active');
+      });
+
+      // Preset thumbnail picker
+      document.querySelectorAll('.preset-img-thumb').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          document.querySelectorAll('.preset-img-thumb').forEach(t => t.classList.remove('selected'));
+          thumb.classList.add('selected');
+          document.getElementById('plantImage').value = thumb.src;
+        });
+      });
+
+      // Submit Add Plant Form (Author Guard)
+      addPlantForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (!HarborDB.isAuthor()) {
+          HarborAuth.showToast('Access Denied: Only Author accounts can publish new flowers or trees.', 'error', 'Author Clearance Required');
+          addPlantModal.classList.remove('active');
+          return;
+        }
+
+        const name = document.getElementById('plantName').value.trim();
+        const scientific = document.getElementById('plantScientific').value.trim();
+        const image = document.getElementById('plantImage').value.trim();
+        const bloomSeason = document.getElementById('plantBloom').value.trim();
+        const seasonCategory = document.getElementById('plantSeasonCategory').value;
+        const speciality = document.getElementById('plantSpeciality').value.trim();
+        const growGuide = document.getElementById('plantGrowGuide').value.trim();
+
+        try {
+          const newPlant = HarborDB.savePlant({
+            name,
+            scientific,
+            image,
+            bloomSeason,
+            seasonCategory,
+            speciality,
+            growGuide
+          });
+
+          addPlantModal.classList.remove('active');
+          addPlantForm.reset();
+
+          HarborAuth.showToast(`"${newPlant.name}" has been added to the botanical collection!`, 'success', '🌿 Plant Listed');
+          renderFlowerGrid();
+
+          // Scroll down to the newly added plant
+          setTimeout(() => {
+            const newElem = document.querySelector(`[data-id="${newPlant.id}"]`);
+            if (newElem) {
+              newElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              newElem.style.border = '2px solid var(--harbor-gold)';
+              setTimeout(() => newElem.style.border = '', 2500);
+            }
+          }, 400);
+
+        } catch (err) {
+          HarborAuth.showToast(err.message, 'error', 'Failed to List Plant');
+        }
+      });
+
+      // Initial Render & Permissions Check
+      updateAuthorUI();
+      renderFlowerGrid();
+
+    });
+  </script>
+</body>
 </html>

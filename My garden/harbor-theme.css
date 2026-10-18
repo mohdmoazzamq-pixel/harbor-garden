@@ -1,0 +1,1057 @@
+/* ==========================================================================
+   Harbor Design System — Ultra-Luxurious Light Theme
+   Pristine Pearl Canvas &bull; Imperial Gold &bull; Royal Botanical Emerald &bull; High Contrast
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* Luxury Light Canvas Colors */
+  --harbor-bg-abyss: #0a140e;
+  --harbor-bg-body: #f8faf8;
+  --harbor-bg-surface: #ffffff;
+  --harbor-bg-surface-elevated: #f1f5f0;
+  --harbor-bg-glass: rgba(255, 255, 255, 0.88);
+  --harbor-bg-glass-card: #ffffff;
+  --harbor-bg-glass-hover: #f9fbf9;
+
+  /* Imperial Warm Gold Accents */
+  --harbor-gold: #d97706;
+  --harbor-gold-light: #b45309;
+  --harbor-gold-dark: #92400e;
+  --harbor-gold-glow: rgba(217, 119, 6, 0.25);
+  --harbor-gold-border: rgba(217, 119, 6, 0.28);
+
+  /* Luminous Botanical Emerald */
+  --harbor-emerald: #059669;
+  --harbor-emerald-light: #10b981;
+  --harbor-emerald-dark: #047857;
+  --harbor-emerald-glow: rgba(5, 150, 105, 0.22);
+  --harbor-emerald-border: rgba(5, 150, 105, 0.25);
+
+  /* Atmospheric Cyan & Indigo */
+  --harbor-cyan: #0284c7;
+  --harbor-cyan-glow: rgba(2, 132, 199, 0.2);
+  --harbor-indigo: #4f46e5;
+
+  /* Status Colors */
+  --harbor-success: #059669;
+  --harbor-warning: #d97706;
+  --harbor-danger: #e11d48;
+  --harbor-info: #0284c7;
+
+  /* Refined High-Contrast Typography */
+  --harbor-text-main: #132219;
+  --harbor-text-muted: #475569;
+  --harbor-text-dim: #64748b;
+  --harbor-text-gold: #92400e;
+
+  /* Borders & Shadows */
+  --harbor-border: rgba(0, 0, 0, 0.08);
+  --harbor-border-hover: rgba(217, 119, 6, 0.45);
+  --harbor-card-shadow: 0 14px 34px -10px rgba(19, 34, 25, 0.08), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --harbor-glow-shadow: 0 0 28px -4px rgba(5, 150, 105, 0.2);
+  --harbor-gold-shadow: 0 0 26px -3px rgba(217, 119, 6, 0.22);
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Reactive Transitions */
+  --transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: all 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Reset & Luxury Light Mesh */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--harbor-bg-body);
+  color: var(--harbor-text-main);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(at 12% 14%, rgba(5, 150, 105, 0.07) 0px, transparent 48%),
+    radial-gradient(at 88% 8%, rgba(217, 119, 6, 0.06) 0px, transparent 45%),
+    radial-gradient(at 50% 95%, rgba(2, 132, 199, 0.05) 0px, transparent 50%),
+    radial-gradient(at 80% 80%, rgba(99, 102, 241, 0.04) 0px, transparent 55%);
+  background-attachment: fixed;
+}
+
+/* ==========================================================================
+   Header & Floating Luxury Navigation (Light Theme)
+   ========================================================================== */
+header.harbor-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+}
+
+.harbor-nav-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Brand Logo */
+.harbor-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--harbor-text-main);
+}
+
+.harbor-logo-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.15), rgba(5, 150, 105, 0.15));
+  border: 1px solid var(--harbor-gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--harbor-gold);
+  box-shadow: var(--harbor-gold-shadow);
+  transition: var(--transition);
+}
+
+.harbor-brand:hover .harbor-logo-badge {
+  transform: rotate(-6deg) scale(1.08);
+  border-color: var(--harbor-gold);
+}
+
+.harbor-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.harbor-brand-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--harbor-text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.harbor-brand-title span {
+  background: linear-gradient(135deg, var(--harbor-gold), var(--harbor-emerald));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.harbor-brand-subtitle {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--harbor-gold);
+  font-weight: 700;
+}
+
+/* Nav Links */
+.harbor-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+}
+
+.harbor-nav-link {
+  color: var(--harbor-text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: var(--transition);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.harbor-nav-link:hover {
+  color: var(--harbor-emerald);
+  background: rgba(5, 150, 105, 0.08);
+  transform: translateY(-1px);
+}
+
+.harbor-nav-link.active {
+  color: var(--harbor-gold-dark);
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid var(--harbor-gold-border);
+}
+
+.harbor-nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: var(--harbor-gold);
+  border-radius: 4px;
+}
+
+/* Navigation Actions (Auth, Role Pill, Database) */
+.harbor-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Role Badges */
+.role-badge-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: #fef3c7;
+  border: 1px solid var(--harbor-gold);
+  border-radius: 20px;
+  color: #92400e;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+}
+
+.role-badge-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: #d1fae5;
+  border: 1px solid var(--harbor-emerald);
+  border-radius: 20px;
+  color: #065f46;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-nav-database {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #fef3c7;
+  border: 1px solid var(--harbor-gold);
+  border-radius: 8px;
+  color: #92400e;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-nav-database:hover {
+  background: #fde68a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+}
+
+.btn-harbor-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  background: linear-gradient(135deg, var(--harbor-gold) 0%, var(--harbor-gold-dark) 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.86rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-harbor-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35);
+  filter: brightness(1.06);
+}
+
+/* User Session Badge */
+.harbor-user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px 5px 6px;
+  background: #ffffff;
+  border: 1px solid var(--harbor-border);
+  border-radius: 30px;
+  color: var(--harbor-text-main);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.harbor-user-badge:hover {
+  border-color: var(--harbor-gold);
+  box-shadow: var(--harbor-gold-shadow);
+}
+
+.harbor-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--harbor-gold), var(--harbor-emerald));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.harbor-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--harbor-emerald);
+  box-shadow: 0 0 8px var(--harbor-emerald);
+}
+
+/* User Dropdown Menu */
+.harbor-user-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 250px;
+  background: #ffffff;
+  border: 1px solid var(--harbor-gold-border);
+  border-radius: 14px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(217, 119, 6, 0.1);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  z-index: 1001;
+}
+
+.harbor-user-dropdown.show {
+  display: flex;
+  animation: fadeInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.harbor-dropdown-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 8px;
+}
+
+.harbor-dropdown-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--harbor-text-main);
+}
+
+.harbor-dropdown-email {
+  font-size: 0.75rem;
+  color: var(--harbor-text-dim);
+}
+
+.harbor-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--harbor-text-muted);
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 600;
+  transition: var(--transition);
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.harbor-dropdown-item:hover {
+  color: var(--harbor-text-main);
+  background: var(--harbor-bg-surface-elevated);
+  transform: translateX(3px);
+}
+
+.harbor-dropdown-item.logout {
+  color: var(--harbor-danger);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 8px;
+}
+
+.harbor-dropdown-item.logout:hover {
+  background: #ffe4e6;
+}
+
+.harbor-menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--harbor-border);
+  color: var(--harbor-text-main);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Page Hero Banner (Luxury Light Botanical)
+   ========================================================================== */
+.harbor-hero {
+  text-align: center;
+  padding: 68px 20px 50px;
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.harbor-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 30px;
+  background: #fef3c7;
+  border: 1px solid var(--harbor-gold);
+  color: #92400e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  box-shadow: 0 2px 10px rgba(217, 119, 6, 0.15);
+}
+
+.harbor-hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5.2vw, 4rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: #0d1e15;
+  margin-bottom: 18px;
+}
+
+.harbor-hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--harbor-emerald) 0%, var(--harbor-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.harbor-hero p {
+  font-size: 1.15rem;
+  color: var(--harbor-text-muted);
+  max-width: 720px;
+  margin: 0 auto 34px;
+  line-height: 1.75;
+}
+
+.harbor-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Luxury Reactive Buttons (Light Theme)
+   ========================================================================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--harbor-gold) 0%, var(--harbor-gold-dark) 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.94rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.28);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 26px rgba(217, 119, 6, 0.38);
+  filter: brightness(1.08);
+}
+
+.btn-emerald {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--harbor-emerald) 0%, var(--harbor-emerald-dark) 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.94rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.25);
+  transition: var(--transition);
+}
+
+.btn-emerald:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 26px rgba(5, 150, 105, 0.35);
+  filter: brightness(1.08);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1.5px solid var(--harbor-gold);
+  color: var(--harbor-text-main);
+  font-weight: 700;
+  font-size: 0.94rem;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+}
+
+.btn-secondary:hover {
+  background: #fef3c7;
+  color: #92400e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.2);
+}
+
+.btn-outline {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: var(--harbor-text-muted);
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  border-color: var(--harbor-gold);
+  color: var(--harbor-gold-dark);
+  background: #fffbeb;
+}
+
+/* ==========================================================================
+   Harbor Luxury Glass Cards (Light Theme)
+   ========================================================================== */
+.harbor-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: var(--harbor-card-shadow);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.harbor-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--harbor-gold), transparent);
+}
+
+.harbor-card:hover {
+  border-color: var(--harbor-border-hover);
+  box-shadow: 0 24px 50px -12px rgba(25, 40, 32, 0.15), var(--harbor-gold-shadow);
+  transform: translateY(-4px);
+}
+
+/* ==========================================================================
+   Forms & Luxury Inputs (Light Theme)
+   ========================================================================== */
+.form-group {
+  margin-bottom: 22px;
+  position: relative;
+}
+
+label.harbor-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0f2418;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.harbor-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.harbor-input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--harbor-text-dim);
+  font-size: 1.05rem;
+  pointer-events: none;
+}
+
+input.harbor-input,
+select.harbor-input,
+textarea.harbor-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  color: var(--harbor-text-main);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  outline: none;
+  transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.has-icon input.harbor-input {
+  padding-left: 46px;
+}
+
+input.harbor-input:focus,
+select.harbor-input:focus,
+textarea.harbor-input:focus {
+  border-color: var(--harbor-emerald);
+  box-shadow: 0 0 0 3.5px rgba(5, 150, 105, 0.18);
+  background: #ffffff;
+}
+
+input.harbor-input::placeholder,
+textarea.harbor-input::placeholder {
+  color: #94a3b8;
+}
+
+select.harbor-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+select.harbor-input option {
+  background: #ffffff;
+  color: #14221A;
+}
+
+.btn-toggle-password {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--harbor-text-dim);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.btn-toggle-password:hover {
+  color: var(--harbor-gold);
+}
+
+/* ==========================================================================
+   Luxury Light Modals
+   ========================================================================== */
+.harbor-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.harbor-modal-overlay.active {
+  display: flex;
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.harbor-modal-card {
+  background: #ffffff;
+  border: 1px solid var(--harbor-gold-border);
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 34px;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25), 0 0 20px rgba(217, 119, 6, 0.15);
+  position: relative;
+}
+
+.harbor-modal-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--harbor-emerald), var(--harbor-gold));
+}
+
+.harbor-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+}
+
+.harbor-modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--harbor-text-main);
+}
+
+.harbor-modal-close {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: var(--harbor-text-dim);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.harbor-modal-close:hover {
+  border-color: var(--harbor-gold);
+  color: var(--harbor-gold);
+  background: #fef3c7;
+}
+
+/* ==========================================================================
+   Access Restricted / Lock Screen (RBAC)
+   ========================================================================== */
+.access-restricted-card {
+  max-width: 580px;
+  margin: 60px auto;
+  text-align: center;
+  padding: 48px 32px;
+  background: #ffffff;
+  border: 1.5px solid rgba(225, 29, 72, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12), 0 0 25px rgba(225, 29, 72, 0.1);
+}
+
+.lock-shield-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  background: #ffe4e6;
+  border: 1.5px solid var(--harbor-danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: var(--harbor-danger);
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+.harbor-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 440px;
+  pointer-events: none;
+}
+
+.harbor-toast {
+  pointer-events: auto;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: var(--harbor-text-main);
+  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.harbor-toast.success { border-left: 5px solid var(--harbor-emerald); }
+.harbor-toast.error { border-left: 5px solid var(--harbor-danger); }
+.harbor-toast.info { border-left: 5px solid var(--harbor-gold); }
+.harbor-toast.warning { border-left: 5px solid var(--harbor-warning); }
+
+.harbor-toast-icon { font-size: 1.35rem; margin-top: 1px; }
+.harbor-toast.success .harbor-toast-icon { color: var(--harbor-emerald); }
+.harbor-toast.error .harbor-toast-icon { color: var(--harbor-danger); }
+.harbor-toast.info .harbor-toast-icon { color: var(--harbor-gold); }
+.harbor-toast.warning .harbor-toast-icon { color: var(--harbor-warning); }
+
+.harbor-toast-content { flex: 1; }
+.harbor-toast-title { font-weight: 800; font-size: 0.92rem; margin-bottom: 2px; color: var(--harbor-text-main); }
+.harbor-toast-msg { font-size: 0.84rem; color: var(--harbor-text-muted); line-height: 1.45; }
+
+.harbor-toast-close {
+  background: none;
+  border: none;
+  color: var(--harbor-text-dim);
+  cursor: pointer;
+  padding: 2px;
+  font-size: 1.1rem;
+}
+
+.harbor-toast-close:hover { color: var(--harbor-text-main); }
+
+/* ==========================================================================
+   Footer (Grounded Luxury Anchor)
+   ========================================================================== */
+footer.harbor-footer {
+  margin-top: auto;
+  background: var(--harbor-bg-abyss);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: #cbd5e1;
+  padding: 72px 24px 34px;
+  position: relative;
+}
+
+footer.harbor-footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 15%; right: 15%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--harbor-gold), transparent);
+}
+
+.harbor-footer-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 44px;
+}
+
+.harbor-footer-col h3 {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.harbor-footer-col h3::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0; width: 32px; height: 2px;
+  background: var(--harbor-gold);
+  border-radius: 2px;
+}
+
+.harbor-footer-col p {
+  font-size: 0.92rem;
+  color: #94a3b8;
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+
+.harbor-footer-col a {
+  display: block;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 11px;
+  transition: var(--transition);
+}
+
+.harbor-footer-col a:hover {
+  color: var(--harbor-gold);
+  transform: translateX(4px);
+}
+
+.harbor-footer-security-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid var(--harbor-gold-border);
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+.harbor-footer-security-badge span.icon {
+  font-size: 1.4rem;
+  color: var(--harbor-gold);
+}
+
+.harbor-footer-security-badge div {
+  font-size: 0.8rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.harbor-footer-security-badge div small {
+  display: block;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.harbor-footer-bottom {
+  max-width: 1280px;
+  margin: 54px auto 0;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.84rem;
+  color: #64748b;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .harbor-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .harbor-menu-toggle {
+    display: block;
+  }
+
+  .harbor-nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-bottom: 1.5px solid var(--harbor-gold);
+    flex-direction: column;
+    padding: 18px 24px;
+    gap: 10px;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .harbor-nav-links.show {
+    display: flex;
+  }
+
+  .harbor-nav-link {
+    width: 100%;
+  }
+
+  .harbor-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .harbor-hero {
+    padding: 48px 16px 36px;
+  }
+
+  .harbor-hero h1 {
+    font-size: 2.3rem;
+  }
+}

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Command Center &bull; Harbor</title>
+  <link rel="stylesheet" href="harbor-theme.css" />
+  <style>
+    .portal-layout {
+      max-width: 1240px;
+      margin: 40px auto 80px;
+      padding: 0 28px;
+    }
+
+    /* Identity Banner */
+    .portal-identity-card {
+      background: var(--harbor-bg-glass-card);
+      border: 1px solid var(--harbor-border);
+      border-radius: 20px;
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 34px;
+      box-shadow: var(--harbor-card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portal-identity-card::after {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(230, 202, 101, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .portal-user-meta {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .portal-big-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--harbor-gold), var(--harbor-emerald));
+      color: #070b13;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      font-weight: 800;
+      box-shadow: var(--harbor-gold-shadow);
+    }
+
+    .portal-user-info h2 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--harbor-text-main);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .portal-user-info p {
+      font-size: 0.9rem;
+      color: var(--harbor-text-muted);
+    }
+
+    .portal-score-box {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #ffffff;
+      border: 1.5px solid var(--harbor-gold-border);
+      border-radius: 16px;
+      padding: 14px 24px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .score-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 3px solid var(--harbor-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #92400e;
+      background: #fef3c7;
+      box-shadow: var(--harbor-gold-shadow);
+    }
+
+    .score-details h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--harbor-text-main);
+    }
+
+    .score-details p {
+      font-size: 0.78rem;
+      color: var(--harbor-text-dim);
+    }
+
+    /* Portal Tabs */
+    .portal-nav-tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .portal-tab-btn {
+      padding: 11px 20px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: var(--harbor-text-muted);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .portal-tab-btn:hover {
+      color: var(--harbor-text-main);
+      background: #f1f5f0;
+    }
+
+    .portal-tab-btn.active {
+      background: #fef3c7;
+      border-color: var(--harbor-gold);
+      color: #92400e;
+      box-shadow: 0 2px 10px rgba(217, 119, 6, 0.15);
+    }
+
+    /* Portal Panels */
+    .portal-panel {
+      display: none;
+    }
+
+    .portal-panel.active {
+      display: block;
+      animation: fadeInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Metric Grid */
+    .metric-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: var(--harbor-card-shadow);
+    }
+
+    .metric-icon-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: #f8faf8;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .metric-val {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--harbor-text-main);
+    }
+
+    .metric-title {
+      font-size: 0.82rem;
+      color: var(--harbor-text-muted);
+    }
+
+    /* Device Sessions Table */
+    .device-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .device-item:last-child {
+      border-bottom: none;
+    }
+
+    .device-details {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .device-icon { font-size: 1.8rem; }
+    .device-name { font-size: 0.95rem; font-weight: 700; color: var(--harbor-text-main); }
+    .device-meta { font-size: 0.8rem; color: var(--harbor-text-dim); }
+
+    /* Switch Component */
+    .switch-label {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 28px;
+    }
+
+    .switch-label input { opacity: 0; width: 0; height: 0; }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      transition: var(--transition);
+      border-radius: 30px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #ffffff;
+      transition: var(--transition);
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: var(--harbor-gold);
+      border-color: var(--harbor-gold);
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(22px);
+      background-color: #ffffff;
+    }
+
+    /* Audit Table */
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .audit-table th {
+      text-align: left;
+      padding: 14px 18px;
+      background: #f1f5f0;
+      color: var(--harbor-text-main);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.76rem;
+    }
+
+    .audit-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      color: var(--harbor-text-muted);
+    }
+
+    .audit-badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .audit-badge.SUCCESS { background: rgba(16, 185, 129, 0.15); color: var(--harbor-emerald); }
+    .audit-badge.INFO { background: rgba(230, 202, 101, 0.15); color: var(--harbor-gold-light); }
+    .audit-badge.WARNING { background: rgba(244, 63, 94, 0.15); color: var(--harbor-danger); }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="harbor-header">
+    <div class="harbor-nav-container">
+      <a href="index.html" class="harbor-brand">
+        <div class="harbor-logo-badge">🛡️</div>
+        <div class="harbor-brand-text">
+          <div class="harbor-brand-title">HARBOR <span>GARDEN</span></div>
+          <div class="harbor-brand-subtitle">Security Portal</div>
+        </div>
+      </a>
+
+      <button class="harbor-menu-toggle" id="harborMenuToggle" aria-label="Toggle navigation">&#9776;</button>
+
+      <ul class="harbor-nav-links" id="harborNavLinks">
+        <li><a href="index.html" class="harbor-nav-link">Home</a></li>
+        <li><a href="about.html" class="harbor-nav-link">About</a></li>
+        <li><a href="services.html" class="harbor-nav-link">Services</a></li>
+        <li><a href="contact.html" class="harbor-nav-link">Contact</a></li>
+        <li><a href="database.html" class="harbor-nav-link">Database</a></li>
+        <li><a href="portal.html" class="harbor-nav-link active">Security Portal</a></li>
+      </ul>
+
+      <div class="harbor-nav-actions">
+        <a href="database.html" class="btn-nav-database">
+          <span>📊</span> Inquiries DB
+        </a>
+        <div id="harborNavAuth"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Security Command Center -->
+  <main class="portal-layout">
+    
+    <!-- Identity Header Banner -->
+    <div class="portal-identity-card">
+      <div class="portal-user-meta">
+        <div class="portal-big-avatar" id="portalAvatar">AM</div>
+        <div class="portal-user-info">
+          <h2>
+            <span id="portalName">Alex Morgan</span>
+            <span id="portalRoleBadge"></span>
+          </h2>
+          <p><span id="portalEmail">alex.morgan@harbor.io</span> &bull; <span id="portalRoleTitle">Lead Security Architect</span></p>
+        </div>
+      </div>
+
+      <div class="portal-score-box">
+        <div class="score-circle" id="portalScore">98%</div>
+        <div class="score-details">
+          <h4>Security Posture</h4>
+          <p id="portalScoreLabel">Multi-factor protection active</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tab Buttons -->
+    <div class="portal-nav-tabs">
+      <button class="portal-tab-btn active" id="tabOverview">
+        <span>🛡️</span> Security Overview
+      </button>
+      <button class="portal-tab-btn" id="tabSecurity">
+        <span>🔐</span> Multi-Factor &amp; Password
+      </button>
+      <button class="portal-tab-btn" id="tabDevices">
+        <span>💻</span> Active Devices &amp; Sessions
+      </button>
+      <button class="portal-tab-btn" id="tabAudit">
+        <span>📜</span> Audit Trail Logs
+      </button>
+    </div>
+
+    <!-- PANEL 1: Overview -->
+    <div class="portal-panel active" id="panelOverview">
+      <div class="metric-cards-grid">
+        <div class="metric-card">
+          <div class="metric-icon-box" style="color: var(--harbor-emerald);">✓</div>
+          <div>
+            <div class="metric-val" id="metric2fa">Enabled</div>
+            <div class="metric-title">Multi-Factor Status</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-box" style="color: var(--harbor-gold);">💻</div>
+          <div>
+            <div class="metric-val">2 Active</div>
+            <div class="metric-title">Authenticated Devices</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-box" style="color: var(--harbor-cyan);">🌿</div>
+          <div>
+            <div class="metric-val" id="metricPlantsCount">10</div>
+            <div class="metric-title">Catalog Plant Species</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Cards (Conditioned by Role) -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+        
+        <div class="harbor-card" id="cardAuthorDatabaseBox">
+          <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 10px;">Botanical Inquiries Database</h3>
+          <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 22px;">
+            Access all client inquiries, garden maintenance requests, and service submissions stored locally in the persistent database.
+          </p>
+          <a href="database.html" class="btn-primary" style="font-size: 0.86rem; padding: 10px 20px;">
+            <span>📊</span> Open Inquiries Database &rarr;
+          </a>
+        </div>
+
+        <div class="harbor-card">
+          <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 10px;">Plant Listing Manager</h3>
+          <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 22px;">
+            Add new flower specimens, specify blooming seasons, and write step-by-step growing guides on the home page.
+          </p>
+          <a href="index.html#plantListingSection" class="btn-secondary" style="font-size: 0.86rem; padding: 10px 20px;">
+            <span>🌿</span> Manage Botanical Listings &rarr;
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PANEL 2: Security & 2FA -->
+    <div class="portal-panel" id="panelSecurity">
+      <div class="harbor-card" style="margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 4px;">Two-Factor Authentication (2FA)</h3>
+            <p style="font-size: 0.86rem; color: var(--harbor-text-muted);">
+              Add an additional layer of cryptographic verification when signing in.
+            </p>
+          </div>
+          <label class="switch-label">
+            <input type="checkbox" id="toggle2faSwitch" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--harbor-text-dim);">
+          Status: <strong id="lbl2faStatus" style="color: var(--harbor-gold);">Enabled (Recommended)</strong>
+        </p>
+      </div>
+
+      <div class="harbor-card">
+        <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 18px;">Update Password</h3>
+        <form id="changePasswordForm" style="max-width: 440px;">
+          <div class="form-group">
+            <label class="harbor-label" for="currentPass">Current Password</label>
+            <input type="password" id="currentPass" class="harbor-input" required />
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="newPortalPass">New Password</label>
+            <input type="password" id="newPortalPass" class="harbor-input" minlength="6" required />
+          </div>
+
+          <button type="submit" class="btn-primary" style="font-size: 0.88rem;">
+            Update Credentials &rarr;
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PANEL 3: Active Devices -->
+    <div class="portal-panel" id="panelDevices">
+      <div class="harbor-card">
+        <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 20px;">Authenticated Devices &amp; Active Sessions</h3>
+
+        <div class="device-item">
+          <div class="device-details">
+            <div class="device-icon">💻</div>
+            <div>
+              <div class="device-name">Current Browser Session <span class="role-badge-author" style="background: rgba(230,202,101,0.2);">This Device</span></div>
+              <div class="device-meta">Windows 11 &bull; Chrome / Edge &bull; Haldwani, Uttarakhand, IN &bull; 127.0.0.1</div>
+            </div>
+          </div>
+          <span style="font-size: 0.82rem; color: var(--harbor-emerald); font-weight: 700;">Active Now</span>
+        </div>
+
+        <div class="device-item" id="deviceRowMobile">
+          <div class="device-details">
+            <div class="device-icon">📱</div>
+            <div>
+              <div class="device-name">iPhone 16 Pro (Mobile Client)</div>
+              <div class="device-meta">iOS 18.2 &bull; Safari &bull; Delhi, IN &bull; Last active 2 hours ago</div>
+            </div>
+          </div>
+          <button type="button" class="btn-outline" id="btnRevokeMobile" style="font-size: 0.78rem; color: var(--harbor-danger); border-color: rgba(244, 63, 94, 0.4);">
+            Revoke Session
+          </button>
+        </div>
+
+        <div class="device-item" id="deviceRowMac">
+          <div class="device-details">
+            <div class="device-icon">🖥️</div>
+            <div>
+              <div class="device-name">MacBook Pro (Office Terminal)</div>
+              <div class="device-meta">macOS Sonoma &bull; Brave &bull; Bengaluru, IN &bull; Last seen yesterday</div>
+            </div>
+          </div>
+          <button type="button" class="btn-outline" id="btnRevokeMac" style="font-size: 0.78rem; color: var(--harbor-danger); border-color: rgba(244, 63, 94, 0.4);">
+            Revoke Session
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: Audit Trail (Restricted to Author) -->
+    <div class="portal-panel" id="panelAudit">
+      <div class="harbor-card" id="auditContentContainer">
+        <!-- Rendered dynamically by role -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="harbor-footer">
+    <div class="harbor-footer-bottom">
+      <p>&copy; 2026 Harbor &bull; Royal Botanical Living &bull; Enterprise Account Portal</p>
+      <a href="index.html" style="color: var(--harbor-gold); text-decoration: none;">Return to Home</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentUser = HarborDB.getCurrentUser();
+      if (!currentUser) {
+        HarborAuth.showToast('Please sign in to access the Security Command Center.', 'info', 'Authentication Required');
+        setTimeout(() => window.location.href = 'login.html', 500);
+        return;
+      }
+
+      const isAuthor = HarborDB.isAuthor();
+
+      // Populate user info
+      document.getElementById('portalName').textContent = currentUser.name;
+      document.getElementById('portalEmail').textContent = currentUser.email;
+      document.getElementById('portalRoleTitle').textContent = currentUser.title || currentUser.role;
+      document.getElementById('portalAvatar').textContent = currentUser.avatarInitials || 'U';
+      document.getElementById('portalScore').textContent = (currentUser.securityScore || 85) + '%';
+
+      // Role badge
+      const roleBadge = document.getElementById('portalRoleBadge');
+      if (isAuthor) {
+        roleBadge.className = 'role-badge-author';
+        roleBadge.innerHTML = '👑 Author Clearance';
+      } else {
+        roleBadge.className = 'role-badge-user';
+        roleBadge.innerHTML = '👤 Standard Member';
+      }
+
+      // Catalog count
+      const plants = HarborDB.getPlants();
+      document.getElementById('metricPlantsCount').textContent = plants.length;
+
+      // Overview Database Card rule
+      const dbCard = document.getElementById('cardAuthorDatabaseBox');
+      if (dbCard && !isAuthor) {
+        dbCard.innerHTML = `
+          <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 10px;">Inquiries Database</h3>
+          <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 22px;">
+            Client inquiry records and admin persistence are reserved for verified <strong>Author</strong> accounts.
+          </p>
+          <span style="font-size: 0.82rem; color: var(--harbor-text-dim); padding: 8px 14px; background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px dashed var(--harbor-border);">
+            🔒 Author Clearance Required
+          </span>
+        `;
+      }
+
+      // 2FA status
+      const is2fa = !!currentUser.twoFactorEnabled;
+      const toggle2fa = document.getElementById('toggle2faSwitch');
+      const lbl2fa = document.getElementById('lbl2faStatus');
+      const metric2fa = document.getElementById('metric2fa');
+
+      toggle2fa.checked = is2fa;
+      lbl2fa.textContent = is2fa ? 'Enabled (Recommended)' : 'Disabled';
+      lbl2fa.style.color = is2fa ? 'var(--harbor-gold)' : 'var(--harbor-danger)';
+      metric2fa.textContent = is2fa ? 'Enabled' : 'Disabled';
+      metric2fa.style.color = is2fa ? 'var(--harbor-emerald)' : 'var(--harbor-danger)';
+
+      toggle2fa.addEventListener('change', () => {
+        HarborDB.toggle2FA(currentUser.id, toggle2fa.checked);
+        const updated = toggle2fa.checked;
+        lbl2fa.textContent = updated ? 'Enabled (Recommended)' : 'Disabled';
+        lbl2fa.style.color = updated ? 'var(--harbor-gold)' : 'var(--harbor-danger)';
+        metric2fa.textContent = updated ? 'Enabled' : 'Disabled';
+        metric2fa.style.color = updated ? 'var(--harbor-emerald)' : 'var(--harbor-danger)';
+        HarborAuth.showToast(`Two-factor authentication has been ${updated ? 'enabled' : 'disabled'}.`, 'info', 'Security Setting Updated');
+      });
+
+      // Render Audit Panel based on role
+      const auditContainer = document.getElementById('auditContentContainer');
+      const auditTabBtn = document.getElementById('tabAudit');
+
+      if (isAuthor) {
+        auditContainer.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: #ffffff;">Cryptographic Security Audit Trail</h3>
+            <span class="db-badge-author">Author Clearance</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Event Type</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                  <th>IP Origin</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody"></tbody>
+            </table>
+          </div>
+        `;
+
+        function renderAuditLogs() {
+          const tbody = document.getElementById('auditTableBody');
+          if (!tbody) return;
+          const logs = HarborDB.getAuditLogs();
+          if (!logs.length) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No audit logs recorded yet.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = logs.map(log => `
+            <tr>
+              <td style="font-family: var(--font-mono); font-size: 0.78rem;">${new Date(log.timestamp).toLocaleString()}</td>
+              <td><strong style="color: #ffffff;">${log.event}</strong></td>
+              <td>${log.details}</td>
+              <td><span class="audit-badge ${log.status}">${log.status}</span></td>
+              <td style="font-family: var(--font-mono); font-size: 0.78rem;">${log.ip}</td>
+            </tr>
+          `).join('');
+        }
+        renderAuditLogs();
+
+      } else {
+        // Restricted for regular users
+        auditTabBtn.innerHTML = `<span>🔒</span> Audit Trail (Author Only)`;
+        auditTabBtn.style.opacity = '0.6';
+        auditContainer.innerHTML = `
+          <div style="text-align: center; padding: 48px 20px;">
+            <div style="font-size: 2.4rem; color: var(--harbor-danger); margin-bottom: 14px;">🔒</div>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: #ffffff; margin-bottom: 10px;">
+              Audit Trail Logs Restricted
+            </h3>
+            <p style="color: var(--harbor-text-muted); max-width: 520px; margin: 0 auto 24px; font-size: 0.92rem; line-height: 1.65;">
+              Audit trail logs, access origins, and credential security traces are reserved strictly for <strong>Author</strong> accounts.
+            </p>
+            <button type="button" class="btn-primary" id="btnSwitchAuditToAuthor">
+              <span>👑</span> Sign In as Author (Alex Morgan)
+            </button>
+          </div>
+        `;
+        const switchBtn = document.getElementById('btnSwitchAuditToAuthor');
+        if (switchBtn) {
+          switchBtn.addEventListener('click', () => HarborAuth.quickAuthorLogin());
+        }
+      }
+
+      // Tab Switcher
+      const tabs = [
+        { btn: document.getElementById('tabOverview'), panel: document.getElementById('panelOverview') },
+        { btn: document.getElementById('tabSecurity'), panel: document.getElementById('panelSecurity') },
+        { btn: document.getElementById('tabDevices'), panel: document.getElementById('panelDevices') },
+        { btn: document.getElementById('tabAudit'), panel: document.getElementById('panelAudit') }
+      ];
+
+      tabs.forEach(item => {
+        item.btn.addEventListener('click', () => {
+          tabs.forEach(t => {
+            t.btn.classList.remove('active');
+            t.panel.classList.remove('active');
+          });
+          item.btn.classList.add('active');
+          item.panel.classList.add('active');
+        });
+      });
+
+      // Revoke session buttons
+      const btnRevokeMobile = document.getElementById('btnRevokeMobile');
+      if (btnRevokeMobile) {
+        btnRevokeMobile.addEventListener('click', () => {
+          document.getElementById('deviceRowMobile').style.display = 'none';
+          HarborDB.addAuditLog('SESSION_REVOKED', 'iPhone 16 Pro session revoked by user', 'INFO');
+          HarborAuth.showToast('iPhone 16 Pro session revoked.', 'success', 'Session Terminated');
+        });
+      }
+
+      const btnRevokeMac = document.getElementById('btnRevokeMac');
+      if (btnRevokeMac) {
+        btnRevokeMac.addEventListener('click', () => {
+          document.getElementById('deviceRowMac').style.display = 'none';
+          HarborDB.addAuditLog('SESSION_REVOKED', 'MacBook Pro session revoked by user', 'INFO');
+          HarborAuth.showToast('MacBook Pro session revoked.', 'success', 'Session Terminated');
+        });
+      }
+
+      // Change password form
+      document.getElementById('changePasswordForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const cur = document.getElementById('currentPass').value;
+        const nxt = document.getElementById('newPortalPass').value;
+
+        const users = HarborDB.getUsers();
+        const u = users.find(x => x.id === currentUser.id);
+
+        if (u && u.password === cur) {
+          u.password = nxt;
+          localStorage.setItem('harbor_garden_users', JSON.stringify(users));
+          HarborDB.addAuditLog('PASSWORD_CHANGED', `Password updated via Security Center for ${currentUser.email}`, 'SUCCESS');
+          HarborAuth.showToast('Your security credentials have been updated!', 'success', 'Password Changed');
+          document.getElementById('changePasswordForm').reset();
+        } else {
+          HarborAuth.showToast('Incorrect current password.', 'error', 'Authorization Failed');
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>

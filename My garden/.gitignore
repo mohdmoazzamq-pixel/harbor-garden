@@ -1,0 +1,14 @@
+# Data directory (contains user accounts, contacts, and audit logs)
+data/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local

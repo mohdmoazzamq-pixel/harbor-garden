@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In &bull; Harbor — Royal Account Portal</title>
+  <link rel="stylesheet" href="harbor-theme.css" />
+  <style>
+    .auth-page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .auth-brand-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .auth-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, rgba(230, 202, 101, 0.25), rgba(16, 185, 129, 0.25));
+      border: 1px solid var(--harbor-gold-border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--harbor-gold);
+      box-shadow: var(--harbor-gold-shadow);
+      animation: goldShimmer 3s infinite alternate;
+    }
+
+    .auth-brand-header h1 {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--harbor-text-main);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .auth-brand-header p {
+      font-size: 0.88rem;
+      color: var(--harbor-text-muted);
+    }
+
+    /* Tabs Switcher */
+    .auth-tabs {
+      display: flex;
+      background: #f1f5f0;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 4px;
+      margin-bottom: 24px;
+      gap: 4px;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 11px;
+      border: none;
+      background: transparent;
+      color: var(--harbor-text-muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .auth-tab-btn.active {
+      background: #ffffff;
+      color: var(--harbor-gold-dark);
+      border: 1px solid var(--harbor-gold-border);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+      animation: fadeInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .auth-helper-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      font-size: 0.84rem;
+    }
+
+    .remember-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--harbor-text-muted);
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: var(--harbor-gold);
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+      color: var(--harbor-gold-dark);
+    }
+
+    .btn-auth-submit {
+      width: 100%;
+      padding: 14px;
+      font-size: 0.98rem;
+      margin-bottom: 20px;
+    }
+
+    /* Quick Demo Box with Author vs User Selection */
+    .demo-access-box {
+      margin-top: 24px;
+      padding: 18px;
+      background: #fefce8;
+      border: 1.5px dashed var(--harbor-gold);
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .demo-access-box p {
+      font-size: 0.8rem;
+      color: var(--harbor-text-main);
+      margin-bottom: 12px;
+    }
+
+    .demo-buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-demo-author {
+      padding: 10px 14px;
+      background: #fef3c7;
+      border: 1.5px solid var(--harbor-gold);
+      border-radius: 10px;
+      color: #92400e;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: var(--transition);
+    }
+
+    .btn-demo-author:hover {
+      background: #fde68a;
+      box-shadow: 0 4px 16px rgba(217, 119, 6, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .btn-demo-user {
+      padding: 10px 14px;
+      background: #d1fae5;
+      border: 1.5px solid var(--harbor-emerald);
+      border-radius: 10px;
+      color: #065f46;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: var(--transition);
+    }
+
+    .btn-demo-user:hover {
+      background: #a7f3d0;
+      box-shadow: 0 4px 16px rgba(5, 150, 105, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* Password strength bar */
+    .password-strength-wrapper {
+      margin-top: -12px;
+      margin-bottom: 18px;
+    }
+
+    .strength-track {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: var(--transition);
+      background: var(--harbor-text-dim);
+    }
+
+    .strength-label {
+      font-size: 0.72rem;
+      color: var(--harbor-text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--harbor-text-dim);
+      text-decoration: none;
+      font-size: 0.86rem;
+      margin-top: 24px;
+      transition: var(--transition);
+    }
+
+    .back-home-link:hover {
+      color: var(--harbor-gold);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-page-wrapper">
+    <div class="auth-container">
+      
+      <!-- Brand Header -->
+      <div class="auth-brand-header">
+        <div class="auth-logo">🛡️</div>
+        <h1>Harbor Account Portal</h1>
+        <p>Royal Botanical Living &bull; Enterprise Access Center</p>
+      </div>
+
+      <!-- Auth Card -->
+      <div class="harbor-card">
+        
+        <!-- Tab Switcher -->
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab-btn active" id="tabSignIn">Sign In</button>
+          <button type="button" class="auth-tab-btn" id="tabSignUp">Create Account</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <form id="signInForm" class="auth-form active">
+          
+          <div class="form-group">
+            <label class="harbor-label" for="loginEmail">Email Address</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">✉</span>
+              <input 
+                type="email" 
+                id="loginEmail" 
+                name="email" 
+                class="harbor-input" 
+                placeholder="name@example.com" 
+                required 
+                autocomplete="username"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="loginPassword">Password</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">🔒</span>
+              <input 
+                type="password" 
+                id="loginPassword" 
+                name="password" 
+                class="harbor-input" 
+                placeholder="Enter your password" 
+                required 
+                autocomplete="current-password"
+              />
+              <button type="button" class="btn-toggle-password" id="toggleLoginPassword" aria-label="Toggle password view">
+                👁
+              </button>
+            </div>
+          </div>
+
+          <div class="auth-helper-row">
+            <label class="remember-label">
+              <input type="checkbox" id="rememberMe" checked />
+              <span>Remember me</span>
+            </label>
+            <!-- Highlighted Forgot Password Link -->
+            <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-primary btn-auth-submit" id="btnSignInSubmit">
+            Sign In to Harbor Portal &rarr;
+          </button>
+
+          <!-- Quick Role Selection Demo Access Box -->
+          <div class="demo-access-box">
+            <p><strong>Test Role Rules Instantly:</strong></p>
+            <div class="demo-buttons-grid">
+              
+              <!-- Author Role Button -->
+              <button type="button" class="btn-demo-author" id="btnDemoAuthor" title="Author has full access to whole project, database, audit logs, and plant listing">
+                <span>👑 Sign In as Author</span>
+                <small style="font-size: 0.68rem; opacity: 0.85;">Full Access (Alex Morgan)</small>
+              </button>
+
+              <!-- Regular User Role Button -->
+              <button type="button" class="btn-demo-user" id="btnDemoUser" title="User cannot access database or audit trail logs">
+                <span>👤 Sign In as User</span>
+                <small style="font-size: 0.68rem; opacity: 0.85;">Restricted (Elena Vance)</small>
+              </button>
+
+            </div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim); margin-top: 10px;">
+              Rules: Authors access whole project; Users cannot access Database or Audit logs.
+            </div>
+          </div>
+
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signUpForm" class="auth-form">
+          
+          <div class="form-group">
+            <label class="harbor-label" for="registerName">Full Name</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">👤</span>
+              <input 
+                type="text" 
+                id="registerName" 
+                name="name" 
+                class="harbor-input" 
+                placeholder="Your full name" 
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="registerEmail">Email Address</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">✉</span>
+              <input 
+                type="email" 
+                id="registerEmail" 
+                name="email" 
+                class="harbor-input" 
+                placeholder="name@example.com" 
+                required 
+                autocomplete="username"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="registerPassword">Password</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">🔒</span>
+              <input 
+                type="password" 
+                id="registerPassword" 
+                name="password" 
+                class="harbor-input" 
+                placeholder="Create strong password" 
+                minlength="6"
+                required 
+                autocomplete="new-password"
+              />
+              <button type="button" class="btn-toggle-password" id="toggleRegPassword" aria-label="Toggle password view">
+                👁
+              </button>
+            </div>
+          </div>
+
+          <!-- Password strength meter -->
+          <div class="password-strength-wrapper" id="strengthWrapper" style="display: none;">
+            <div class="strength-track">
+              <div class="strength-fill" id="strengthFill"></div>
+            </div>
+            <div class="strength-label">
+              <span>Password Security</span>
+              <span id="strengthText">Weak</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="registerPasswordConfirm">Confirm Password</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">🔒</span>
+              <input 
+                type="password" 
+                id="registerPasswordConfirm" 
+                name="passwordConfirm" 
+                class="harbor-input" 
+                placeholder="Confirm your password" 
+                minlength="6"
+                required 
+                autocomplete="new-password"
+              />
+            </div>
+          </div>
+
+          <!-- Account Role Selection (Author vs User) -->
+          <div class="form-group">
+            <label class="harbor-label" for="registerRole">Register As (Account Role) *</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">👑</span>
+              <select id="registerRole" name="role" class="harbor-input" required>
+                <option value="Author">👑 Author &mdash; Full Access (List Plants/Trees, DB, Audit Logs)</option>
+                <option value="User" selected>👤 User &mdash; Standard Member (Browse &amp; Inquire)</option>
+              </select>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--harbor-text-dim); margin-top: 6px; line-height: 1.45;">
+              <strong>👑 Author:</strong> Full access to list flowers/trees on Home page, view Inquiries Database, and inspect Audit Logs.<br/>
+              <strong>👤 User:</strong> Standard member access. Database, audit trail, and plant listing are restricted.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="remember-label" style="font-size: 0.8rem;">
+              <input type="checkbox" id="acceptTerms" required />
+              <span>I agree to Harbor security standards &amp; garden data policies</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary btn-auth-submit" id="btnSignUpSubmit">
+            Create Harbor Account &rarr;
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- Return Link -->
+      <div style="text-align: center;">
+        <a href="index.html" class="back-home-link">
+          <span>&larr;</span> Return to My Garden Home
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabSignIn = document.getElementById('tabSignIn');
+      const tabSignUp = document.getElementById('tabSignUp');
+      const signInForm = document.getElementById('signInForm');
+      const signUpForm = document.getElementById('signUpForm');
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('mode') === 'signup') {
+        activateSignUp();
+      }
+
+      function activateSignIn() {
+        tabSignIn.classList.add('active');
+        tabSignUp.classList.remove('active');
+        signInForm.classList.add('active');
+        signUpForm.classList.remove('active');
+      }
+
+      function activateSignUp() {
+        tabSignUp.classList.add('active');
+        tabSignIn.classList.remove('active');
+        signUpForm.classList.add('active');
+        signInForm.classList.remove('active');
+      }
+
+      tabSignIn.addEventListener('click', activateSignIn);
+      tabSignUp.addEventListener('click', activateSignUp);
+
+      // Password visibility toggles
+      setupToggle('toggleLoginPassword', 'loginPassword');
+      setupToggle('toggleRegPassword', 'registerPassword');
+
+      function setupToggle(btnId, inputId) {
+        const btn = document.getElementById(btnId);
+        const input = document.getElementById(inputId);
+        if (btn && input) {
+          btn.addEventListener('click', () => {
+            const isText = input.type === 'text';
+            input.type = isText ? 'password' : 'text';
+            btn.style.color = isText ? 'var(--harbor-text-dim)' : 'var(--harbor-gold)';
+          });
+        }
+      }
+
+      // Password strength live meter
+      const regPassword = document.getElementById('registerPassword');
+      const strengthWrapper = document.getElementById('strengthWrapper');
+      const strengthFill = document.getElementById('strengthFill');
+      const strengthText = document.getElementById('strengthText');
+
+      if (regPassword) {
+        regPassword.addEventListener('input', () => {
+          const val = regPassword.value;
+          if (val.length > 0) {
+            strengthWrapper.style.display = 'block';
+            const result = HarborAuth.calculatePasswordStrength(val);
+            strengthFill.style.width = result.score + '%';
+            strengthFill.style.backgroundColor = result.color;
+            strengthText.textContent = result.label;
+            strengthText.style.color = result.color;
+          } else {
+            strengthWrapper.style.display = 'none';
+          }
+        });
+      }
+
+      // Quick Demo: Author Login
+      document.getElementById('btnDemoAuthor').addEventListener('click', () => {
+        HarborAuth.quickAuthorLogin();
+      });
+
+      // Quick Demo: Regular User Login
+      document.getElementById('btnDemoUser').addEventListener('click', () => {
+        HarborAuth.quickUserLogin();
+      });
+
+      // Handle Sign In submission
+      signInForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+
+        try {
+          const session = HarborDB.loginUser(email, password, rememberMe);
+          HarborAuth.showToast(`Welcome back, ${session.user.name} (${session.user.role})!`, 'success', 'Harbor Authentication');
+          setTimeout(() => {
+            window.location.href = session.user.role === 'Author' ? 'portal.html' : 'index.html';
+          }, 600);
+        } catch (err) {
+          HarborAuth.showToast(err.message, 'error', 'Sign In Failed');
+        }
+      });
+
+      // Handle Sign Up submission
+      signUpForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('registerName').value.trim();
+        const email = document.getElementById('registerEmail').value.trim();
+        const password = document.getElementById('registerPassword').value;
+        const confirm = document.getElementById('registerPasswordConfirm').value;
+
+        if (password !== confirm) {
+          HarborAuth.showToast('Passwords do not match. Please re-enter.', 'error', 'Validation Error');
+          return;
+        }
+
+        const roleSelect = document.getElementById('registerRole');
+        const role = roleSelect ? roleSelect.value : 'User';
+
+        try {
+          const user = HarborDB.registerUser({ name, email, password, role });
+          HarborAuth.showToast(`Account created successfully as ${role}!`, 'success', 'Harbor Registration');
+          HarborDB.loginUser(email, password, true);
+          setTimeout(() => {
+            window.location.href = user.role === 'Author' ? 'portal.html' : 'index.html';
+          }, 800);
+        } catch (err) {
+          HarborAuth.showToast(err.message, 'error', 'Registration Failed');
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>

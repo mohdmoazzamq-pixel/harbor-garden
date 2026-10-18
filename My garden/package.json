@@ -1,0 +1,18 @@
+{
+  "name": "my-garden-harbor-portal",
+  "version": "2.0.0",
+  "description": "My Garden with Harbor Authentication, Forgot Password, and Local Database Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "garden",
+    "harbor",
+    "security-portal",
+    "local-database",
+    "authentication"
+  ],
+  "author": "Mohd Moazzam",
+  "license": "MIT"
+}

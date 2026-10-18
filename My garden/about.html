@@ -1,145 +1,461 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About My GARDEN</title>
-    <link rel="stylesheet" href="about.css" />
-  </head>
-  <body>
-    <header>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <h1>MY GARDEN</h1>
-    </header>
-    <main>
-      <div>
-        <!-- Introduction -->
-        <section>
-          <h1>Welcome to My Garden</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us &bull; Harbor &bull; My Garden</title>
+  <link rel="stylesheet" href="harbor-theme.css" />
+  <style>
+    .about-section {
+      margin-bottom: 56px;
+    }
 
-          <p>
-            Welcome to my garden! A garden is a beautiful place where plants,
-            flowers, trees, and nature come together. It provides a peaceful
-            environment and makes our surroundings fresh and beautiful.
-          </p>
-        </section>
+    .about-section h2 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--harbor-text-main);
+      margin-bottom: 14px;
+      position: relative;
+      padding-bottom: 10px;
+    }
 
-        <!-- About Garden -->
-        <section>
-          <h2>About My Garden</h2>
+    .about-section h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 44px;
+      height: 3px;
+      background: var(--harbor-emerald);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--harbor-emerald);
+    }
 
-          <p>
-            My garden contains a variety of flowers, plants, and small trees. I
-            take care of the plants by providing them with sufficient water,
-            sunlight, and nutrients.
-          </p>
-        </section>
+    .about-lead-text {
+      font-size: 1.05rem;
+      color: var(--harbor-text-muted);
+      line-height: 1.75;
+      max-width: 840px;
+    }
 
-        <!-- Types of Plants -->
-        <section>
-          <h2>Plants in My Garden</h2>
+    /* Plant Type Cards */
+    .plant-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 26px;
+      margin-top: 24px;
+    }
 
-          <article>
-            <h3>Flower Plants</h3>
-            <img src="https://images.pexels.com/photos/7694761/pexels-photo-7694761.jpeg" alt="flower plant"/>
-            <p>
-              Roses, marigolds, and hibiscus add beautiful colors and pleasant
-              fragrances to the garden.
-            </p>
-          </article>
-             
-          <article>
-            <h3>Herbs</h3>
-            <img src="https://media.istockphoto.com/id/2245083692/photo/ashwagandha-roots-and-powder-known-as-withania-somnifera-in-white-bowl-on-wooden-background.jpg?b=1&s=612x612&w=0&k=20&c=3K9-XzPVZIxPu60Q7mYJCaI6YsemouQK1Znkx2JqREk=" alt="herbs"/>
-             
-            <p>
-              Mint, basil, and coriander are useful herbs that can easily be
-              grown in a home garden.
-            </p>
-          </article>
-             </div>
-             <div>  
-          <article>
-            <h3>Vegetable Plants</h3>
-            <img src="https://media.istockphoto.com/id/182174646/photo/corrot-in-field.jpg?b=1&s=612x612&w=0&k=20&c=5q9YjoMxvzygpFHG1de2L8u_ywLMjOynOMzGxEvpbxU=" alt="Vegetable plants"/>
+    .plant-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--harbor-card-shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
 
-            <p>
-              Tomatoes, chilies, spinach, and other vegetables can be grown in a
-              garden with proper care.
-            </p>
-          </article>
-        </section>
-      
-        <!-- Gardening Tips -->
-        <section>
-          <h2>Gardening Tips</h2>
-          <img src="https://images.pexels.com/photos/6231880/pexels-photo-6231880.jpeg" alt="gardening tips"/>
+    .plant-card:hover {
+      border-color: var(--harbor-border-hover);
+      box-shadow: 0 20px 45px -12px rgba(25, 40, 32, 0.15), var(--harbor-glow-shadow);
+      transform: translateY(-4px);
+    }
 
-          <ul>
-            <li>Water plants regularly.</li>
-            <li>Provide enough sunlight.</li>
-            <li>Remove weeds from the garden.</li>
-            <li>Use good-quality soil and compost.</li>
-            <li>Protect plants from pests.</li>
-          </ul>
+    .plant-card-img {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
 
-        </section>
+    .plant-card:hover .plant-card-img {
+      transform: scale(1.05);
+    }
 
-        <!-- Benefits -->
-        <section>
-          <h2>Benefits of Gardening</h2>
+    .plant-card-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-          <p>
-            Gardening helps keep our surroundings green and beautiful. It can
-            also be a relaxing activity and provides an opportunity to spend
-            time with nature.
-          </p>
-        </section>
+    .plant-card-body h3 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--harbor-text-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .plant-card-body p {
+      font-size: 0.92rem;
+      color: var(--harbor-text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    /* Gardening Tips List */
+    .tips-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      list-style: none;
+    }
+
+    .tip-item {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: var(--transition);
+    }
+
+    .tip-item:hover {
+      border-color: var(--harbor-emerald);
+      transform: translateX(4px);
+    }
+
+    .tip-icon {
+      font-size: 1.3rem;
+      color: var(--harbor-emerald);
+      margin-top: 1px;
+    }
+
+    .tip-item div strong {
+      display: block;
+      color: var(--harbor-text-main);
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+
+    .tip-item div span {
+      font-size: 0.84rem;
+      color: var(--harbor-text-muted);
+    }
+
+    /* Benefits Grid */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .benefit-box {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--harbor-card-shadow);
+    }
+
+    .benefit-box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--harbor-emerald);
+    }
+
+    .benefit-box h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--harbor-text-main);
+      margin-bottom: 8px;
+    }
+
+    .benefit-box p {
+      font-size: 0.88rem;
+      color: var(--harbor-text-muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="harbor-header">
+    <div class="harbor-nav-container">
+      <a href="index.html" class="harbor-brand">
+        <div class="harbor-logo-badge">🌿</div>
+        <div class="harbor-brand-text">
+          <div class="harbor-brand-title">HARBOR <span>GARDEN</span></div>
+          <div class="harbor-brand-subtitle">Botanical Living</div>
+        </div>
+      </a>
+
+      <button class="harbor-menu-toggle" id="harborMenuToggle" aria-label="Toggle navigation">&#9776;</button>
+
+      <ul class="harbor-nav-links" id="harborNavLinks">
+        <li><a href="index.html" class="harbor-nav-link">Home</a></li>
+        <li><a href="about.html" class="harbor-nav-link active">About</a></li>
+        <li><a href="services.html" class="harbor-nav-link">Services</a></li>
+        <li><a href="contact.html" class="harbor-nav-link">Contact</a></li>
+        <li><a href="database.html" class="harbor-nav-link">Database</a></li>
+        <li><a href="portal.html" class="harbor-nav-link">Security Portal</a></li>
+      </ul>
+
+      <div class="harbor-nav-actions">
+        <a href="database.html" class="btn-nav-database">
+          <span>📊</span> Inquiries DB
+        </a>
+        <div id="harborNavAuth"></div>
       </div>
-    </main>
+    </div>
+  </header>
 
-    <footer>
-      <div>
-        <h2>My Garden</h2>
-        <p>
-          Bringing nature closer to your home with beautiful plants, healthy
-          gardens, and eco-friendly gardening solutions.
+  <!-- Hero Banner -->
+  <section class="harbor-hero">
+    <div class="harbor-badge-pill">
+      <span>❀</span> Our Story &amp; Philosophy
+    </div>
+    <h1>Cultivating Serenity &amp; <em>Ecological</em> Balance</h1>
+    <p>
+      Discover the story behind My Garden: blending horticultural expertise, native flora stewardship, and modern data security under the Harbor ecosystem.
+    </p>
+  </section>
+
+  <!-- Main Content -->
+  <main style="max-width: 1100px; margin: 0 auto; padding: 0 24px 80px;">
+    
+    <!-- Welcome & Philosophy -->
+    <section class="about-section">
+      <h2>Welcome to My Garden</h2>
+      <p class="about-lead-text">
+        Welcome to My Garden! A garden is more than just land with plants—it is a sanctuary where flowers, trees, soil microbes, and nature thrive in harmony. It provides a peaceful retreat from daily hustle, brings fresh air, and enriches surroundings with living beauty.
+      </p>
+    </section>
+
+    <!-- About Garden Story -->
+    <section class="about-section">
+      <h2>About Our Horticultural Practice</h2>
+      <div class="harbor-card" style="padding: 32px;">
+        <p class="about-lead-text" style="margin-bottom: 16px;">
+          Our garden incorporates a diverse variety of native flowers, therapeutic herbs, and organic fruit trees. We nurture each species with precise natural hydration, filtered Himalayan sunlight, organic nutrient compost, and scientific soil temperature management.
+        </p>
+        <p class="about-lead-text">
+          By tracking moisture, pest resistance, and seasonal bloom phases within our local digital system, every specimen reaches its peak vitality.
         </p>
       </div>
+    </section>
 
-      <div>
+    <!-- Plants in My Garden Grid -->
+    <section class="about-section">
+      <h2>Botanical Varieties in Our Garden</h2>
+      <p class="about-lead-text">
+        Explore the three central botanical categories nurtured within our estate grounds:
+      </p>
+
+      <div class="plant-types-grid">
+        
+        <!-- 1. Flower Plants -->
+        <article class="plant-card">
+          <div style="overflow: hidden;">
+            <img 
+              src="https://images.pexels.com/photos/7694761/pexels-photo-7694761.jpeg" 
+              alt="Flower Plants" 
+              class="plant-card-img"
+              loading="lazy"
+            />
+          </div>
+          <div class="plant-card-body">
+            <h3><span>🌸</span> Flower Plants</h3>
+            <p>
+              Roses, marigolds, and hibiscus add rich seasonal color palettes, aromatic nectar, and aesthetic fragrance to the garden while welcoming helpful pollinators.
+            </p>
+          </div>
+        </article>
+
+        <!-- 2. Herbs -->
+        <article class="plant-card">
+          <div style="overflow: hidden;">
+            <img 
+              src="https://media.istockphoto.com/id/2245083692/photo/ashwagandha-roots-and-powder-known-as-withania-somnifera-in-white-bowl-on-wooden-background.jpg?b=1&s=612x612&w=0&k=20&c=3K9-XzPVZIxPu60Q7mYJCaI6YsemouQK1Znkx2JqREk=" 
+              alt="Herbs" 
+              class="plant-card-img"
+              loading="lazy"
+            />
+          </div>
+          <div class="plant-card-body">
+            <h3><span>🌿</span> Medicinal &amp; Culinary Herbs</h3>
+            <p>
+              Mint, holy basil, ashwagandha, and coriander are useful culinary herbs and healing perennials that thrive easily in home garden containers and raised beds.
+            </p>
+          </div>
+        </article>
+
+        <!-- 3. Vegetable Plants -->
+        <article class="plant-card">
+          <div style="overflow: hidden;">
+            <img 
+              src="https://media.istockphoto.com/id/182174646/photo/corrot-in-field.jpg?b=1&s=612x612&w=0&k=20&c=5q9YjoMxvzygpFHG1de2L8u_ywLMjOynOMzGxEvpbxU=" 
+              alt="Vegetable Plants" 
+              class="plant-card-img"
+              loading="lazy"
+            />
+          </div>
+          <div class="plant-card-body">
+            <h3><span>🥕</span> Organic Vegetable Beds</h3>
+            <p>
+              Tomatoes, crisp carrots, green chilies, and spinach can be cultivated organically in home vegetable beds with proper composting and sun orientation.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Essential Gardening Tips -->
+    <section class="about-section">
+      <h2>Essential Gardening Tips</h2>
+      <p class="about-lead-text">
+        Practical best practices to help your plants flourish throughout the seasonal calendar:
+      </p>
+
+      <ul class="tips-list">
+        <li class="tip-item">
+          <span class="tip-icon">💧</span>
+          <div>
+            <strong>Deep Morning Watering</strong>
+            <span>Water early in the morning so roots absorb moisture before afternoon heat evaporation.</span>
+          </div>
+        </li>
+
+        <li class="tip-item">
+          <span class="tip-icon">☀️</span>
+          <div>
+            <strong>Adequate Sunlight Exposure</strong>
+            <span>Ensure minimum 6 hours of filtered sunlight daily for flowering perennials.</span>
+          </div>
+        </li>
+
+        <li class="tip-item">
+          <span class="tip-icon">🌱</span>
+          <div>
+            <strong>Proactive Weed Clearing</strong>
+            <span>Clear invasive weeds regularly to avoid nutrient and root competition in the soil.</span>
+          </div>
+        </li>
+
+        <li class="tip-item">
+          <span class="tip-icon">🍂</span>
+          <div>
+            <strong>Organic Vermicompost</strong>
+            <span>Incorporate rich leaf mold and organic vermicompost every 6-8 weeks for vibrant soil microbes.</span>
+          </div>
+        </li>
+
+        <li class="tip-item">
+          <span class="tip-icon">🛡️</span>
+          <div>
+            <strong>Natural Eco Pest Defense</strong>
+            <span>Use neem oil sprays and companion planting to protect tender shoots without harsh chemicals.</span>
+          </div>
+        </li>
+
+        <li class="tip-item">
+          <span class="tip-icon">✂️</span>
+          <div>
+            <strong>Seasonal Pruning</strong>
+            <span>Prune dead wood and spent flowers regularly to encourage vigorous bushier second blooms.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Benefits of Gardening -->
+    <section class="about-section">
+      <h2>Holistic Benefits of Gardening</h2>
+      <div class="benefits-grid">
+        <div class="benefit-box">
+          <h4>Pristine Surroundings</h4>
+          <p>Creates natural air purification, cools building microclimates, and turns ordinary open yards into lush outdoor sanctuaries.</p>
+        </div>
+
+        <div class="benefit-box">
+          <h4>Mindful Wellbeing</h4>
+          <p>Tending to living plants provides restorative calm, lowers cortisol stress levels, and offers therapeutic grounding with nature.</p>
+        </div>
+
+        <div class="benefit-box">
+          <h4>Biodiversity Support</h4>
+          <p>Provides critical habitats, clean nectar, and nesting refuge for native songbirds, honeybees, and colorful butterflies.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="services.html" class="btn-primary" style="font-size: 0.95rem; padding: 13px 30px;">
+        Explore Our Gardening Services &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="harbor-footer">
+    <div class="harbor-footer-grid">
+      <div class="harbor-footer-col">
+        <h3>Harbor Garden</h3>
+        <p>
+          Bringing nature closer to your home with healthy perennials, eco-friendly garden architecture, and enterprise-grade data management.
+        </p>
+        <div class="harbor-footer-security-badge">
+          <span class="icon">🛡️</span>
+          <div>
+            Connected to Harbor Security Portal
+            <small>Local Storage Persistence &bull; 2FA Support</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="harbor-footer-col">
         <h3>Quick Links</h3>
-
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
+        <a href="about.html">About My Garden</a>
+        <a href="services.html">Services &amp; Care</a>
         <a href="contact.html">Contact Us</a>
+        <a href="database.html">Local Database</a>
       </div>
 
-      <div>
-        <h3>Contact Us</h3>
-
-        <p>Email: info@mygarden.com</p>
-        <p>Phone: +91 98765 43210</p>
-        <p>Haldwani, India</p>
+      <div class="harbor-footer-col">
+        <h3>Contact Info</h3>
+        <p><strong>Address:</strong> 123 Green Garden Road, Haldwani, Uttarakhand, India</p>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+        <p><strong>Email:</strong> info@mygarden.com</p>
       </div>
 
-      <div>
-        <h3>Follow Us</h3>
-
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
+      <div class="harbor-footer-col">
+        <h3>Security &amp; Portal</h3>
+        <a href="login.html">Sign In to Portal</a>
+        <a href="login.html?mode=signup">Create Account</a>
+        <a href="forgot-password.html">Forgot Password Recovery</a>
+        <a href="database.html">Inquiries Management DB</a>
       </div>
+    </div>
 
-      <hr />
+    <div class="harbor-footer-bottom">
+      <p>&copy; 2026 Harbor &bull; My Garden. All Rights Reserved.</p>
+      <div style="display: flex; gap: 16px;">
+        <a href="login.html" style="color: var(--harbor-emerald);">Portal Login</a>
+        <a href="forgot-password.html" style="color: var(--harbor-cyan);">Forgot Password</a>
+      </div>
+    </div>
+  </footer>
 
-      <p>&copy; 2026 My Garden. All Rights Reserved.</p>
-    </footer>
-  </body>
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="auth.js"></script>
+</body>
 </html>

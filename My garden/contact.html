@@ -1,156 +1,489 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="contactus.css" />
-  </head>
-  <body>
-    <header>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <h1>MY GARDEN</h1>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us &bull; Harbor &bull; My Garden</title>
+  <link rel="stylesheet" href="harbor-theme.css" />
+  <style>
+    .contact-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 36px;
+      margin-bottom: 70px;
+      align-items: start;
+    }
 
-    <main class="contact-page">
-      <section>
-        <h2>Contact Us</h2>
-        <p>
-          Have a question about gardening or need help with your garden? We
-          would love to hear from you. Get in touch with us using the contact
-          details or form below.
-        </p>
-      </section>
+    /* Left Info Card */
+    .contact-info-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: var(--harbor-card-shadow);
+    }
 
-      <section>
-        <h2>Get in Touch</h2>
-        <div class="contact-info">
-          <p>
-            <strong>Address:</strong> 123 Green Garden Road, Haldwani, India
-          </p>
-          <p><strong>Phone:</strong> +91 98765 43210</p>
-          <p><strong>Email:</strong> info@mygarden.com</p>
-          <p>
-            <strong>Working Hours:</strong> Monday - Saturday, 9:00 AM - 6:00 PM
-          </p>
+    .contact-info-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--harbor-text-main);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-info-card p.intro {
+      font-size: 0.92rem;
+      color: var(--harbor-text-muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #d1fae5;
+      border: 1px solid rgba(5, 150, 105, 0.25);
+      color: var(--harbor-emerald);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .info-label {
+      font-size: 0.74rem;
+      color: var(--harbor-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 3px;
+    }
+
+    .info-val {
+      font-size: 0.92rem;
+      color: var(--harbor-text-main);
+      font-weight: 600;
+    }
+
+    .info-val a {
+      color: var(--harbor-text-main);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .info-val a:hover {
+      color: var(--harbor-emerald);
+    }
+
+    /* Right Form Card */
+    .contact-form-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 18px;
+      padding: 36px;
+      box-shadow: var(--harbor-card-shadow);
+      position: relative;
+    }
+
+    .contact-form-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--harbor-text-main);
+      margin-bottom: 8px;
+    }
+
+    .contact-form-card p.sub {
+      font-size: 0.88rem;
+      color: var(--harbor-text-muted);
+      margin-bottom: 26px;
+    }
+
+    .form-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Success Card Banner */
+    .submission-success-card {
+      display: none;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--harbor-emerald);
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 24px;
+      text-align: center;
+      animation: fadeInDown 0.3s ease forwards;
+    }
+
+    .success-icon-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--harbor-emerald);
+      color: #061109;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0 auto 14px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    }
+
+    @media (max-width: 850px) {
+      .contact-layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="harbor-header">
+    <div class="harbor-nav-container">
+      <a href="index.html" class="harbor-brand">
+        <div class="harbor-logo-badge">🌿</div>
+        <div class="harbor-brand-text">
+          <div class="harbor-brand-title">HARBOR <span>GARDEN</span></div>
+          <div class="harbor-brand-subtitle">Botanical Living</div>
         </div>
-      </section>
+      </a>
 
-      <section>
-        <h2>Send Us a Message</h2>
+      <button class="harbor-menu-toggle" id="harborMenuToggle" aria-label="Toggle navigation">&#9776;</button>
 
-        <form>
-          <label for="name">Full Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your full name"
-            required
-          />
+      <ul class="harbor-nav-links" id="harborNavLinks">
+        <li><a href="index.html" class="harbor-nav-link">Home</a></li>
+        <li><a href="about.html" class="harbor-nav-link">About</a></li>
+        <li><a href="services.html" class="harbor-nav-link">Services</a></li>
+        <li><a href="contact.html" class="harbor-nav-link active">Contact</a></li>
+        <li><a href="database.html" class="harbor-nav-link">Database</a></li>
+        <li><a href="portal.html" class="harbor-nav-link">Security Portal</a></li>
+      </ul>
 
-          <br /><br />
+      <div class="harbor-nav-actions">
+        <a href="database.html" class="btn-nav-database">
+          <span>📊</span> Inquiries DB
+        </a>
+        <div id="harborNavAuth"></div>
+      </div>
+    </div>
+  </header>
 
-          <label for="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            required
-          />
+  <!-- Hero Banner -->
+  <section class="harbor-hero">
+    <div class="harbor-badge-pill">
+      <span>❀</span> Get in Touch
+    </div>
+    <h1>Let's Cultivate Your <em>Botanical Vision</em></h1>
+    <p>
+      Have questions about perennial plant care or planning a garden renovation? Fill out the form below—all inquiries are safely recorded to your local database engine.
+    </p>
+  </section>
 
-          <br /><br />
-
-          <label for="mobile">Mobile Number</label>
-          <input
-            type="tel"
-            id="mobile"
-            name="mobile"
-            placeholder="Enter your mobile number"
-            maxlength="10"
-            pattern="[0-9]{10}"
-            required
-          />
-
-          <br /><br />
-
-          <label for="service">Select Service</label>
-
-          <select id="service" name="service" required>
-            <option value="">-- Select a Service --</option>
-            <option value="garden-design">Garden Design</option>
-            <option value="planting">Planting Services</option>
-            <option value="maintenance">Garden Maintenance</option>
-            <option value="lawn-care">Lawn Care</option>
-            <option value="plant-care">Tree and Plant Care</option>
-            <option value="organic-gardening">Organic Gardening</option>
-          </select>
-
-          <br /><br />
-
-          <label for="message">Message</label>
-          <br />
-
-          <textarea
-            id="message"
-            name="message"
-            rows="6"
-            cols="40"
-            placeholder="Write your message here..."
-            required
-          ></textarea>
-
-          <br /><br />
-
-          <button type="submit">Send Message</button>
-
-          <button type="reset">Clear</button>
-        </form>
-      </section>
-    </main>
-    <footer>
-      <div>
-        <h2>My Garden</h2>
-        <p>
-          Bringing nature closer to your home with beautiful plants, healthy
-          gardens, and eco-friendly gardening solutions.
+  <!-- Main Container -->
+  <main style="max-width: 1200px; margin: 0 auto; padding: 0 24px 80px;">
+    
+    <div class="contact-layout-grid">
+      
+      <!-- Left Column: Contact Information -->
+      <div class="contact-info-card">
+        <h3><span>🌿</span> Garden Headquarters</h3>
+        <p class="intro">
+          Our landscape studio and organic nursery are open for consultations, site visits, and botanical specimen viewings.
         </p>
+
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-label">Address</div>
+            <div class="info-val">123 Green Garden Road, Haldwani, Uttarakhand, India</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div>
+            <div class="info-label">Direct Telephone</div>
+            <div class="info-val"><a href="tel:+919876543210">+91 98765 43210</a></div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">✉️</div>
+          <div>
+            <div class="info-label">Email Support</div>
+            <div class="info-val"><a href="mailto:info@mygarden.com">info@mygarden.com</a></div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">⏱️</div>
+          <div>
+            <div class="info-label">Working Hours</div>
+            <div class="info-val">Monday &ndash; Saturday, 9:00 AM &ndash; 6:00 PM IST</div>
+          </div>
+        </div>
+
+        <!-- Quick link to database -->
+        <div style="margin-top: 26px; padding: 16px; background: rgba(255,255,255,0.03); border: 1px dashed var(--harbor-border); border-radius: 12px; text-align: center;">
+          <div style="font-size: 0.8rem; color: var(--harbor-text-dim); margin-bottom: 8px;">
+            Administrator or looking for saved inquiries?
+          </div>
+          <a href="database.html" class="btn-outline" style="display: inline-block; width: 100%; text-align: center;">
+            <span>📊</span> Open Inquiries Database Viewer
+          </a>
+        </div>
       </div>
 
-      <div>
+      <!-- Right Column: Contact Form -->
+      <div class="contact-form-card">
+        <h3>Send Us a Message</h3>
+        <p class="sub">
+          Inquiries are saved automatically to your browser's persistent local database.
+        </p>
+
+        <form id="contactForm">
+          
+          <div class="form-group">
+            <label class="harbor-label" for="contactName">Full Name *</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">👤</span>
+              <input 
+                type="text" 
+                id="contactName" 
+                name="name" 
+                class="harbor-input" 
+                placeholder="Enter your full name" 
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="contactEmail">Email Address *</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">✉</span>
+              <input 
+                type="email" 
+                id="contactEmail" 
+                name="email" 
+                class="harbor-input" 
+                placeholder="name@example.com" 
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="contactMobile">Mobile Number *</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">📱</span>
+              <input 
+                type="tel" 
+                id="contactMobile" 
+                name="mobile" 
+                class="harbor-input" 
+                placeholder="10-digit mobile number" 
+                maxlength="10" 
+                pattern="[0-9]{10}" 
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="contactService">Select Botanical Service *</label>
+            <div class="harbor-input-wrapper">
+              <select id="contactService" name="service" class="harbor-input" required>
+                <option value="">-- Select a Gardening Service --</option>
+                <option value="garden-design">Garden Design &amp; Architecture</option>
+                <option value="planting">Planting Services &amp; Perennial Stems</option>
+                <option value="maintenance">Routine Garden Maintenance</option>
+                <option value="lawn-care">Lawn Care &amp; Turf Revitalization</option>
+                <option value="plant-care">Tree and Plant Care / Arboriculture</option>
+                <option value="organic-gardening">Organic Gardening &amp; Composting</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="contactMessage">Detailed Message / Scope *</label>
+            <textarea 
+              id="contactMessage" 
+              name="message" 
+              class="harbor-input" 
+              rows="5" 
+              placeholder="Describe your garden size, location, preferred plants, or specific requirements..." 
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-actions-row">
+            <button type="submit" class="btn-primary" id="btnSubmitContact" style="font-size: 0.95rem; padding: 13px 28px;">
+              <span>💾</span> Save &amp; Send Inquiry
+            </button>
+            <button type="reset" class="btn-secondary" id="btnResetForm" style="font-size: 0.95rem; padding: 13px 22px;">
+              Clear Form
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Inline Submission Success Banner -->
+        <div class="submission-success-card" id="submissionSuccessBox">
+          <div class="success-icon-badge">✓</div>
+          <h4 style="font-size: 1.25rem; color: #ffffff; margin-bottom: 6px;">Inquiry Successfully Stored</h4>
+          <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 16px;">
+            Your inquiry has been encrypted and recorded into the persistent local database with Reference ID: <strong id="successRefId" style="color: var(--harbor-emerald); font-family: var(--font-mono);"></strong>.
+          </p>
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="database.html" class="btn-primary" style="font-size: 0.85rem; padding: 10px 18px;">
+              <span>📊</span> View in Database Manager &rarr;
+            </a>
+            <button type="button" class="btn-secondary" id="btnSendAnother" style="font-size: 0.85rem; padding: 10px 18px;">
+              Submit Another Inquiry
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="harbor-footer">
+    <div class="harbor-footer-grid">
+      <div class="harbor-footer-col">
+        <h3>Harbor Garden</h3>
+        <p>
+          Bringing nature closer to your home with healthy perennials, eco-friendly garden architecture, and enterprise-grade data management.
+        </p>
+        <div class="harbor-footer-security-badge">
+          <span class="icon">🛡️</span>
+          <div>
+            Connected to Harbor Security Portal
+            <small>Local Storage Persistence &bull; 2FA Support</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="harbor-footer-col">
         <h3>Quick Links</h3>
-
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
+        <a href="about.html">About My Garden</a>
+        <a href="services.html">Services &amp; Care</a>
         <a href="contact.html">Contact Us</a>
+        <a href="database.html">Local Database</a>
       </div>
 
-      <div>
-        <h3>Contact Us</h3>
-
-        <p>Email: info@mygarden.com</p>
-        <p>Phone: +91 98765 43210</p>
-        <p>Haldwani, India</p>
+      <div class="harbor-footer-col">
+        <h3>Contact Info</h3>
+        <p><strong>Address:</strong> 123 Green Garden Road, Haldwani, Uttarakhand, India</p>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+        <p><strong>Email:</strong> info@mygarden.com</p>
       </div>
 
-      <div>
-        <h3>Follow Us</h3>
-
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
+      <div class="harbor-footer-col">
+        <h3>Security &amp; Portal</h3>
+        <a href="login.html">Sign In to Portal</a>
+        <a href="login.html?mode=signup">Create Account</a>
+        <a href="forgot-password.html">Forgot Password Recovery</a>
+        <a href="database.html">Inquiries Management DB</a>
       </div>
+    </div>
 
-      <hr />
+    <div class="harbor-footer-bottom">
+      <p>&copy; 2026 Harbor &bull; My Garden. All Rights Reserved.</p>
+      <div style="display: flex; gap: 16px;">
+        <a href="login.html" style="color: var(--harbor-emerald);">Portal Login</a>
+        <a href="forgot-password.html" style="color: var(--harbor-cyan);">Forgot Password</a>
+      </div>
+    </div>
+  </footer>
 
-      <p>&copy; 2026 My Garden. All Rights Reserved.</p>
-    </footer>
-  </body>
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check URL parameters for pre-selected service (e.g. ?service=planting)
+      const params = new URLSearchParams(window.location.search);
+      const preselectedService = params.get('service');
+      const serviceSelect = document.getElementById('contactService');
+      if (preselectedService && serviceSelect) {
+        serviceSelect.value = preselectedService;
+      }
+
+      const form = document.getElementById('contactForm');
+      const successBox = document.getElementById('submissionSuccessBox');
+      const successRefId = document.getElementById('successRefId');
+      const btnSendAnother = document.getElementById('btnSendAnother');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const mobile = document.getElementById('contactMobile').value.trim();
+        const service = document.getElementById('contactService').value;
+        const message = document.getElementById('contactMessage').value.trim();
+
+        if (!name || !email || !mobile || !service || !message) {
+          HarborAuth.showToast('Please fill in all required fields.', 'warning', 'Missing Information');
+          return;
+        }
+
+        try {
+          // Save to Local Database
+          const newEntry = HarborDB.saveContact({
+            name,
+            email,
+            mobile,
+            service,
+            message
+          });
+
+          // Show Toast notification
+          HarborAuth.showToast('Inquiry recorded in local database!', 'success', 'Saved Locally');
+
+          // Display success card with reference ID
+          successRefId.textContent = newEntry.id;
+          form.style.display = 'none';
+          successBox.style.display = 'block';
+
+        } catch (err) {
+          HarborAuth.showToast('Failed to save inquiry to database: ' + err.message, 'error', 'Storage Error');
+        }
+      });
+
+      // Send another inquiry
+      btnSendAnother.addEventListener('click', () => {
+        form.reset();
+        successBox.style.display = 'none';
+        form.style.display = 'block';
+      });
+
+    });
+  </script>
+</body>
 </html>
