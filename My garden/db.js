@@ -1,7 +1,7 @@
 /**
  * HarborDB — Local Database Engine for My Garden & Harbor Security Portal
- * Supports Role-Based Access Control (Author vs User), Persistent Plant Listings,
- * Inquiries Database, Audit Trails, and Password Recovery.
+ * Supports Role-Based Access Control (Author vs User), Persistent Plant Listings with Pricing,
+ * E-Commerce Shopping Cart, Service Bookings, About Cards, Inquiries, Audit Trails, and Password Recovery.
  */
 (function(window) {
   'use strict';
@@ -12,7 +12,11 @@
     AUDIT: 'harbor_garden_audit',
     SESSION: 'harbor_garden_session',
     RESET_TOKENS: 'harbor_garden_reset_tokens',
-    PLANTS: 'harbor_garden_plants_v2'
+    PLANTS: 'harbor_garden_plants_v2',
+    CART: 'harbor_garden_cart',
+    ORDERS: 'harbor_garden_orders',
+    SERVICES: 'harbor_garden_services',
+    ABOUT_CARDS: 'harbor_garden_about_cards'
   };
 
   // Default seed users with explicit Author vs User roles
@@ -58,12 +62,13 @@
     }
   ];
 
-  // The 10 original flowers with full specialities and step-by-step growing guides
+  // The 10 original flowers with prices, full specialities, and step-by-step growing guides
   const SEED_PLANTS = [
     {
       id: 'plt_peony',
       name: 'Peony',
       scientific: 'Paeonia lactiflora',
+      price: 450,
       image: 'https://hips.hearstapps.com/clv.h-cdn.co/assets/17/13/1490640739-gettyimages-126026586.jpg?crop=0.5357277882797731xw:1xh;center,top',
       bloomSeason: 'Late spring to early summer',
       seasonCategory: 'spring',
@@ -76,6 +81,7 @@
       id: 'plt_sunflower',
       name: 'Sunflower',
       scientific: 'Helianthus annuus',
+      price: 180,
       image: 'https://hips.hearstapps.com/hmg-prod/images/sunflowers-blooming-against-sky-royalty-free-image-1573171826.jpg?crop=0.8xw:1xh;center,top',
       bloomSeason: 'Late summer to early fall',
       seasonCategory: 'summer',
@@ -88,6 +94,7 @@
       id: 'plt_black_eyed_susan',
       name: 'Black-Eyed Susan',
       scientific: 'Rudbeckia hirta',
+      price: 220,
       image: 'https://hips.hearstapps.com/hmg-prod/images/full-frame-shot-of-yellow-flowering-plants-columbus-royalty-free-image-1709658257.jpg?crop=1xw:0.9375xh;center,top',
       bloomSeason: 'Late summer to early fall',
       seasonCategory: 'summer',
@@ -100,6 +107,7 @@
       id: 'plt_tulip',
       name: 'Tulip',
       scientific: 'Tulipa gesneriana',
+      price: 320,
       image: 'https://hips.hearstapps.com/clv.h-cdn.co/assets/16/18/tulip.jpg?crop=0.536xw:1.00xh;0.0182xw,0',
       bloomSeason: 'Early to late spring',
       seasonCategory: 'spring',
@@ -112,6 +120,7 @@
       id: 'plt_snowdrop',
       name: 'Snowdrop',
       scientific: 'Galanthus nivalis',
+      price: 280,
       image: 'https://hips.hearstapps.com/hmg-prod/images/spring-snowdrops-galanthus-nivalis-royalty-free-image-1709587839.jpg?crop=0.53358xw:1xh;center,top',
       bloomSeason: 'Late winter to earliest spring',
       seasonCategory: 'spring',
@@ -124,6 +133,7 @@
       id: 'plt_fritillaria',
       name: 'Fritillaria',
       scientific: 'Fritillaria meleagris',
+      price: 390,
       image: 'https://hips.hearstapps.com/hmg-prod/images/flowering-snakeshead-lily-royalty-free-image-1709589246.jpg?crop=0.557xw:1.00xh;0.383xw,0',
       bloomSeason: 'Mid-spring',
       seasonCategory: 'spring',
@@ -136,6 +146,7 @@
       id: 'plt_azalea',
       name: 'Azalea',
       scientific: 'Rhododendron indicum',
+      price: 520,
       image: 'https://hips.hearstapps.com/hmg-prod/images/close-up-of-pink-azalea-flowers-filling-frame-royalty-free-image-1709656178.jpg?crop=0.53333xw:1xh;center,top',
       bloomSeason: 'Spring',
       seasonCategory: 'spring',
@@ -148,6 +159,7 @@
       id: 'plt_foam_flower',
       name: 'Foam Flower',
       scientific: 'Tiarella cordifolia',
+      price: 240,
       image: 'https://hips.hearstapps.com/hmg-prod/images/white-tiarella-spring-symphony-foam-flower-in-bloom-royalty-free-image-1709589477.jpg?crop=0.536xw:1.00xh;0.336xw,0',
       bloomSeason: 'Spring to summer',
       seasonCategory: 'spring',
@@ -160,6 +172,7 @@
       id: 'plt_astrantia',
       name: 'Astrantia (Masterwort)',
       scientific: 'Astrantia major',
+      price: 350,
       image: 'https://hips.hearstapps.com/hmg-prod/images/beautiful-pink-flowers-of-astrantia-major-a-summer-royalty-free-image-1709585164.jpg?crop=0.802xw:1.00xh;0.150xw,0',
       bloomSeason: 'Spring to summer',
       seasonCategory: 'summer',
@@ -172,6 +185,7 @@
       id: 'plt_allium',
       name: 'Allium',
       scientific: 'Allium giganteum',
+      price: 290,
       image: 'https://hips.hearstapps.com/hmg-prod/images/rhs-garden-wisley-surrey-allium-globemaster-onion-royalty-free-image-1709590587.jpg?crop=0.536xw:1.00xh;0.315xw,0',
       bloomSeason: 'Spring to summer',
       seasonCategory: 'spring',
@@ -219,13 +233,123 @@
     }
   ];
 
+  // Default seed services with full pricing and descriptions
+  const SEED_SERVICES = [
+    {
+      id: 'svc_garden_design',
+      name: 'Garden Design & Architecture',
+      price: 4999,
+      duration: '2-3 Days',
+      icon: '🎨',
+      description: 'Bespoke royal landscape blueprints, 3D elevation renderings, sun-path analysis, and customized perennial plant curation tailored for your estate.',
+      image: 'https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&w=800',
+      badge: 'Popular',
+      isCustom: false,
+      createdAt: '2026-01-01T00:00:00.000Z'
+    },
+    {
+      id: 'svc_planting',
+      name: 'Perennial Planting & Installation',
+      price: 2499,
+      duration: '1 Day',
+      icon: '🌱',
+      description: 'Precision rootbed preparation, organic mycorrhizal inoculation, premium horticultural soil blending, and gentle specimen transplanting.',
+      image: 'https://images.pexels.com/photos/1301856/pexels-photo-1301856.jpeg?auto=compress&cs=tinysrgb&w=800',
+      badge: 'Verified',
+      isCustom: false,
+      createdAt: '2026-01-02T00:00:00.000Z'
+    },
+    {
+      id: 'svc_maintenance',
+      name: 'Seasonal Garden Care & Maintenance',
+      price: 1499,
+      duration: 'Ongoing / Monthly',
+      icon: '✂️',
+      description: 'Artisanal pruning, deadheading, slow-release nutrient feeding, mulch replenishing, weed suppression, and seasonal crown protection.',
+      image: 'https://images.pexels.com/photos/1408221/pexels-photo-1408221.jpeg?auto=compress&cs=tinysrgb&w=800',
+      badge: 'Essential',
+      isCustom: false,
+      createdAt: '2026-01-03T00:00:00.000Z'
+    },
+    {
+      id: 'svc_organic',
+      name: 'Organic Plant Nutrition & Eco-Shield',
+      price: 1999,
+      duration: '1 Day',
+      icon: '🌿',
+      description: '100% certified bio-dynamic foliar sprays, vermicompost enrichment, natural neem pest deterrents, and zero-chemical soil revitalizing.',
+      image: 'https://images.pexels.com/photos/4503273/pexels-photo-4503273.jpeg?auto=compress&cs=tinysrgb&w=800',
+      badge: 'Eco Certified',
+      isCustom: false,
+      createdAt: '2026-01-04T00:00:00.000Z'
+    },
+    {
+      id: 'svc_landscape',
+      name: 'Estate Landscape Architecture',
+      price: 8999,
+      duration: '5-7 Days',
+      icon: '🏡',
+      description: 'Comprehensive luxury garden transformation including natural stone walkways, terrace grading, ambient night illumination, and flora cascades.',
+      image: 'https://images.pexels.com/photos/259580/pexels-photo-259580.jpeg?auto=compress&cs=tinysrgb&w=800',
+      badge: 'Luxury',
+      isCustom: false,
+      createdAt: '2026-01-05T00:00:00.000Z'
+    },
+    {
+      id: 'svc_irrigation',
+      name: 'Smart Drip & Micro-Irrigation',
+      price: 5499,
+      duration: '2 Days',
+      icon: '💧',
+      description: 'Automated water conservation systems, subsurface root soakers, smart Wi-Fi timers, moisture probes, and zero-runoff distribution nozzles.',
+      image: 'https://images.pexels.com/photos/2132253/pexels-photo-2132253.jpeg?auto=compress&cs=tinysrgb&w=800',
+      badge: 'Smart Water',
+      isCustom: false,
+      createdAt: '2026-01-06T00:00:00.000Z'
+    }
+  ];
+
+  // Default seed about cards
+  const SEED_ABOUT_CARDS = [
+    {
+      id: 'abt_heritage',
+      icon: '🌿',
+      title: 'Himalayan Botanical Heritage',
+      subtitle: 'Est. 2024 • Haldwani, Uttarakhand',
+      description: 'Nestled at the foothills of the Himalayas, Harbor Garden began as an artisanal perennial sanctuary. Today we preserve rare Himalayan flora and cultivate disease-resilient heirloom varieties.',
+      image: 'https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&w=800',
+      isCustom: false,
+      createdAt: '2026-01-01T00:00:00.000Z'
+    },
+    {
+      id: 'abt_mission',
+      icon: '🌱',
+      title: 'Our Sustainable Philosophy',
+      subtitle: '100% Certified Chemical-Free',
+      description: 'We believe genuine luxury coexists with ecological integrity. Every blossom we nurture is grown in living soil enriched with organic compost, safeguarding bees, butterflies, and subterranean microbes.',
+      image: 'https://images.pexels.com/photos/7728082/pexels-photo-7728082.jpeg?auto=compress&cs=tinysrgb&w=800',
+      isCustom: false,
+      createdAt: '2026-01-02T00:00:00.000Z'
+    },
+    {
+      id: 'abt_artisans',
+      icon: '👥',
+      title: 'Estate Master Horticulturists',
+      subtitle: 'Decades of Collective Craft',
+      description: 'Our certified arborists, landscape designers, and nursery caretakers bring rigorous botanical science and bespoke estate craftsmanship to every home garden we touch.',
+      image: 'https://images.pexels.com/photos/4503267/pexels-photo-4503267.jpeg?auto=compress&cs=tinysrgb&w=800',
+      isCustom: false,
+      createdAt: '2026-01-03T00:00:00.000Z'
+    }
+  ];
+
   // Default audit logs
   const SEED_AUDIT = [
     {
       id: 'aud_seed_1',
       timestamp: new Date(Date.now() - 3600000 * 12).toISOString(),
       event: 'SYSTEM_BOOT',
-      details: 'Harbor Local Database initialized with Author & User RBAC rules.',
+      details: 'Harbor Local Database initialized with Author & User RBAC rules, Flower Pricing & E-Commerce.',
       status: 'SUCCESS',
       ip: '127.0.0.1'
     },
@@ -268,6 +392,36 @@
 
       if (!localStorage.getItem(STORAGE_KEYS.PLANTS)) {
         localStorage.setItem(STORAGE_KEYS.PLANTS, JSON.stringify(SEED_PLANTS));
+      } else {
+        // Ensure all plants have price field migrated
+        const cachedPlants = this.getPlants();
+        let plantsUpdated = false;
+        cachedPlants.forEach(p => {
+          if (!p.price) {
+            const seed = SEED_PLANTS.find(sp => sp.id === p.id);
+            p.price = seed ? seed.price : 299;
+            plantsUpdated = true;
+          }
+        });
+        if (plantsUpdated) {
+          localStorage.setItem(STORAGE_KEYS.PLANTS, JSON.stringify(cachedPlants));
+        }
+      }
+
+      if (!localStorage.getItem(STORAGE_KEYS.SERVICES)) {
+        localStorage.setItem(STORAGE_KEYS.SERVICES, JSON.stringify(SEED_SERVICES));
+      }
+
+      if (!localStorage.getItem(STORAGE_KEYS.ABOUT_CARDS)) {
+        localStorage.setItem(STORAGE_KEYS.ABOUT_CARDS, JSON.stringify(SEED_ABOUT_CARDS));
+      }
+
+      if (!localStorage.getItem(STORAGE_KEYS.CART)) {
+        localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify([]));
+      }
+
+      if (!localStorage.getItem(STORAGE_KEYS.ORDERS)) {
+        localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([]));
       }
 
       if (!localStorage.getItem(STORAGE_KEYS.CONTACTS)) {
@@ -334,7 +488,7 @@
     }
 
     // ==========================================
-    // Plant Listings Collection
+    // Plant Listings Collection with Pricing
     // ==========================================
     getPlants() {
       try {
@@ -345,7 +499,7 @@
       }
     }
 
-    savePlant({ name, image, bloomSeason, speciality, growGuide, scientific, seasonCategory }) {
+    savePlant({ name, image, bloomSeason, speciality, growGuide, scientific, seasonCategory, price }) {
       if (!this.isAuthor()) {
         throw new Error('Access Denied: Only Author accounts are authorized to list flowers or trees in the botanical collection. Please sign in as an Author.');
       }
@@ -355,11 +509,15 @@
       if (!bloomSeason || !bloomSeason.trim()) throw new Error('Blooming season detail is required.');
       if (!growGuide || !growGuide.trim()) throw new Error('How to Grow guide is required.');
 
+      const parsedPrice = parseInt(price, 10);
+      const safePrice = (!isNaN(parsedPrice) && parsedPrice > 0) ? parsedPrice : 299;
+
       const plants = this.getPlants();
       const newPlant = {
         id: this.generateId('plt'),
         name: name.trim(),
         scientific: (scientific || name.trim() + ' sp.').trim(),
+        price: safePrice,
         image: (image && image.trim()) || 'https://images.pexels.com/photos/7694761/pexels-photo-7694761.jpeg',
         bloomSeason: bloomSeason.trim(),
         seasonCategory: seasonCategory || 'spring',
@@ -372,7 +530,7 @@
 
       plants.unshift(newPlant);
       localStorage.setItem(STORAGE_KEYS.PLANTS, JSON.stringify(plants));
-      this.addAuditLog('PLANT_ADDED', `New plant listed in collection: "${newPlant.name}"`, 'SUCCESS');
+      this.addAuditLog('PLANT_ADDED', `New plant listed in collection: "${newPlant.name}" (₹${newPlant.price})`, 'SUCCESS');
       this.syncToServer('POST', '/api/plants', newPlant);
 
       return newPlant;
@@ -394,6 +552,234 @@
     resetPlantsToSeed() {
       localStorage.setItem(STORAGE_KEYS.PLANTS, JSON.stringify(SEED_PLANTS));
       return SEED_PLANTS;
+    }
+
+    // ==========================================
+    // E-Commerce Cart Management
+    // ==========================================
+    getCart() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.CART);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    addToCart(plant, qty = 1) {
+      const cart = this.getCart();
+      const existing = cart.find(item => item.id === plant.id);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({
+          id: plant.id,
+          name: plant.name,
+          scientific: plant.scientific || '',
+          image: plant.image,
+          price: parseInt(plant.price, 10) || 299,
+          bloomSeason: plant.bloomSeason || '',
+          qty: qty
+        });
+      }
+      localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
+      window.dispatchEvent(new CustomEvent('harbor_cart_updated', { detail: { cart } }));
+      return cart;
+    }
+
+    removeFromCart(plantId) {
+      let cart = this.getCart();
+      cart = cart.filter(item => item.id !== plantId);
+      localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
+      window.dispatchEvent(new CustomEvent('harbor_cart_updated', { detail: { cart } }));
+      return cart;
+    }
+
+    updateCartQty(plantId, newQty) {
+      let cart = this.getCart();
+      const item = cart.find(item => item.id === plantId);
+      if (item) {
+        if (newQty <= 0) {
+          return this.removeFromCart(plantId);
+        } else {
+          item.qty = newQty;
+          localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
+        }
+      }
+      window.dispatchEvent(new CustomEvent('harbor_cart_updated', { detail: { cart } }));
+      return cart;
+    }
+
+    clearCart() {
+      localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify([]));
+      window.dispatchEvent(new CustomEvent('harbor_cart_updated', { detail: { cart: [] } }));
+      return [];
+    }
+
+    getCartCount() {
+      const cart = this.getCart();
+      return cart.reduce((total, item) => total + (item.qty || 1), 0);
+    }
+
+    getCartTotal() {
+      const cart = this.getCart();
+      return cart.reduce((total, item) => total + (item.price * (item.qty || 1)), 0);
+    }
+
+    // ==========================================
+    // Order Placement & Customer Delivery
+    // ==========================================
+    getOrders() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.ORDERS);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    placeOrder({ items, address, paymentMethod, orderType = 'FLOWER_PURCHASE', serviceDetails = null, notes = '' }) {
+      const orders = this.getOrders();
+      const subtotal = items.reduce((sum, item) => sum + ((item.price || 0) * (item.qty || 1)), 0);
+      const deliveryFee = subtotal >= 999 || orderType === 'SERVICE_BOOKING' ? 0 : 99;
+      const totalAmount = subtotal + deliveryFee + (serviceDetails ? (serviceDetails.price || 0) : 0);
+
+      const newOrder = {
+        id: 'HBR-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(100 + Math.random() * 900),
+        orderType,
+        items,
+        serviceDetails,
+        address,
+        paymentMethod: paymentMethod || 'COD',
+        subtotal,
+        deliveryFee,
+        totalAmount,
+        status: 'Confirmed',
+        notes,
+        createdAt: new Date().toISOString(),
+        customer: this.getCurrentUser() ? this.getCurrentUser().name : (address ? address.name : 'Guest Customer')
+      };
+
+      orders.unshift(newOrder);
+      localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+
+      // Clear cart if this was a cart checkout
+      if (orderType === 'FLOWER_PURCHASE') {
+        this.clearCart();
+      }
+
+      this.addAuditLog('ORDER_PLACED', `New order #${newOrder.id} placed: ₹${newOrder.totalAmount} (${newOrder.paymentMethod})`, 'SUCCESS');
+      this.syncToServer('POST', '/api/orders', newOrder);
+
+      return newOrder;
+    }
+
+    // ==========================================
+    // Services Management (Author Only for Modifications)
+    // ==========================================
+    getServices() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.SERVICES);
+        return raw ? JSON.parse(raw) : SEED_SERVICES;
+      } catch (e) {
+        return SEED_SERVICES;
+      }
+    }
+
+    saveService({ name, price, duration, icon, description, image, badge }) {
+      if (!this.isAuthor()) {
+        throw new Error('Access Denied: Only Author accounts are authorized to introduce new gardening services. Please sign in as an Author.');
+      }
+      if (!name || !name.trim()) throw new Error('Service name is required.');
+      if (!price || isNaN(price)) throw new Error('Valid service price is required.');
+
+      const services = this.getServices();
+      const newService = {
+        id: this.generateId('svc'),
+        name: name.trim(),
+        price: parseInt(price, 10),
+        duration: (duration || '1-2 Days').trim(),
+        icon: icon || '🌿',
+        description: (description || '').trim(),
+        image: (image && image.trim()) || 'https://images.pexels.com/photos/1105019/pexels-photo-1105019.jpeg?auto=compress&cs=tinysrgb&w=800',
+        badge: (badge || 'Bespoke').trim(),
+        isCustom: true,
+        createdBy: this.getCurrentUser() ? this.getCurrentUser().name : 'Botanical Author',
+        createdAt: new Date().toISOString()
+      };
+
+      services.unshift(newService);
+      localStorage.setItem(STORAGE_KEYS.SERVICES, JSON.stringify(services));
+      this.addAuditLog('SERVICE_ADDED', `New service added: "${newService.name}" (₹${newService.price})`, 'SUCCESS');
+      this.syncToServer('POST', '/api/services', newService);
+
+      return newService;
+    }
+
+    deleteService(serviceId) {
+      if (!this.isAuthor()) {
+        throw new Error('Only Author accounts are permitted to remove services.');
+      }
+      const services = this.getServices();
+      const target = services.find(s => s.id === serviceId);
+      const filtered = services.filter(s => s.id !== serviceId);
+      localStorage.setItem(STORAGE_KEYS.SERVICES, JSON.stringify(filtered));
+      this.addAuditLog('SERVICE_DELETED', `Service removed: ${target ? target.name : serviceId}`, 'WARNING');
+      this.syncToServer('DELETE', `/api/services/${serviceId}`);
+      return true;
+    }
+
+    // ==========================================
+    // About Cards Management (Author Only for Modifications)
+    // ==========================================
+    getAboutCards() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.ABOUT_CARDS);
+        return raw ? JSON.parse(raw) : SEED_ABOUT_CARDS;
+      } catch (e) {
+        return SEED_ABOUT_CARDS;
+      }
+    }
+
+    saveAboutCard({ title, subtitle, icon, description, image }) {
+      if (!this.isAuthor()) {
+        throw new Error('Access Denied: Only Author accounts are authorized to add new about/story cards. Please sign in as an Author.');
+      }
+      if (!title || !title.trim()) throw new Error('Card title is required.');
+      if (!description || !description.trim()) throw new Error('Card description is required.');
+
+      const cards = this.getAboutCards();
+      const newCard = {
+        id: this.generateId('abt'),
+        title: title.trim(),
+        subtitle: (subtitle || 'Harbor Heritage').trim(),
+        icon: icon || '🌿',
+        description: description.trim(),
+        image: (image && image.trim()) || '',
+        isCustom: true,
+        createdBy: this.getCurrentUser() ? this.getCurrentUser().name : 'Botanical Author',
+        createdAt: new Date().toISOString()
+      };
+
+      cards.unshift(newCard);
+      localStorage.setItem(STORAGE_KEYS.ABOUT_CARDS, JSON.stringify(cards));
+      this.addAuditLog('ABOUT_CARD_ADDED', `New About Card added: "${newCard.title}"`, 'SUCCESS');
+      this.syncToServer('POST', '/api/about-cards', newCard);
+
+      return newCard;
+    }
+
+    deleteAboutCard(cardId) {
+      if (!this.isAuthor()) {
+        throw new Error('Only Author accounts are permitted to remove About cards.');
+      }
+      const cards = this.getAboutCards();
+      const target = cards.find(c => c.id === cardId);
+      const filtered = cards.filter(c => c.id !== cardId);
+      localStorage.setItem(STORAGE_KEYS.ABOUT_CARDS, JSON.stringify(filtered));
+      this.addAuditLog('ABOUT_CARD_DELETED', `About card removed: ${target ? target.title : cardId}`, 'WARNING');
+      this.syncToServer('DELETE', `/api/about-cards/${cardId}`);
+      return true;
     }
 
     // ==========================================
@@ -747,7 +1133,10 @@
       }
       return JSON.stringify({
         plants: this.getPlants(),
+        services: this.getServices(),
+        aboutCards: this.getAboutCards(),
         contacts: this.getContacts(),
+        orders: this.getOrders(),
         users: this.getUsers().map(u => ({ ...u, password: '***' })),
         auditLogs: this.canAccessAudit() ? this.getAuditLogs() : [],
         exportedAt: new Date().toISOString()

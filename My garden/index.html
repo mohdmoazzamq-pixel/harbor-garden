@@ -3,80 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Garden &bull; Harbor Royal Botanical Collection</title>
+  <title>Harbor Garden &bull; Royal Botanical Collection &amp; Flora Boutique</title>
   <link rel="stylesheet" href="harbor-theme.css" />
   <style>
-    /* Flower Gallery & Plant Listing Styles */
+    /* Catalog & Shop Custom Enhancements */
     .catalog-top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 18px;
-      margin-bottom: 36px;
+      gap: 16px;
+      margin-bottom: 32px;
       padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .gallery-filter-bar {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .filter-pill {
-      padding: 7px 18px;
+      padding: 8px 18px;
       border-radius: 30px;
-      background: rgba(255, 255, 255, 0.04);
+      background: #ffffff;
       border: 1px solid var(--harbor-border);
       color: var(--harbor-text-muted);
       font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       transition: var(--transition);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
     }
 
     .filter-pill:hover,
     .filter-pill.active {
-      background: rgba(230, 202, 101, 0.15);
+      background: #fef3c7;
       border-color: var(--harbor-gold);
-      color: var(--harbor-gold-light);
-      box-shadow: 0 0 16px rgba(230, 202, 101, 0.2);
+      color: #92400e;
+      box-shadow: 0 0 14px rgba(217, 119, 6, 0.22);
     }
 
     .btn-add-plant-cta {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 20px;
+      padding: 10px 22px;
       background: linear-gradient(135deg, var(--harbor-emerald) 0%, var(--harbor-emerald-dark) 100%);
-      color: #031309;
+      color: #ffffff;
       font-weight: 800;
       font-size: 0.86rem;
       border-radius: 30px;
       text-decoration: none;
       border: none;
       cursor: pointer;
-      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 4px 18px rgba(5, 150, 105, 0.35);
       transition: var(--transition);
     }
 
     .btn-add-plant-cta:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
-      filter: brightness(1.1);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(5, 150, 105, 0.45);
+      filter: brightness(1.08);
     }
 
     /* Reactive Flower Cards Grid */
     .flower-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
       margin-bottom: 70px;
     }
 
     .flower-card {
-      background: var(--harbor-bg-glass-card);
+      background: #ffffff;
       border: 1px solid var(--harbor-border);
       border-radius: 20px;
       overflow: hidden;
@@ -85,25 +87,20 @@
       display: flex;
       flex-direction: column;
       position: relative;
-    }
-
-    .flower-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(230, 202, 101, 0.35), transparent);
+      animation: fadeInUp 0.45s ease both;
     }
 
     .flower-card:hover {
       border-color: var(--harbor-gold-border);
-      box-shadow: 0 28px 56px -15px rgba(0, 0, 0, 0.85), var(--harbor-gold-shadow);
-      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 20px 45px -10px rgba(19, 34, 25, 0.12), var(--harbor-gold-shadow);
+      transform: translateY(-6px);
     }
 
     .flower-image-container {
       position: relative;
-      height: 260px;
+      height: 240px;
       overflow: hidden;
+      background: #f1f5f0;
     }
 
     .flower-image-container img {
@@ -119,37 +116,36 @@
 
     .flower-season-tag {
       position: absolute;
-      bottom: 14px;
-      left: 14px;
-      background: rgba(7, 11, 19, 0.9);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--harbor-gold-border);
+      bottom: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--harbor-border);
       border-radius: 20px;
-      padding: 5px 14px;
+      padding: 4px 12px;
       font-size: 0.74rem;
       font-weight: 800;
-      color: var(--harbor-gold-light);
-      letter-spacing: 0.04em;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      color: #92400e;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .badge-custom-listed {
       position: absolute;
-      top: 14px;
-      right: 14px;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9));
-      color: #031309;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.95), rgba(4, 120, 87, 0.95));
+      color: #ffffff;
       font-size: 0.7rem;
       font-weight: 800;
       text-transform: uppercase;
       padding: 4px 10px;
       border-radius: 20px;
       letter-spacing: 0.05em;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .flower-card-body {
-      padding: 26px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -159,75 +155,75 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .flower-card-title {
       font-family: var(--font-serif);
-      font-size: 1.55rem;
-      color: #ffffff;
+      font-size: 1.45rem;
+      color: var(--harbor-text-main);
       font-weight: 700;
     }
 
     .flower-card-scientific {
       font-style: italic;
       font-size: 0.8rem;
-      color: var(--harbor-gold);
+      color: var(--harbor-gold-dark);
       font-weight: 600;
     }
 
     .flower-card-season-text {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: var(--harbor-text-dim);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .flower-card-season-text strong {
-      color: var(--harbor-cyan);
+      color: var(--harbor-emerald-dark);
     }
 
     .flower-card-quote {
-      font-size: 0.93rem;
+      font-size: 0.88rem;
       color: var(--harbor-text-muted);
-      line-height: 1.7;
-      margin-bottom: 22px;
+      line-height: 1.65;
+      margin-bottom: 16px;
       flex: 1;
     }
 
     .flower-card-footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.07);
+      padding-top: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 16px;
-      gap: 12px;
+      gap: 10px;
     }
 
     .btn-grow-guide {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
-      background: rgba(230, 202, 101, 0.12);
-      border: 1px solid var(--harbor-gold-border);
+      padding: 8px 14px;
+      background: #f8faf8;
+      border: 1px solid var(--harbor-border);
       border-radius: 10px;
-      color: var(--harbor-gold-light);
-      font-size: 0.82rem;
+      color: var(--harbor-text-main);
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       transition: var(--transition);
     }
 
     .btn-grow-guide:hover {
-      background: var(--harbor-gold);
-      color: #070b13;
-      box-shadow: var(--harbor-gold-shadow);
-      transform: translateY(-2px);
+      background: #fef3c7;
+      border-color: var(--harbor-gold);
+      color: #92400e;
+      transform: translateY(-1px);
     }
 
     .btn-delete-plant {
       background: none;
-      border: 1px solid rgba(244, 63, 94, 0.3);
+      border: 1px solid rgba(225, 29, 72, 0.3);
       color: var(--harbor-danger);
       padding: 7px 12px;
       border-radius: 8px;
@@ -238,7 +234,7 @@
     }
 
     .btn-delete-plant:hover {
-      background: rgba(244, 63, 94, 0.15);
+      background: #ffe4e6;
       border-color: var(--harbor-danger);
     }
 
@@ -267,7 +263,7 @@
       border-color: var(--harbor-gold);
       opacity: 1;
       transform: scale(1.08);
-      box-shadow: 0 0 12px var(--harbor-gold);
+      box-shadow: 0 0 10px rgba(217, 119, 6, 0.4);
     }
 
     /* Plant Details / Grow Guide Drawer Modal */
@@ -277,7 +273,7 @@
       object-fit: cover;
       border-radius: 14px;
       margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
 
     .guide-specs-grid {
@@ -311,7 +307,7 @@
       font-size: 0.84rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--harbor-gold);
+      color: #92400e;
       margin-bottom: 10px;
       display: flex;
       align-items: center;
@@ -324,6 +320,19 @@
       line-height: 1.75;
       white-space: pre-line;
     }
+
+    /* Checkout Modal Styles */
+    .checkout-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .checkout-form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -335,7 +344,7 @@
         <div class="harbor-logo-badge">🌿</div>
         <div class="harbor-brand-text">
           <div class="harbor-brand-title">HARBOR <span>GARDEN</span></div>
-          <div class="harbor-brand-subtitle">Royal Botanical Living</div>
+          <div class="harbor-brand-subtitle">Royal Botanical Living &amp; Flora Boutique</div>
         </div>
       </a>
 
@@ -351,6 +360,9 @@
       </ul>
 
       <div class="harbor-nav-actions">
+        <button type="button" class="btn-primary" id="btnNavCartQuick" style="padding: 8px 16px; font-size: 0.85rem;">
+          <span>🛒</span> Cart (<span id="navCartCount">0</span>)
+        </button>
         <a href="database.html" class="btn-nav-database">
           <span>📊</span> Inquiries DB
         </a>
@@ -359,70 +371,338 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section with Stats & Search -->
   <section class="harbor-hero">
     <div class="harbor-badge-pill">
-      <span>❀</span> Harbor Royal Flora Sanctuary
+      <span>❀</span> Harbor Royal Flora Sanctuary &amp; Perennial Nursery
     </div>
     <h1>Curating Nature's <em>Masterpieces</em> with Enterprise Care</h1>
     <p>
-      Discover timeless perennial blooms, expert landscape architecture, and certified eco-friendly solutions protected by the Harbor management portal.
+      Explore artisanal perennial blooms, heirloom Himalayan flora, and professional garden services. Delivered fresh to your doorstep with guaranteed customer satisfaction.
     </p>
+
     <div class="harbor-hero-actions">
       <button type="button" class="btn-primary" id="btnOpenAddPlantModal">
         <span>🌿</span> List New Plant / Flower &rarr;
       </button>
       <a href="services.html" class="btn-secondary">
-        Explore Gardening Services
+        <span>🛠️</span> Book Garden Services
       </a>
+    </div>
+
+    <!-- Animated Stats Counter Row -->
+    <div class="harbor-stats-row">
+      <div class="harbor-stat-item">
+        <span class="harbor-stat-num" id="statSpeciesCount">10+</span>
+        <span class="harbor-stat-label">Botanical Species</span>
+      </div>
+      <div class="harbor-stat-item">
+        <span class="harbor-stat-num">500+</span>
+        <span class="harbor-stat-label">Happy Home Estates</span>
+      </div>
+      <div class="harbor-stat-item">
+        <span class="harbor-stat-num">100%</span>
+        <span class="harbor-stat-label">Organic Soil Care</span>
+      </div>
+      <div class="harbor-stat-item">
+        <span class="harbor-stat-num">Free</span>
+        <span class="harbor-stat-label">Delivery on Orders &gt; ₹999</span>
+      </div>
     </div>
   </section>
 
   <!-- Main Botanical Catalog Section -->
-  <main style="max-width: 1280px; margin: 0 auto; padding: 0 28px 80px;">
+  <main style="max-width: 1280px; margin: 0 auto; padding: 40px 24px 80px;">
     
-    <!-- Top Filter & Action Bar -->
+    <!-- Top Filter & Search Bar -->
     <div class="catalog-top-bar" id="plantListingSection">
+      
+      <!-- Filter Pills -->
       <div class="gallery-filter-bar">
         <button class="filter-pill active" data-filter="all">All Botanical Species (<span id="totalPlantsCount">10</span>)</button>
         <button class="filter-pill" data-filter="spring">Spring Bloomers</button>
-        <button class="filter-pill" data-filter="summer">Summer &amp; Fall Bloomers</button>
+        <button class="filter-pill" data-filter="summer">Summer &amp; Fall</button>
         <button class="filter-pill" data-filter="custom">Custom Listed</button>
       </div>
 
+      <!-- Real-time Flower Search Bar -->
+      <div class="harbor-search-wrap">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="flowerSearchInput" 
+          class="harbor-search-input" 
+          placeholder="Search flowers by name, scientific title, or season..." 
+          aria-label="Search flower collection"
+        />
+        <button type="button" class="search-clear-btn" id="searchClearBtn" title="Clear search">&times;</button>
+      </div>
+
+      <!-- Quick Add Plant for Author -->
       <button type="button" class="btn-add-plant-cta" id="btnQuickAddPlant">
         <span>+</span> List New Plant
       </button>
     </div>
 
-    <!-- Flower Cards Grid (Dynamically Populated from HarborDB) -->
+    <!-- Flower Shop Grid (Dynamically Populated from HarborDB) -->
     <div class="flower-grid" id="flowerGrid">
       <!-- Populated dynamically by JavaScript -->
     </div>
 
     <!-- Luxury Botanical CTA Banner -->
-    <div class="harbor-card" style="text-align: center; padding: 50px 32px; background: linear-gradient(135deg, rgba(230, 202, 101, 0.08), rgba(16, 185, 129, 0.08)); border-color: var(--harbor-gold-border);">
+    <div class="harbor-card" style="text-align: center; padding: 50px 32px; background: linear-gradient(135deg, rgba(217, 119, 6, 0.08), rgba(5, 150, 105, 0.08)); border-color: var(--harbor-gold-border);">
       <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--harbor-text-main); margin-bottom: 12px;">
-        Architect Your Private Garden Paradise
+        Architect Your Private Garden Sanctuary
       </h2>
       <p style="color: var(--harbor-text-muted); max-width: 640px; margin: 0 auto 26px; font-size: 1.05rem;">
         Whether introducing heirloom peonies, cultivating organic herbs, or scheduling seasonal turf revitalization, our team brings botanical dreams to life.
       </p>
-      <a href="contact.html" class="btn-primary" style="font-size: 0.95rem; padding: 14px 34px;">
-        Book a Complimentary Garden Consultation &rarr;
-      </a>
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a href="services.html" class="btn-primary" style="font-size: 0.95rem; padding: 14px 34px;">
+          Explore &amp; Book Gardening Services &rarr;
+        </a>
+        <a href="contact.html" class="btn-secondary" style="font-size: 0.95rem; padding: 14px 34px;">
+          Custom Consultation Inquiry
+        </a>
+      </div>
     </div>
 
   </main>
 
   <!-- ==========================================================================
-       MODAL 1: ADD NEW PLANT / FLOWER LISTING
+       CART SLIDE-OUT DRAWER
+       ========================================================================== -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title">
+        <span>🛒</span> Your Botanical Cart
+      </div>
+      <button type="button" class="cart-drawer-close" id="btnCloseCartDrawer" aria-label="Close cart">&times;</button>
+    </div>
+
+    <div class="cart-drawer-body" id="cartDrawerBody">
+      <!-- Populated dynamically by renderCart() -->
+    </div>
+
+    <div class="cart-drawer-footer" id="cartDrawerFooter">
+      <div class="cart-total-row">
+        <span>Estimated Subtotal:</span>
+        <span id="cartDrawerSubtotal" style="color: var(--harbor-emerald-dark); font-size: 1.25rem;">₹0</span>
+      </div>
+      <div class="cart-delivery-note" id="cartDeliveryNote">
+        🚚 Free delivery on orders over ₹999. Standard shipping: ₹99.
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn-outline" id="btnClearCartBtn" style="flex: 1; padding: 11px;">
+          Clear Cart
+        </button>
+        <button type="button" class="btn-primary" id="btnDrawerCheckout" style="flex: 2; padding: 11px; font-size: 0.9rem;">
+          <span>📦</span> Checkout &amp; Pay &rarr;
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Floating Cart FAB Button -->
+  <button type="button" class="cart-fab" id="cartFabBtn" aria-label="Open Shopping Cart" title="View your cart">
+    <span>🛒</span>
+    <span class="cart-badge hidden" id="cartBadgeCount">0</span>
+  </button>
+
+  <!-- ==========================================================================
+       MODAL 1: CHECKOUT & DELIVERY ADDRESS & PAYMENT MODAL
+       ========================================================================== -->
+  <div class="harbor-modal-overlay" id="checkoutModal">
+    <div class="harbor-modal-card" style="max-width: 680px;">
+      
+      <!-- Stepper Header -->
+      <div class="booking-stepper">
+        <div class="booking-step active" id="checkoutStep1Indicator">
+          <div class="booking-step-dot">1</div>
+          <div class="booking-step-label">Delivery Address</div>
+        </div>
+        <div class="booking-step" id="checkoutStep2Indicator">
+          <div class="booking-step-dot">2</div>
+          <div class="booking-step-label">Payment</div>
+        </div>
+        <div class="booking-step" id="checkoutStep3Indicator">
+          <div class="booking-step-dot">✓</div>
+          <div class="booking-step-label">Confirmed</div>
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 id="checkoutModalTitle" style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--harbor-text-main);">
+          Customer Delivery Address
+        </h3>
+        <button type="button" class="harbor-modal-close" id="btnCloseCheckoutModal">&times;</button>
+      </div>
+
+      <!-- STEP 1: Delivery Address Form -->
+      <div id="checkoutStep1Panel">
+        <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 20px;">
+          Please enter your delivery destination. Our botanical handlers ensure temperature-controlled transit for delicate blooms.
+        </p>
+
+        <form id="checkoutAddressForm">
+          <div class="checkout-form-grid">
+            <div class="form-group">
+              <label class="harbor-label" for="shipName">Full Name *</label>
+              <input type="text" id="shipName" class="harbor-input" placeholder="e.g. Priya Sharma" required />
+            </div>
+            <div class="form-group">
+              <label class="harbor-label" for="shipPhone">Mobile Number *</label>
+              <input type="tel" id="shipPhone" class="harbor-input" placeholder="e.g. 9876543210" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="shipEmail">Email Address (for order tracking) *</label>
+            <input type="email" id="shipEmail" class="harbor-input" placeholder="e.g. priya@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="shipAddress">Complete Delivery Address *</label>
+            <textarea id="shipAddress" class="harbor-input" rows="2" placeholder="House/Flat No., Building Name, Street, Landmark" required></textarea>
+          </div>
+
+          <div class="checkout-form-grid">
+            <div class="form-group">
+              <label class="harbor-label" for="shipCity">City / District *</label>
+              <input type="text" id="shipCity" class="harbor-input" placeholder="e.g. Haldwani" required />
+            </div>
+            <div class="form-group">
+              <label class="harbor-label" for="shipPincode">Postal Pincode *</label>
+              <input type="text" id="shipPincode" class="harbor-input" placeholder="e.g. 263139" required />
+            </div>
+          </div>
+
+          <!-- Mini Order Summary in Step 1 -->
+          <div style="background: #f8faf8; border: 1px solid var(--harbor-border); border-radius: 12px; padding: 14px 18px; margin: 16px 0;">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.92rem; color: var(--harbor-text-main); margin-bottom: 6px;">
+              <span>Items Total (<span id="checkoutItemCount">0</span> plants):</span>
+              <span id="checkoutSubtotalDisplay">₹0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--harbor-text-muted); margin-bottom: 6px;">
+              <span>Botanical Safe Delivery:</span>
+              <span id="checkoutDeliveryDisplay">₹0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.05rem; color: var(--harbor-emerald-dark); border-top: 1px dashed var(--harbor-border); padding-top: 8px;">
+              <span>Grand Total:</span>
+              <span id="checkoutGrandTotalDisplay">₹0</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 14px;">
+            <button type="button" class="btn-secondary" id="btnCancelCheckout">Back to Cart</button>
+            <button type="submit" class="btn-primary">
+              Continue to Payment &rarr;
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 2: Payment Section -->
+      <div id="checkoutStep2Panel" style="display: none;">
+        <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 16px;">
+          Select your preferred payment method. Encrypted and protected by Harbor Financial Portal.
+        </p>
+
+        <!-- Payment Options Grid -->
+        <div class="payment-grid">
+          <div class="payment-option selected" data-method="UPI">
+            <div class="payment-option-icon">📱</div>
+            <div class="payment-option-label">UPI / QR</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">GPay, PhonePe, Paytm</div>
+          </div>
+          <div class="payment-option" data-method="Card">
+            <div class="payment-option-icon">💳</div>
+            <div class="payment-option-label">Debit / Credit</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">Visa, Mastercard, RuPay</div>
+          </div>
+          <div class="payment-option" data-method="NetBanking">
+            <div class="payment-option-icon">🏦</div>
+            <div class="payment-option-label">Net Banking</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">All Major Indian Banks</div>
+          </div>
+          <div class="payment-option" data-method="COD">
+            <div class="payment-option-icon">💵</div>
+            <div class="payment-option-label">Cash on Delivery</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">Pay upon Inspection</div>
+          </div>
+        </div>
+
+        <!-- Conditional Payment Details Box -->
+        <div id="paymentDetailsBox" style="background: #fefce8; border: 1px solid var(--harbor-gold-border); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+          <div id="upiFields">
+            <label class="harbor-label" for="upiIdInput">Enter Virtual Payment Address (UPI ID) *</label>
+            <input type="text" id="upiIdInput" class="harbor-input" placeholder="e.g. yourname@okhdfcbank or 9876543210@paytm" />
+            <div style="font-size: 0.74rem; color: var(--harbor-text-dim); margin-top: 6px;">
+              A collect request will be dispatched to your UPI app upon order confirmation.
+            </div>
+          </div>
+          <div id="cardFields" style="display: none;">
+            <div class="form-group">
+              <label class="harbor-label">Card Number</label>
+              <input type="text" class="harbor-input" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <input type="text" class="harbor-input" placeholder="MM / YY" maxlength="5" />
+              <input type="password" class="harbor-input" placeholder="CVV" maxlength="3" />
+            </div>
+          </div>
+          <div id="codFields" style="display: none; font-size: 0.88rem; color: #92400e; font-weight: 600;">
+            ✓ Cash on Delivery selected. Please keep exact cash or UPI ready at the time of delivery.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: space-between; align-items: center;">
+          <button type="button" class="btn-outline" id="btnBackToAddressStep">&larr; Back to Address</button>
+          <button type="button" class="btn-primary" id="btnConfirmPlaceOrder" style="padding: 12px 28px;">
+            <span>🔒</span> Authorize &amp; Place Order (₹<span id="btnPayAmountDisplay">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Order Confirmation Success -->
+      <div id="checkoutStep3Panel" style="display: none;">
+        <div class="order-success-box">
+          <div class="order-success-icon">✓</div>
+          <h2 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--harbor-text-main); margin-bottom: 6px;">
+            Order Placed Successfully!
+          </h2>
+          <p style="color: var(--harbor-text-muted); font-size: 0.95rem; margin-bottom: 12px;">
+            Thank you for shopping with Harbor Garden. Your royal botanical collection has been prepared for dispatch.
+          </p>
+
+          <div class="order-id-badge" id="confirmedOrderId">HBR-ORDER-SUCCESS</div>
+
+          <div style="background: #f8faf8; border: 1px solid var(--harbor-border); border-radius: 14px; padding: 18px; margin: 20px 0; text-align: left; font-size: 0.88rem;">
+            <div style="margin-bottom: 8px;"><strong>Recipient:</strong> <span id="confCustomerName">Priya Sharma</span></div>
+            <div style="margin-bottom: 8px;"><strong>Delivery Destination:</strong> <span id="confDeliveryAddress">Haldwani, Uttarakhand</span></div>
+            <div style="margin-bottom: 8px;"><strong>Payment Mode:</strong> <span id="confPaymentMethod">UPI</span> &bull; <strong>Total Paid:</strong> <span id="confTotalAmount" style="color: var(--harbor-emerald-dark); font-weight: 800;">₹0</span></div>
+            <div><strong>Estimated Arrival:</strong> Within 2-3 Business Days</div>
+          </div>
+
+          <button type="button" class="btn-primary" id="btnFinishOrderShopping" style="padding: 12px 30px;">
+            Continue Exploring Garden Collection &rarr;
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: ADD NEW PLANT / FLOWER LISTING (AUTHOR ONLY)
        ========================================================================== -->
   <div class="harbor-modal-overlay" id="addPlantModal">
     <div class="harbor-modal-card">
       <div class="harbor-modal-header">
         <div>
-          <h3><span>🌿</span> List New Plant / Tree in Collection</h3>
+          <h3><span>🌿</span> List New Plant / Flower in Collection</h3>
           <div id="authorModalStatusPill" style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 800; color: #92400e; background: #fef3c7; border: 1px solid var(--harbor-gold); padding: 3px 10px; border-radius: 20px;">
             👑 Author Publishing Clearance
           </div>
@@ -432,36 +712,67 @@
 
       <form id="addPlantForm">
         
-        <!-- 1. Flower Name -->
-        <div class="form-group">
-          <label class="harbor-label" for="plantName">Flower / Plant Name *</label>
-          <div class="harbor-input-wrapper has-icon">
-            <span class="harbor-input-icon">🌸</span>
-            <input 
-              type="text" 
-              id="plantName" 
-              class="harbor-input" 
-              placeholder="e.g. Lavender, English Rose, White Jasmine" 
-              required 
-            />
+        <!-- Flower Name & Botanical Title -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="harbor-label" for="plantName">Flower / Plant Name *</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">🌸</span>
+              <input 
+                type="text" 
+                id="plantName" 
+                class="harbor-input" 
+                placeholder="e.g. Lavender, English Rose" 
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="plantScientific">Botanical / Scientific Title</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">🔬</span>
+              <input 
+                type="text" 
+                id="plantScientific" 
+                class="harbor-input" 
+                placeholder="e.g. Lavandula angustifolia" 
+              />
+            </div>
           </div>
         </div>
 
-        <!-- Botanical Scientific Name -->
-        <div class="form-group">
-          <label class="harbor-label" for="plantScientific">Botanical / Scientific Title</label>
-          <div class="harbor-input-wrapper has-icon">
-            <span class="harbor-input-icon">🔬</span>
-            <input 
-              type="text" 
-              id="plantScientific" 
-              class="harbor-input" 
-              placeholder="e.g. Lavandula angustifolia" 
-            />
+        <!-- Price Field (New) & Season Category -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="harbor-label" for="plantPrice">Price (₹ INR) *</label>
+            <div class="harbor-input-wrapper has-icon">
+              <span class="harbor-input-icon">₹</span>
+              <input 
+                type="number" 
+                id="plantPrice" 
+                class="harbor-input" 
+                placeholder="e.g. 350" 
+                min="1" 
+                step="1"
+                required 
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="plantSeasonCategory">Season Filter</label>
+            <select id="plantSeasonCategory" class="harbor-input">
+              <option value="spring">Spring</option>
+              <option value="summer">Summer</option>
+              <option value="fall">Autumn / Fall</option>
+              <option value="winter">Winter</option>
+              <option value="all">Year-Round</option>
+            </select>
           </div>
         </div>
 
-        <!-- 2. Flower Image URL + Preset Thumbnails -->
+        <!-- Flower Image URL + Preset Thumbnails -->
         <div class="form-group">
           <label class="harbor-label" for="plantImage">Flower Image URL *</label>
           <div class="harbor-input-wrapper has-icon">
@@ -513,54 +824,41 @@
           </div>
         </div>
 
-        <!-- 3. When it Blooms & Category -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div class="form-group">
-            <label class="harbor-label" for="plantBloom">When It Blooms *</label>
-            <div class="harbor-input-wrapper has-icon">
-              <span class="harbor-input-icon">🗓️</span>
-              <input 
-                type="text" 
-                id="plantBloom" 
-                class="harbor-input" 
-                placeholder="e.g. Mid-summer to autumn" 
-                required 
-              />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="harbor-label" for="plantSeasonCategory">Season Filter</label>
-            <select id="plantSeasonCategory" class="harbor-input">
-              <option value="spring">Spring</option>
-              <option value="summer">Summer</option>
-              <option value="fall">Autumn / Fall</option>
-              <option value="winter">Winter</option>
-              <option value="all">Year-Round</option>
-            </select>
+        <!-- When it Blooms -->
+        <div class="form-group">
+          <label class="harbor-label" for="plantBloom">When It Blooms *</label>
+          <div class="harbor-input-wrapper has-icon">
+            <span class="harbor-input-icon">🗓️</span>
+            <input 
+              type="text" 
+              id="plantBloom" 
+              class="harbor-input" 
+              placeholder="e.g. Mid-summer to autumn" 
+              required 
+            />
           </div>
         </div>
 
-        <!-- 4. Flower Speciality -->
+        <!-- Flower Speciality -->
         <div class="form-group">
           <label class="harbor-label" for="plantSpeciality">Flower Speciality (Why We Love It) *</label>
           <textarea 
             id="plantSpeciality" 
             class="harbor-input" 
-            rows="3" 
-            placeholder="Describe what makes this flower unique: intoxicating scent, bee &amp; butterfly attraction, rare petals, longevity..." 
+            rows="2" 
+            placeholder="Describe what makes this flower unique: intoxicating scent, pollinator magnet, rare petals..." 
             required
           ></textarea>
         </div>
 
-        <!-- 5. How to Grow that Plant Guide -->
+        <!-- How to Grow that Plant Guide -->
         <div class="form-group">
           <label class="harbor-label" for="plantGrowGuide">How to Grow that Plant Guide *</label>
           <textarea 
             id="plantGrowGuide" 
             class="harbor-input" 
-            rows="5" 
-            placeholder="Step-by-step growing instructions: soil type &amp; pH, sunlight requirements, watering frequency, pruning, seasonal care..." 
+            rows="4" 
+            placeholder="Step-by-step growing instructions: soil type &amp; pH, sunlight requirements, watering frequency, seasonal care..." 
             required
           ></textarea>
         </div>
@@ -568,7 +866,7 @@
         <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px;">
           <button type="button" class="btn-secondary" id="btnCancelPlant">Cancel</button>
           <button type="submit" class="btn-primary" id="btnSavePlantSubmit">
-            <span>💾</span> Save Plant to Collection
+            <span>💾</span> Save &amp; Publish Plant (Author)
           </button>
         </div>
 
@@ -577,14 +875,14 @@
   </div>
 
   <!-- ==========================================================================
-       MODAL 2: HOW TO GROW THAT PLANT GUIDE
+       MODAL 3: HOW TO GROW THAT PLANT GUIDE
        ========================================================================== -->
   <div class="harbor-modal-overlay" id="guideModal">
     <div class="harbor-modal-card">
       <div class="harbor-modal-header">
         <div>
           <h3 id="guidePlantName" style="font-size: 1.6rem; color: var(--harbor-text-main);">Plant Name</h3>
-          <span id="guideScientificName" style="font-style: italic; font-size: 0.85rem; color: var(--harbor-gold);">Scientific Name</span>
+          <span id="guideScientificName" style="font-style: italic; font-size: 0.85rem; color: var(--harbor-gold-dark);">Scientific Name</span>
         </div>
         <button type="button" class="harbor-modal-close" id="btnCloseGuideModal">&times;</button>
       </div>
@@ -618,21 +916,21 @@
 
       <!-- Step-by-Step Growing Guide Block -->
       <div class="guide-text-block" style="border-color: var(--harbor-gold-border);">
-        <h4 style="color: var(--harbor-gold-light);"><span>🌱</span> Step-by-Step Growing Guide</h4>
+        <h4 style="color: var(--harbor-gold-dark);"><span>🌱</span> Step-by-Step Growing Guide</h4>
         <p id="guideGrowingStepsText"></p>
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <span style="font-size: 0.78rem; color: var(--harbor-text-dim);">Harbor Certified Horticultural Practice</span>
-        <a href="contact.html" class="btn-primary" style="font-size: 0.86rem; padding: 9px 20px;">
-          Consult Garden Specialist &rarr;
-        </a>
+        <button type="button" class="btn-primary" id="btnGuideBuyNow" style="font-size: 0.86rem; padding: 9px 20px;">
+          <span>⚡</span> Purchase This Specimen &rarr;
+        </button>
       </div>
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL 3: AUTHOR PRIVILEGE REQUIRED NOTIFICATION
+       MODAL 4: AUTHOR PRIVILEGE REQUIRED NOTIFICATION
        ========================================================================== -->
   <div class="harbor-modal-overlay" id="authorOnlyModal">
     <div class="harbor-modal-card" style="max-width: 520px; text-align: center;">
@@ -643,12 +941,12 @@
         Author Privilege Required
       </h3>
       <p id="authorOnlyNoticeText" style="color: var(--harbor-text-muted); font-size: 0.94rem; line-height: 1.65; margin-bottom: 24px;">
-        Listing new flowers and trees is strictly restricted to <strong>Author</strong> accounts. Regular Members and Guests are not authorized to publish new botanical species.
+        Listing new flowers, adjusting inventory, and accessing database archives is strictly restricted to <strong>Author</strong> accounts.
       </p>
       <div style="background: #f8faf8; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 14px 18px; margin-bottom: 24px; text-align: left; font-size: 0.82rem; color: var(--harbor-text-muted);">
         <div style="font-weight: 700; color: var(--harbor-text-main); margin-bottom: 4px;">Role Access Rules:</div>
-        <div>&bull; <strong>Author:</strong> Full access to list flowers/trees, inquiries database, audit logs.</div>
-        <div>&bull; <strong>User / Member:</strong> Browsing and contact inquiries only.</div>
+        <div>&bull; <strong>Author:</strong> Full access to list flowers/trees, services, inquiries database, audit logs.</div>
+        <div>&bull; <strong>User / Member:</strong> Shopping, cart management, and booking inquiries.</div>
       </div>
       <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
         <button type="button" class="btn-outline" id="btnCloseAuthorOnlyModal">Continue Browsing</button>
@@ -678,7 +976,7 @@
 
       <div class="harbor-footer-col">
         <h3>Quick Links</h3>
-        <a href="index.html">Home</a>
+        <a href="index.html">Home &amp; Flower Shop</a>
         <a href="about.html">About My Garden</a>
         <a href="services.html">Services &amp; Care</a>
         <a href="contact.html">Contact Us</a>
@@ -717,18 +1015,63 @@
     document.addEventListener('DOMContentLoaded', () => {
       const flowerGrid = document.getElementById('flowerGrid');
       const totalPlantsCount = document.getElementById('totalPlantsCount');
+      const statSpeciesCount = document.getElementById('statSpeciesCount');
       const filterPills = document.querySelectorAll('.filter-pill');
-      let currentFilter = 'all';
+      const flowerSearchInput = document.getElementById('flowerSearchInput');
+      const searchClearBtn = document.getElementById('searchClearBtn');
 
-      // Modals
+      let currentFilter = 'all';
+      let searchQuery = '';
+      let activeGuidePlant = null;
+      let selectedPaymentMethod = 'UPI';
+
+      // Modals & Drawers Elements
+      const cartFabBtn = document.getElementById('cartFabBtn');
+      const cartBadgeCount = document.getElementById('cartBadgeCount');
+      const navCartCount = document.getElementById('navCartCount');
+      const btnNavCartQuick = document.getElementById('btnNavCartQuick');
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartDrawerOverlay = document.getElementById('cartDrawerOverlay');
+      const btnCloseCartDrawer = document.getElementById('btnCloseCartDrawer');
+      const cartDrawerBody = document.getElementById('cartDrawerBody');
+      const cartDrawerSubtotal = document.getElementById('cartDrawerSubtotal');
+      const btnClearCartBtn = document.getElementById('btnClearCartBtn');
+      const btnDrawerCheckout = document.getElementById('btnDrawerCheckout');
+
+      // Checkout Modal Elements
+      const checkoutModal = document.getElementById('checkoutModal');
+      const btnCloseCheckoutModal = document.getElementById('btnCloseCheckoutModal');
+      const btnCancelCheckout = document.getElementById('btnCancelCheckout');
+      const checkoutStep1Panel = document.getElementById('checkoutStep1Panel');
+      const checkoutStep2Panel = document.getElementById('checkoutStep2Panel');
+      const checkoutStep3Panel = document.getElementById('checkoutStep3Panel');
+      const checkoutStep1Indicator = document.getElementById('checkoutStep1Indicator');
+      const checkoutStep2Indicator = document.getElementById('checkoutStep2Indicator');
+      const checkoutStep3Indicator = document.getElementById('checkoutStep3Indicator');
+      const checkoutAddressForm = document.getElementById('checkoutAddressForm');
+      const btnBackToAddressStep = document.getElementById('btnBackToAddressStep');
+      const btnConfirmPlaceOrder = document.getElementById('btnConfirmPlaceOrder');
+      const btnFinishOrderShopping = document.getElementById('btnFinishOrderShopping');
+
+      // Add Plant & Guide Modals
       const addPlantModal = document.getElementById('addPlantModal');
       const guideModal = document.getElementById('guideModal');
+      const authorOnlyModal = document.getElementById('authorOnlyModal');
       const btnOpenAddPlantModal = document.getElementById('btnOpenAddPlantModal');
       const btnQuickAddPlant = document.getElementById('btnQuickAddPlant');
       const btnClosePlantModal = document.getElementById('btnClosePlantModal');
       const btnCancelPlant = document.getElementById('btnCancelPlant');
       const btnCloseGuideModal = document.getElementById('btnCloseGuideModal');
+      const btnCloseAuthorOnlyModal = document.getElementById('btnCloseAuthorOnlyModal');
       const addPlantForm = document.getElementById('addPlantForm');
+      const presetPicker = document.getElementById('presetPicker');
+      const btnGuideBuyNow = document.getElementById('btnGuideBuyNow');
+
+      // Temporary holder for customer checkout address
+      let currentCustomerAddress = {};
+
+      // Initialize badge counters
+      updateCartBadge();
 
       // Render Flower Cards dynamically
       function renderFlowerGrid() {
@@ -736,8 +1079,11 @@
         const isAuthor = HarborDB.isAuthor();
 
         totalPlantsCount.textContent = plants.length;
+        if (statSpeciesCount) statSpeciesCount.textContent = plants.length + '+';
 
         let filtered = plants;
+
+        // Apply Season Filter
         if (currentFilter === 'spring') {
           filtered = plants.filter(p => p.seasonCategory === 'spring' || (p.bloomSeason && p.bloomSeason.toLowerCase().includes('spring')));
         } else if (currentFilter === 'summer') {
@@ -746,14 +1092,37 @@
           filtered = plants.filter(p => p.isCustom);
         }
 
+        // Apply Search Filter
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase().trim();
+          filtered = filtered.filter(p => 
+            (p.name && p.name.toLowerCase().includes(q)) ||
+            (p.scientific && p.scientific.toLowerCase().includes(q)) ||
+            (p.bloomSeason && p.bloomSeason.toLowerCase().includes(q)) ||
+            (p.speciality && p.speciality.toLowerCase().includes(q))
+          );
+        }
+
         if (!filtered.length) {
           flowerGrid.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-              <div style="font-size: 2.5rem; margin-bottom: 12px;">🌿</div>
-              <h3 style="color: #ffffff; margin-bottom: 8px;">No plants found in this category</h3>
-              <p style="color: var(--harbor-text-muted);">Try selecting "All Botanical Species" or add a new plant to the collection.</p>
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #ffffff; border-radius: 18px; border: 1px dashed var(--harbor-border);">
+              <div style="font-size: 2.8rem; margin-bottom: 12px;">🌿</div>
+              <h3 style="color: var(--harbor-text-main); margin-bottom: 8px;">No matching botanical species found</h3>
+              <p style="color: var(--harbor-text-muted); max-width: 440px; margin: 0 auto 18px;">Try clearing your search query or switching categories to explore other varieties.</p>
+              <button type="button" class="btn-outline" id="btnResetSearch">Clear Search &amp; Filters</button>
             </div>
           `;
+          const resetBtn = document.getElementById('btnResetSearch');
+          if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+              searchQuery = '';
+              flowerSearchInput.value = '';
+              searchClearBtn.classList.remove('visible');
+              currentFilter = 'all';
+              filterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === 'all'));
+              renderFlowerGrid();
+            });
+          }
           return;
         }
 
@@ -775,68 +1144,122 @@
               <p class="flower-card-quote">
                 ${plant.speciality}
               </p>
+
+              <!-- Shop Price & Stock Tag -->
+              <div class="shop-price-row">
+                <div class="shop-price-tag">
+                  <span class="currency-symbol">₹</span>${plant.price || 299}
+                </div>
+                <span class="shop-in-stock">✓ Ready to Ship</span>
+              </div>
+
+              <!-- Buy Section / E-commerce Actions -->
+              <div class="shop-card-actions">
+                <button type="button" class="btn-add-cart" data-id="${plant.id}" title="Add to shopping cart">
+                  <span>🛒</span> Add to Cart
+                </button>
+                <button type="button" class="btn-buy-now" data-id="${plant.id}" title="Instant buy & checkout">
+                  <span>⚡</span> Buy Now
+                </button>
+              </div>
+
               <div class="flower-card-footer">
                 <button type="button" class="btn-grow-guide" data-id="${plant.id}">
-                  <span>🌱</span> How to Grow Guide &rarr;
+                  <span>🌱</span> How to Grow Guide
                 </button>
                 ${(plant.isCustom && isAuthor) ? `
                   <button type="button" class="btn-delete-plant" data-id="${plant.id}" title="Remove custom plant">
                     Delete
                   </button>
                 ` : `
-                  <a href="contact.html?service=planting" style="color: var(--harbor-gold); font-size: 0.8rem; font-weight: 700; text-decoration: none;">
-                    Inquire Planting &rarr;
-                  </a>
+                  <span style="font-size: 0.74rem; color: var(--harbor-text-dim);">Harbor Certified</span>
                 `}
               </div>
             </div>
           </article>
         `).join('');
 
-        // Attach Grow Guide listeners
+        // Attach Card Action Listeners
+        document.querySelectorAll('.btn-add-cart').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const pid = e.currentTarget.getAttribute('data-id');
+            const target = HarborDB.getPlants().find(p => p.id === pid);
+            if (target) {
+              HarborDB.addToCart(target, 1);
+              triggerCartFabBounce();
+              HarborAuth.showToast(`Added ${target.name} (₹${target.price}) to your cart.`, 'success', 'Added to Cart');
+            }
+          });
+        });
+
+        document.querySelectorAll('.btn-buy-now').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const pid = e.currentTarget.getAttribute('data-id');
+            const target = HarborDB.getPlants().find(p => p.id === pid);
+            if (target) {
+              HarborDB.addToCart(target, 1);
+              updateCartBadge();
+              openCheckoutModal();
+            }
+          });
+        });
+
         document.querySelectorAll('.btn-grow-guide').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const pid = e.currentTarget.getAttribute('data-id');
             const target = HarborDB.getPlants().find(p => p.id === pid);
-            if (target) openGuideModal(target);
+            if (target) {
+              activeGuidePlant = target;
+              document.getElementById('guidePlantName').textContent = target.name;
+              document.getElementById('guideScientificName').textContent = target.scientific || '';
+              document.getElementById('guidePlantImg').src = target.image;
+              document.getElementById('guideBloomSeason').textContent = target.bloomSeason;
+              document.getElementById('guideSpecialityText').textContent = target.speciality;
+              document.getElementById('guideGrowingStepsText').textContent = target.growGuide;
+              guideModal.classList.add('active');
+            }
           });
         });
 
-        // Attach Delete listeners (for Authors on custom plants)
         document.querySelectorAll('.btn-delete-plant').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const pid = e.currentTarget.getAttribute('data-id');
-            if (confirm('Are you sure you want to remove this plant from the botanical collection?')) {
+            if (confirm('Are you sure you want to delete this custom plant from the collection?')) {
               try {
                 HarborDB.deletePlant(pid);
-                HarborAuth.showToast('Plant removed from collection.', 'info', 'Plant Deleted');
+                HarborAuth.showToast('Plant removed from catalog.', 'info', 'Plant Deleted');
                 renderFlowerGrid();
               } catch (err) {
-                HarborAuth.showToast(err.message, 'error', 'Permission Denied');
+                HarborAuth.showToast(err.message, 'error', 'Error');
               }
             }
           });
         });
       }
 
-      // Open Guide Modal
-      function openGuideModal(plant) {
-        document.getElementById('guidePlantName').textContent = plant.name;
-        document.getElementById('guideScientificName').textContent = plant.scientific || '';
-        document.getElementById('guidePlantImg').src = plant.image;
-        document.getElementById('guideBloomSeason').textContent = plant.bloomSeason;
-        document.getElementById('guideSpecialityText').textContent = plant.speciality;
-        document.getElementById('guideGrowingStepsText').textContent = plant.growGuide;
+      // Initial Render
+      renderFlowerGrid();
 
-        guideModal.classList.add('active');
-      }
-
-      btnCloseGuideModal.addEventListener('click', () => guideModal.classList.remove('active'));
-      guideModal.addEventListener('click', (e) => {
-        if (e.target === guideModal) guideModal.classList.remove('active');
+      // Search Bar Listeners
+      flowerSearchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        if (searchQuery.trim().length > 0) {
+          searchClearBtn.classList.add('visible');
+        } else {
+          searchClearBtn.classList.remove('visible');
+        }
+        renderFlowerGrid();
       });
 
-      // Filter handling
+      searchClearBtn.addEventListener('click', () => {
+        flowerSearchInput.value = '';
+        searchQuery = '';
+        searchClearBtn.classList.remove('visible');
+        renderFlowerGrid();
+        flowerSearchInput.focus();
+      });
+
+      // Filter Pill Listeners
       filterPills.forEach(pill => {
         pill.addEventListener('click', () => {
           filterPills.forEach(p => p.classList.remove('active'));
@@ -846,114 +1269,349 @@
         });
       });
 
-      const authorOnlyModal = document.getElementById('authorOnlyModal');
-      const btnCloseAuthorOnlyModal = document.getElementById('btnCloseAuthorOnlyModal');
-      const authorOnlyNoticeText = document.getElementById('authorOnlyNoticeText');
-      const authorModalStatusPill = document.getElementById('authorModalStatusPill');
-
-      function updateAuthorUI() {
-        const isAuthor = HarborDB.isAuthor();
-        const user = HarborDB.getCurrentUser();
-
-        if (isAuthor) {
-          if (btnOpenAddPlantModal) {
-            btnOpenAddPlantModal.innerHTML = `<span>🌿</span> List New Plant / Tree &rarr;`;
-            btnOpenAddPlantModal.title = `Author Publishing Clearance Active (${user ? user.name : 'Author'})`;
-          }
-          if (btnQuickAddPlant) {
-            btnQuickAddPlant.innerHTML = `<span>+</span> List New Plant / Tree`;
-          }
-          if (authorModalStatusPill) {
-            authorModalStatusPill.innerHTML = `👑 Verified Author Clearance: ${user ? user.name : 'Alex Morgan'}`;
-          }
-        } else {
-          if (btnOpenAddPlantModal) {
-            btnOpenAddPlantModal.innerHTML = `<span>🔒</span> List Plant (Author Only)`;
-            btnOpenAddPlantModal.title = `Listing flowers & trees is strictly reserved for Author accounts`;
-          }
-          if (btnQuickAddPlant) {
-            btnQuickAddPlant.innerHTML = `<span>🔒</span> List Plant (Author Only)`;
+      // Cart Badge Sync
+      function updateCartBadge() {
+        const count = HarborDB.getCartCount();
+        if (navCartCount) navCartCount.textContent = count;
+        if (cartBadgeCount) {
+          cartBadgeCount.textContent = count;
+          if (count > 0) {
+            cartBadgeCount.classList.remove('hidden');
+          } else {
+            cartBadgeCount.classList.add('hidden');
           }
         }
       }
 
-      function openAuthorOnlyModal(message) {
-        if (authorOnlyNoticeText && message) {
-          authorOnlyNoticeText.innerHTML = message;
-        }
-        authorOnlyModal.classList.add('active');
+      function triggerCartFabBounce() {
+        updateCartBadge();
+        cartFabBtn.classList.add('bouncing');
+        setTimeout(() => cartFabBtn.classList.remove('bouncing'), 400);
       }
 
-      if (btnCloseAuthorOnlyModal) {
-        btnCloseAuthorOnlyModal.addEventListener('click', () => {
-          authorOnlyModal.classList.remove('active');
-        });
-      }
-      if (authorOnlyModal) {
-        authorOnlyModal.addEventListener('click', (e) => {
-          if (e.target === authorOnlyModal) authorOnlyModal.classList.remove('active');
-        });
-      }
+      window.addEventListener('harbor_cart_updated', () => {
+        updateCartBadge();
+        renderCartDrawer();
+      });
 
-      // Open Add Plant Modal (strictly Author Only)
-      function openAddModal() {
-        if (!HarborDB.isAuthor()) {
-          const user = HarborDB.getCurrentUser();
-          const userStatus = user 
-            ? `You are currently logged in as a <strong>Member (${user.name})</strong>.` 
-            : `You are currently browsing as a <strong>Guest</strong>.`;
-          
-          openAuthorOnlyModal(`
-            ${userStatus} Under Harbor Botanical rules, <strong>only registered Authors</strong> have permission to publish new flowers or trees into the collection.<br/><br/>
-            Please sign in with an Author account to contribute new botanical listings.
-          `);
+      // Render Cart Drawer
+      function renderCartDrawer() {
+        const cart = HarborDB.getCart();
+        const subtotal = HarborDB.getCartTotal();
+
+        if (cartDrawerSubtotal) cartDrawerSubtotal.textContent = `₹${subtotal}`;
+
+        if (!cart.length) {
+          cartDrawerBody.innerHTML = `
+            <div class="cart-drawer-empty">
+              <div style="font-size: 3.2rem; margin-bottom: 12px;">🌿</div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--harbor-text-main); margin-bottom: 6px;">Your cart is empty</h4>
+              <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 18px;">Select beautiful flowers and perennials from our royal boutique to begin.</p>
+              <button type="button" class="btn-primary" id="btnShopNowEmpty" style="padding: 10px 22px; font-size: 0.85rem;">
+                Browse Flower Collection &rarr;
+              </button>
+            </div>
+          `;
+          const btnShop = document.getElementById('btnShopNowEmpty');
+          if (btnShop) btnShop.addEventListener('click', closeCartDrawer);
           return;
         }
 
-        addPlantForm.reset();
-        addPlantModal.classList.add('active');
-        document.getElementById('plantName').focus();
+        cartDrawerBody.innerHTML = cart.map(item => `
+          <div class="cart-item-row" data-id="${item.id}">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-img" />
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">₹${item.price} each &bull; Total: ₹${item.price * item.qty}</div>
+              <div class="cart-qty-stepper">
+                <button type="button" class="cart-qty-btn btn-cart-minus" data-id="${item.id}">-</button>
+                <span class="cart-qty-val">${item.qty}</span>
+                <button type="button" class="cart-qty-btn btn-cart-plus" data-id="${item.id}">+</button>
+              </div>
+            </div>
+            <button type="button" class="cart-remove-btn btn-cart-del" data-id="${item.id}" title="Remove item">
+              &times;
+            </button>
+          </div>
+        `).join('');
+
+        // Attach Drawer Item Listeners
+        cartDrawerBody.querySelectorAll('.btn-cart-minus').forEach(b => {
+          b.addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            const it = cart.find(i => i.id === id);
+            if (it) HarborDB.updateCartQty(id, it.qty - 1);
+          });
+        });
+
+        cartDrawerBody.querySelectorAll('.btn-cart-plus').forEach(b => {
+          b.addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            const it = cart.find(i => i.id === id);
+            if (it) HarborDB.updateCartQty(id, it.qty + 1);
+          });
+        });
+
+        cartDrawerBody.querySelectorAll('.btn-cart-del').forEach(b => {
+          b.addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            HarborDB.removeFromCart(id);
+            HarborAuth.showToast('Item removed from cart.', 'info', 'Cart Updated');
+          });
+        });
       }
 
-      if (btnOpenAddPlantModal) btnOpenAddPlantModal.addEventListener('click', openAddModal);
-      if (btnQuickAddPlant) btnQuickAddPlant.addEventListener('click', openAddModal);
-      if (btnClosePlantModal) btnClosePlantModal.addEventListener('click', () => addPlantModal.classList.remove('active'));
-      if (btnCancelPlant) btnCancelPlant.addEventListener('click', () => addPlantModal.classList.remove('active'));
-      addPlantModal.addEventListener('click', (e) => {
-        if (e.target === addPlantModal) addPlantModal.classList.remove('active');
+      function openCartDrawer() {
+        renderCartDrawer();
+        cartDrawer.classList.add('open');
+        cartDrawerOverlay.classList.add('open');
+      }
+
+      function closeCartDrawer() {
+        cartDrawer.classList.remove('open');
+        cartDrawerOverlay.classList.remove('open');
+      }
+
+      cartFabBtn.addEventListener('click', openCartDrawer);
+      btnNavCartQuick.addEventListener('click', openCartDrawer);
+      btnCloseCartDrawer.addEventListener('click', closeCartDrawer);
+      cartDrawerOverlay.addEventListener('click', closeCartDrawer);
+
+      btnClearCartBtn.addEventListener('click', () => {
+        if (confirm('Clear all items from your cart?')) {
+          HarborDB.clearCart();
+          HarborAuth.showToast('Your shopping cart is cleared.', 'info', 'Cart Cleared');
+        }
       });
 
-      // Preset thumbnail picker
-      document.querySelectorAll('.preset-img-thumb').forEach(thumb => {
-        thumb.addEventListener('click', () => {
-          document.querySelectorAll('.preset-img-thumb').forEach(t => t.classList.remove('selected'));
-          thumb.classList.add('selected');
-          document.getElementById('plantImage').value = thumb.src;
-        });
+      // Checkout Modal Flow
+      btnDrawerCheckout.addEventListener('click', () => {
+        const cart = HarborDB.getCart();
+        if (!cart.length) {
+          HarborAuth.showToast('Your cart is empty. Please add flowers to proceed.', 'warning', 'Empty Cart');
+          return;
+        }
+        closeCartDrawer();
+        openCheckoutModal();
       });
 
-      // Submit Add Plant Form (Author Guard)
-      addPlantForm.addEventListener('submit', (e) => {
+      function openCheckoutModal() {
+        const cart = HarborDB.getCart();
+        if (!cart.length) {
+          HarborAuth.showToast('Please add items to cart before checking out.', 'warning', 'Cart Empty');
+          return;
+        }
+
+        const subtotal = HarborDB.getCartTotal();
+        const deliveryFee = subtotal >= 999 ? 0 : 99;
+        const grandTotal = subtotal + deliveryFee;
+
+        document.getElementById('checkoutItemCount').textContent = HarborDB.getCartCount();
+        document.getElementById('checkoutSubtotalDisplay').textContent = `₹${subtotal}`;
+        document.getElementById('checkoutDeliveryDisplay').textContent = deliveryFee === 0 ? 'FREE (Special Offer)' : `₹${deliveryFee}`;
+        document.getElementById('checkoutGrandTotalDisplay').textContent = `₹${grandTotal}`;
+        document.getElementById('btnPayAmountDisplay').textContent = grandTotal;
+
+        // Pre-fill user data if available
+        const currentUser = HarborDB.getCurrentUser();
+        if (currentUser) {
+          const nameInput = document.getElementById('shipName');
+          const emailInput = document.getElementById('shipEmail');
+          if (nameInput && !nameInput.value) nameInput.value = currentUser.name || '';
+          if (emailInput && !emailInput.value) emailInput.value = currentUser.email || '';
+        }
+
+        // Reset step panels
+        checkoutStep1Panel.style.display = 'block';
+        checkoutStep2Panel.style.display = 'none';
+        checkoutStep3Panel.style.display = 'none';
+
+        checkoutStep1Indicator.className = 'booking-step active';
+        checkoutStep2Indicator.className = 'booking-step';
+        checkoutStep3Indicator.className = 'booking-step';
+
+        checkoutModal.classList.add('active');
+      }
+
+      function closeCheckoutModal() {
+        checkoutModal.classList.remove('active');
+      }
+
+      btnCloseCheckoutModal.addEventListener('click', closeCheckoutModal);
+      btnCancelCheckout.addEventListener('click', () => {
+        closeCheckoutModal();
+        openCartDrawer();
+      });
+
+      // Step 1: Submit Address Form
+      checkoutAddressForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        currentCustomerAddress = {
+          name: document.getElementById('shipName').value.trim(),
+          phone: document.getElementById('shipPhone').value.trim(),
+          email: document.getElementById('shipEmail').value.trim(),
+          address: document.getElementById('shipAddress').value.trim(),
+          city: document.getElementById('shipCity').value.trim(),
+          pincode: document.getElementById('shipPincode').value.trim()
+        };
 
-        if (!HarborDB.isAuthor()) {
-          HarborAuth.showToast('Access Denied: Only Author accounts can publish new flowers or trees.', 'error', 'Author Clearance Required');
-          addPlantModal.classList.remove('active');
+        // Advance to Step 2: Payment
+        checkoutStep1Panel.style.display = 'none';
+        checkoutStep2Panel.style.display = 'block';
+
+        checkoutStep1Indicator.className = 'booking-step completed';
+        checkoutStep2Indicator.className = 'booking-step active';
+      });
+
+      btnBackToAddressStep.addEventListener('click', () => {
+        checkoutStep2Panel.style.display = 'none';
+        checkoutStep1Panel.style.display = 'block';
+
+        checkoutStep1Indicator.className = 'booking-step active';
+        checkoutStep2Indicator.className = 'booking-step';
+      });
+
+      // Step 2: Payment method choice
+      const paymentOptions = document.querySelectorAll('.payment-option');
+      paymentOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          paymentOptions.forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          selectedPaymentMethod = opt.getAttribute('data-method');
+
+          const upiFields = document.getElementById('upiFields');
+          const cardFields = document.getElementById('cardFields');
+          const codFields = document.getElementById('codFields');
+
+          if (selectedPaymentMethod === 'UPI') {
+            upiFields.style.display = 'block';
+            cardFields.style.display = 'none';
+            codFields.style.display = 'none';
+          } else if (selectedPaymentMethod === 'Card') {
+            upiFields.style.display = 'none';
+            cardFields.style.display = 'block';
+            codFields.style.display = 'none';
+          } else if (selectedPaymentMethod === 'COD') {
+            upiFields.style.display = 'none';
+            cardFields.style.display = 'none';
+            codFields.style.display = 'block';
+          } else {
+            upiFields.style.display = 'none';
+            cardFields.style.display = 'none';
+            codFields.style.display = 'none';
+          }
+        });
+      });
+
+      // Confirm & Place Order
+      btnConfirmPlaceOrder.addEventListener('click', () => {
+        const cartItems = HarborDB.getCart();
+        if (!cartItems.length) {
+          HarborAuth.showToast('Cart is empty.', 'error', 'Order Error');
+          closeCheckoutModal();
           return;
         }
 
-        const name = document.getElementById('plantName').value.trim();
-        const scientific = document.getElementById('plantScientific').value.trim();
-        const image = document.getElementById('plantImage').value.trim();
-        const bloomSeason = document.getElementById('plantBloom').value.trim();
-        const seasonCategory = document.getElementById('plantSeasonCategory').value;
-        const speciality = document.getElementById('plantSpeciality').value.trim();
-        const growGuide = document.getElementById('plantGrowGuide').value.trim();
+        if (selectedPaymentMethod === 'UPI') {
+          const upiVal = document.getElementById('upiIdInput').value.trim();
+          if (!upiVal) {
+            HarborAuth.showToast('Please enter your UPI ID or Virtual Payment Address.', 'warning', 'UPI Required');
+            document.getElementById('upiIdInput').focus();
+            return;
+          }
+        }
 
         try {
+          const order = HarborDB.placeOrder({
+            items: cartItems,
+            address: currentCustomerAddress,
+            paymentMethod: selectedPaymentMethod,
+            orderType: 'FLOWER_PURCHASE'
+          });
+
+          // Show confirmation
+          document.getElementById('confirmedOrderId').textContent = order.id;
+          document.getElementById('confCustomerName').textContent = currentCustomerAddress.name;
+          document.getElementById('confDeliveryAddress').textContent = `${currentCustomerAddress.address}, ${currentCustomerAddress.city} - ${currentCustomerAddress.pincode}`;
+          document.getElementById('confPaymentMethod').textContent = selectedPaymentMethod;
+          document.getElementById('confTotalAmount').textContent = `₹${order.totalAmount}`;
+
+          checkoutStep2Panel.style.display = 'none';
+          checkoutStep3Panel.style.display = 'block';
+
+          checkoutStep2Indicator.className = 'booking-step completed';
+          checkoutStep3Indicator.className = 'booking-step completed';
+
+          HarborAuth.showToast(`Order #${order.id} placed successfully!`, 'success', 'Order Confirmed');
+          updateCartBadge();
+          renderFlowerGrid();
+        } catch (err) {
+          HarborAuth.showToast(err.message, 'error', 'Order Placement Failed');
+        }
+      });
+
+      btnFinishOrderShopping.addEventListener('click', () => {
+        closeCheckoutModal();
+        renderFlowerGrid();
+      });
+
+      // Guide Modal "Buy This Specimen" action
+      btnGuideBuyNow.addEventListener('click', () => {
+        if (activeGuidePlant) {
+          HarborDB.addToCart(activeGuidePlant, 1);
+          guideModal.classList.remove('active');
+          triggerCartFabBounce();
+          openCheckoutModal();
+        }
+      });
+
+      btnCloseGuideModal.addEventListener('click', () => {
+        guideModal.classList.remove('active');
+      });
+
+      // Preset thumbnail pickers in Add Plant modal
+      if (presetPicker) {
+        presetPicker.querySelectorAll('.preset-img-thumb').forEach(thumb => {
+          thumb.addEventListener('click', () => {
+            document.getElementById('plantImage').value = thumb.src;
+            presetPicker.querySelectorAll('.preset-img-thumb').forEach(t => t.classList.remove('selected'));
+            thumb.classList.add('selected');
+          });
+        });
+      }
+
+      // Add Plant Modal triggers
+      function handleOpenAddPlant() {
+        if (!HarborDB.isAuthor()) {
+          authorOnlyModal.classList.add('active');
+          return;
+        }
+        addPlantModal.classList.add('active');
+      }
+
+      btnOpenAddPlantModal.addEventListener('click', handleOpenAddPlant);
+      btnQuickAddPlant.addEventListener('click', handleOpenAddPlant);
+      btnClosePlantModal.addEventListener('click', () => addPlantModal.classList.remove('active'));
+      btnCancelPlant.addEventListener('click', () => addPlantModal.classList.remove('active'));
+      btnCloseAuthorOnlyModal.addEventListener('click', () => authorOnlyModal.classList.remove('active'));
+
+      // Submit Add Plant form
+      addPlantForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        try {
+          const name = document.getElementById('plantName').value.trim();
+          const scientific = document.getElementById('plantScientific').value.trim();
+          const price = document.getElementById('plantPrice').value;
+          const image = document.getElementById('plantImage').value.trim();
+          const bloomSeason = document.getElementById('plantBloom').value.trim();
+          const seasonCategory = document.getElementById('plantSeasonCategory').value;
+          const speciality = document.getElementById('plantSpeciality').value.trim();
+          const growGuide = document.getElementById('plantGrowGuide').value.trim();
+
           const newPlant = HarborDB.savePlant({
             name,
             scientific,
+            price,
             image,
             bloomSeason,
             seasonCategory,
@@ -961,30 +1619,14 @@
             growGuide
           });
 
-          addPlantModal.classList.remove('active');
+          HarborAuth.showToast(`"${newPlant.name}" listed in collection at ₹${newPlant.price}!`, 'success', '👑 Plant Listed');
           addPlantForm.reset();
-
-          HarborAuth.showToast(`"${newPlant.name}" has been added to the botanical collection!`, 'success', '🌿 Plant Listed');
+          addPlantModal.classList.remove('active');
           renderFlowerGrid();
-
-          // Scroll down to the newly added plant
-          setTimeout(() => {
-            const newElem = document.querySelector(`[data-id="${newPlant.id}"]`);
-            if (newElem) {
-              newElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              newElem.style.border = '2px solid var(--harbor-gold)';
-              setTimeout(() => newElem.style.border = '', 2500);
-            }
-          }, 400);
-
         } catch (err) {
-          HarborAuth.showToast(err.message, 'error', 'Failed to List Plant');
+          HarborAuth.showToast(err.message, 'error', 'Publish Failed');
         }
       });
-
-      // Initial Render & Permissions Check
-      updateAuthorUI();
-      renderFlowerGrid();
 
     });
   </script>

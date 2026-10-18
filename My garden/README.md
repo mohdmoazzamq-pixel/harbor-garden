@@ -1,22 +1,24 @@
-# 🌿 Harbor Garden — Royal Botanical Living
+# 🌿 Harbor Garden — Royal Botanical Living & Flora Boutique (v3.0)
 
-> A full-featured, luxury botanical management web application with a built-in authentication portal, role-based access control, local JSON database, and a Node.js API server.
+> A full-featured, luxury botanical e-commerce and garden management platform with built-in authentication portal, role-based access control, shopping cart, multi-step delivery & payment checkout, 3-step service bookings with flower pairing, author management controls, local database, and a zero-dependency Node.js REST API server.
 
 ---
 
-## 📸 Preview
+## 📸 Preview & Highlights
 
-| Home — Botanical Catalog | Services Page | Security Portal |
-|:---:|:---:|:---:|
-| Filter & browse plants | Browse garden services | Login / Signup with RBAC |
+| 🌸 Flower Shop & Catalog | 🛒 Cart & Checkout | 🛠️ 3-Step Service Booking | 🛡️ Security & Recovery |
+|:---:|:---:|:---:|:---:|
+| Search, filter, prices (₹), Buy Now | Floating Cart FAB, drawer, address & payment | Bundle companion flowers, site scheduling, billing | RBAC Author/User, email OTP reset gateway |
 
 ---
 
 ## 🌟 About the Project
 
-**Harbor Garden** is a richly styled botanical catalogue and garden management platform built with pure **HTML, CSS, and JavaScript** on the frontend, backed by a lightweight **Node.js** web + REST API server. It allows users to browse a curated collection of flowers and plants, read growing guides, submit service inquiries, and manage the catalogue — all governed by a role-based security portal.
+**Harbor Garden** is an end-to-end botanical e-commerce platform and estate horticultural management suite built with pure **HTML5, CSS3, and modern Vanilla JavaScript**, supported by a lightweight **Node.js** web + REST API server with **zero external dependencies**.
 
-The project features a distinctive **Harbor Royal** dark gold & emerald design theme (`harbor-theme.css`) that gives it a luxury estate aesthetic throughout every page.
+It empowers customers to search and purchase heirloom Himalayan flowers, manage an interactive shopping cart, select delivery addresses, and pay via UPI, Cards, Net Banking, or Cash on Delivery. Customers can also schedule professional gardening services through an interactive **3-step booking flow** that allows bundling nursery flowers directly with the service.
+
+The entire platform is governed by an **Author vs. User Role-Based Access Control (RBAC)** security portal. Authors can list new plants with pricing, introduce custom services, publish heritage about cards, and inspect real-time database inquiries and security audit trails.
 
 ---
 
@@ -25,177 +27,142 @@ The project features a distinctive **Harbor Royal** dark gold & emerald design t
 ```
 My garden/
 │
-├── index.html            # 🏠 Home — Botanical plant/flower catalogue with dynamic cards
-├── about.html            # ℹ️ About — Mission, plant types, and team information
-├── services.html         # 🛠️ Services — Garden design, planting, and care services
-├── contact.html          # 📬 Contact — Service inquiry form (saved to local DB)
-├── database.html         # 📊 Database — Admin view of all inquiries & audit logs
-├── portal.html           # 🛡️ Security Portal — User management & audit dashboard
-├── login.html            # 🔑 Login / Sign Up page
-├── forgot-password.html  # 🔒 Password recovery page
+├── index.html            # 🏠 Home — Flower Shop, Real-Time Search, Cart Drawer & Multi-Step Checkout
+├── services.html         # 🛠️ Services — Dynamic service listings & 3-Step Service Booking Flow
+├── about.html            # ℹ️ About — Botanical heritage, mission, dynamic About Cards & horticultural tips
+├── contact.html          # 📬 Contact — Custom inquiry form (persisted in local DB & syncs to API)
+├── database.html         # 📊 Database — Admin inquiries management & audit logs (Author only)
+├── portal.html           # 🛡️ Security Portal — User management, 2FA & security score dashboard
+├── login.html            # 🔑 Login / Sign Up — Gateway with password strength meter & demo quick-fills
+├── forgot-password.html  # 🔒 Password Recovery — 4-step cryptographic OTP verification & reset
 │
-├── harbor-theme.css      # 🎨 Global luxury dark Harbor design theme
-├── style.css             # Additional global styles
+├── harbor-theme.css      # 🎨 Royal Harbor Theme (Gold, Emerald, White Canvas, Keyframe Animations)
+├── style.css             # Additional layout styles
 ├── about.css             # About page specific styles
 ├── services.css          # Services page specific styles
 ├── contactus.css         # Contact page specific styles
 │
-├── auth.js               # 🔐 HarborAuth — Authentication, RBAC & session manager
-├── db.js                 # 💾 HarborDB — Client-side local storage data engine
-├── server.js             # 🚀 Node.js web server + REST API (zero dependencies)
+├── auth.js               # 🔐 HarborAuth — Session manager, RBAC navbar & toast notifications
+├── db.js                 # 💾 HarborDB — Client database engine (Cart, Orders, Services, About Cards)
+├── server.js             # 🚀 Node.js server + REST API (Zero dependencies, persistent flat JSON storage)
 │
 ├── package.json          # Node.js project config
-├── start.bat             # Windows quick-start script
+├── start.bat             # Windows one-click start launcher
 │
-└── data/                 # 📁 JSON flat-file database (auto-created by server)
-    ├── users.json        # Registered user accounts
-    ├── contacts.json     # Contact/service inquiry submissions
-    ├── plants.json       # Custom plant listings added by Authors
-    └── audit.json        # Server & security audit log
+└── data/                 # 📁 Flat-file JSON database (auto-seeded by server)
+    ├── plants.json       # Custom botanical listings added by Authors
+    ├── services.json     # Custom garden services added by Authors
+    ├── about-cards.json  # Custom heritage story cards added by Authors
+    ├── orders.json       # Customer plant orders & service bookings
+    ├── contacts.json     # Inquiries submitted via Contact form
+    ├── users.json        # User profiles & role credentials
+    └── audit.json        # Security and administrative audit trail
 ```
 
 ---
 
-## ✨ Features
+## ✨ Comprehensive Features (v3.0)
 
-### 🌸 Botanical Catalogue (Home Page)
-- Dynamic flower/plant card grid populated from **HarborDB**
-- Filter by **Spring Bloomers**, **Summer & Fall**, or **Custom Listed**
-- Each card shows: plant image, bloom season, scientific name, speciality description
-- **"How to Grow" modal** — step-by-step growing guide with specs (sunlight, hydration, bloom period)
-- **Add New Plant** form (restricted to **Author** role only) with preset image picker
+### 🌸 Botanical Flower Shop (`index.html`)
+- **Real-Time Flower Search Bar:** Instant client-side filtering by flower name, botanical title, season, or speciality.
+- **Season Category Pills:** Quick-switch between All, Spring Bloomers, Summer & Fall, and Custom Listed.
+- **Prominent Flower Pricing:** All flowers display clear prices in Indian Rupees (₹), e.g., Peony (₹450), Sunflower (₹180), Azalea (₹520).
+- **Seller / Author Pricing Control:** When Authors list new plants via the "+ List New Plant" modal, they specify the price in ₹ alongside botanical specs.
+- **Buy Section on Every Flower Card:**
+  - `🛒 Add to Cart`: Increments cart quantity, triggers cart badge count update, and plays a luxury toast alert.
+  - `⚡ Buy Now`: Adds plant to cart and immediately opens the checkout modal.
+  - `🌱 How to Grow Guide`: Opens an extensive modal detailing sunlight, hydration, bloom period, and growing instructions.
+  - `🗑️ Delete Plant`: Author-exclusive button to remove custom plants.
 
-### 🛡️ Security Portal & Authentication
-- **Sign Up / Sign In** with persistent session via `localStorage`
-- **Role-Based Access Control (RBAC)**:
-  - 👑 **Author** — Can list new plants, view the inquiries database, audit logs, and manage users
-  - 👤 **User / Member** — Can browse the catalogue and submit contact inquiries
-- **Forgot Password** recovery flow
-- **2FA support** flag on user accounts
-- Live security score per user profile
+### 🛒 Floating Cart & Slide-Out Drawer
+- **Floating Cart FAB:** Fixed bottom-right button with dynamic item count badge and bounce animation on item addition.
+- **Interactive Slide-Out Drawer:** Shows cart thumbnail, unit price, quantity steppers (`-` / `+`), item deletion, subtotal calculation, and clear cart option.
+- **Free Delivery Threshold:** Automatic complimentary shipping on orders over ₹999 (standard shipping: ₹99).
 
-### 📊 Local Database (Admin Panel)
-- View all **contact/service inquiries** submitted through the site
-- View **all registered users** (passwords masked)
-- View **audit logs** of server events
-- Real-time status management for inquiries (New → In Progress → Resolved)
+### 📦 Customer Delivery & Multi-Step Checkout
+- **Step 1: Delivery Address:** Customer Full Name, Mobile Phone, Email, Delivery Street Address, City, and Pincode (auto-filled if signed in).
+- **Step 2: Payment Gateway:**
+  - 📱 **UPI / QR** (Google Pay, PhonePe, Paytm, BHIM, UPI ID input).
+  - 💳 **Credit / Debit Cards** (Visa, Mastercard, RuPay).
+  - 🏦 **Net Banking** (All major Indian banks).
+  - 💵 **Cash on Delivery (COD)** (Pay upon inspection).
+- **Step 3: Order Confirmation:** Celebratory confirmation modal displaying the generated Order ID (`HBR-XXXX-XXX`), delivery summary, payment mode, and estimated transit time.
 
-### 📬 Contact & Services
-- **6 Garden Services**: Garden Design, Plant Installation, Seasonal Maintenance, Organic Care, Landscape Architecture, Irrigation Systems
-- Contact form with service selection, name, email, mobile, and message
-- Submissions stored persistently via the Node.js API
+### 🛠️ Garden Services & 3-Step Booking (`services.html`)
+- **Dynamic Service Catalog:** Garden Design (₹4,999), Plant Installation (₹2,499), Seasonal Maintenance (₹1,499), Organic Care (₹1,999), Landscape Architecture (₹8,999), and Smart Irrigation (₹5,499).
+- **Author Service Creator:** Authors can introduce new services with custom icons, pricing, duration, description, and cover images.
+- **Interactive 3-Step Customer Booking Flow:**
+  - **Step 1: Service Confirmation & Add Flower Section:** Confirms selected service and allows customers to bundle companion nursery flowers directly with the service!
+  - **Step 2: Service Site Address:** Estate location, contact information, preferred service date, and appointment time slot (Morning / Afternoon / Evening).
+  - **Step 3: Itemized Billing & Payment:** Complete billing summary (Base Service + Selected Plants + Complimentary Dispatch = Grand Total) and payment choice (UPI, Card, Net Banking, or Pay After Service).
+  - **Booking Reference:** Generates instant Booking Reference ID (`HBR-SVC-XXXX`).
 
-### 🎨 Harbor Royal Theme
-- Dark luxury design with **deep navy** background, **gold** accents, and **emerald green** highlights
-- Glassmorphism cards with subtle glows and hover animations
-- Fully **responsive** — mobile-friendly hamburger navigation
-- Custom toast notification system for all user actions
+### 📖 Heritage & Dynamic About Cards (`about.html`)
+- **Author-Managed Story Cards:** Authors can add new milestone cards with custom emoji icons, titles, subtitles, cover images, and narratives.
+- **Horticultural Classifications:** Explanations of Perennials, Biennials, and Annuals.
+- **Best Practices:** Deep morning watering, pine mulching, deadheading, and organic soil balancing.
 
----
-
-## 🛠️ Tech Stack
-
-| Technology | Usage |
-|---|---|
-| **HTML5** | Semantic page structure across all pages |
-| **CSS3** | Custom luxury Harbor theme, responsive grid layouts, animations |
-| **Vanilla JavaScript** | Dynamic UI, DOM manipulation, localStorage data engine |
-| **Node.js** (built-in modules only) | Web server + REST API — **zero npm dependencies** |
-| **JSON flat files** | Lightweight persistent storage for users, contacts, plants, audit |
-
-> ⚡ **No frameworks, no build tools, no npm packages required.** The server uses only Node.js built-in modules (`http`, `fs`, `path`, `url`).
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) v14 or higher
-
-### Installation & Running
-
-**Option 1 — Windows Quick Start (Recommended)**
-```bat
-double-click start.bat
-```
-
-**Option 2 — Command Line**
-```bash
-# Navigate into the project folder
-cd "My garden"
-
-# Start the server
-node server.js
-```
-
-**Option 3 — npm start**
-```bash
-cd "My garden"
-npm start
-```
-
-The server starts on **http://localhost:3000** (auto-increments port if 3000 is busy).
-
-```
-🌿 HARBOR ROYAL GARDEN • WEB & DATABASE SERVER
-======================================================
-📍 Web Application:  http://localhost:3000/
-🛡️ Harbor Login:     http://localhost:3000/login.html
-🔑 Forgot Password:  http://localhost:3000/forgot-password.html
-📊 Local Database:   http://localhost:3000/database.html
-```
+### 🔒 Security Portal, RBAC & Email OTP Recovery
+- **Role-Based Access Control:**
+  - 👑 **Author:** Full administrative privileges (list/delete flowers, add services, add about cards, inspect database, view audit logs).
+  - 👤 **User / Member:** Customer shopping, cart management, and booking inquiries.
+- **Password Recovery (`forgot-password.html`):**
+  - Step 1: User enters registered email.
+  - Step 2: 6-digit cryptographic security code is generated and dispatched (with simulated email gateway and console broadcast), valid for 15 minutes. Supports clipboard paste.
+  - Step 3: Verified user sets new password (with confirmation and minimum character checks).
+  - Step 4: Instant confirmation and redirect to sign in.
 
 ---
 
-## 🔑 Default Demo Accounts
+## 🔑 Demo Accounts
 
-| Name | Email | Password | Role |
+| Name | Email | Password | Role & Clearance |
 |---|---|---|---|
-| Alex Morgan | `alex.morgan@harbor.io` | `Harbor@2026` | 👑 Author |
-| Moazzam Qureshi | `moazzam@mygarden.com` | `Garden@2026` | 👑 Author |
-| Elena Vance | `user@mygarden.com` | `User@2026` | 👤 User |
+| **Alex Morgan** | `alex.morgan@harbor.io` | `Harbor@2026` | 👑 **Author** (Full Access) |
+| **Moazzam Qureshi** | `moazzam@mygarden.com` | `Garden@2026` | 👑 **Author** (Full Access) |
+| **Elena Vance** | `user@mygarden.com` | `User@2026` | 👤 **User** (Member / Shopping) |
 
-> **Note:** These accounts are seeded automatically when the server first starts. Authors can add plants and access the full admin database. Users can only browse and submit inquiries.
+> ⚡ **Quick Test Tip:** On `login.html`, click either "⚡ Sign In as Author (Alex Morgan)" or "👤 Sign In as Member (Elena Vance)" for one-click authentication.
 
 ---
 
 ## 🌐 REST API Endpoints
 
-The Node.js server exposes a simple REST API at `http://localhost:3000`:
+The native Node.js server (`server.js`) operates on port 3000 (or the next available port):
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/api/plants` | Get all custom-listed plants |
-| `POST` | `/api/plants` | Add a new plant to the catalogue |
-| `GET` | `/api/contacts` | Get all contact inquiries |
+| `GET` | `/api/plants` | Fetch all botanical species and custom additions |
+| `POST` | `/api/plants` | Publish a new plant listing (Author) |
+| `GET` | `/api/services` | Fetch all active gardening services |
+| `POST` | `/api/services` | Introduce a new service (Author) |
+| `GET` | `/api/about-cards` | Fetch all heritage story cards |
+| `POST` | `/api/about-cards` | Publish a new about card (Author) |
+| `GET` | `/api/orders` | Retrieve customer orders and service bookings |
+| `POST` | `/api/orders` | Record a customer order or booking |
+| `GET` | `/api/contacts` | Retrieve customer contact inquiries |
 | `POST` | `/api/contacts` | Submit a new contact inquiry |
-| `GET` | `/api/users` | Get all users (passwords masked) |
-| `POST` | `/api/auth/register` | Register a new user account |
-| `POST` | `/api/auth/reset-password` | Reset a user's password |
-| `GET` | `/api/audit` | Get all audit log entries |
+| `POST` | `/api/auth/send-otp` | Dispatch 6-digit password recovery code to email |
+| `POST` | `/api/auth/reset-password` | Update account password using verified token |
+| `GET` | `/api/audit` | Fetch cryptographic security audit log (Author) |
 
 ---
 
-## 📄 Pages Overview
+## 🚀 How to Run
 
-| Page | URL | Description |
-|---|---|---|
-| Home / Catalogue | `/index.html` | Browse all botanical species with filters and growing guides |
-| About | `/about.html` | Our mission, plant categories, and garden philosophy |
-| Services | `/services.html` | Explore all 6 professional garden services |
-| Contact | `/contact.html` | Submit a service inquiry (saved to database) |
-| Database | `/database.html` | Admin dashboard — inquiries, users, and audit logs |
-| Security Portal | `/portal.html` | User management and security overview |
-| Login | `/login.html` | Sign in or create a new account |
-| Forgot Password | `/forgot-password.html` | Password recovery |
+### Method 1: Windows One-Click (Recommended)
+Double-click `start.bat` in the project folder.
 
----
+### Method 2: Command Line
+```bash
+# Navigate to the project directory
+cd "E:\HTML & CSS\My garden"
 
-## 📍 Contact Information
+# Start the server (zero external dependencies required)
+node server.js
+```
 
-- **Address:** 123 Green Garden Road, Haldwani, Uttarakhand, India
-- **Phone:** +91 98765 43210
-- **Email:** info@mygarden.com
+Open your browser to: **http://localhost:3000/**
 
 ---
 
@@ -203,15 +170,10 @@ The Node.js server exposes a simple REST API at `http://localhost:3000`:
 
 **Mohd Moazzam**
 - GitHub: [@mohdmoazzamq-pixel](https://github.com/mohdmoazzamq-pixel)
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** — feel free to use, modify, and distribute it.
+- Repository: [harbor-garden](https://github.com/mohdmoazzamq-pixel/harbor-garden)
 
 ---
 
 <p align="center">
-  🌿 Built with passion for nature and clean code &bull; Harbor Garden &copy; 2026
+  🌿 Crafted with passion for botanical living &bull; Harbor Garden &copy; 2026
 </p>

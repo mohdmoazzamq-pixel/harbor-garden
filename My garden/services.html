@@ -3,31 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Services &bull; Harbor &bull; My Garden</title>
+  <title>Services &bull; Harbor Garden — Royal Botanical &amp; Estate Architecture</title>
   <link rel="stylesheet" href="harbor-theme.css" />
   <style>
+    .services-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
     .services-grid-wrapper {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
       margin-bottom: 60px;
     }
 
     .service-card {
       background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 18px;
+      border: 1px solid var(--harbor-border);
+      border-radius: 20px;
       overflow: hidden;
       box-shadow: var(--harbor-card-shadow);
       transition: var(--transition);
       display: flex;
       flex-direction: column;
+      position: relative;
+      animation: fadeInUp 0.45s ease both;
     }
 
     .service-card:hover {
-      border-color: var(--harbor-border-hover);
-      box-shadow: 0 24px 50px -12px rgba(25, 40, 32, 0.15), var(--harbor-glow-shadow);
-      transform: translateY(-5px);
+      border-color: var(--harbor-emerald-border);
+      box-shadow: 0 22px 48px -12px rgba(25, 40, 32, 0.15), var(--harbor-glow-shadow);
+      transform: translateY(-6px);
     }
 
     .service-card-img-box {
@@ -35,13 +48,14 @@
       width: 100%;
       overflow: hidden;
       position: relative;
+      background: #f1f5f0;
     }
 
     .service-card-img-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .service-card:hover .service-card-img-box img {
@@ -52,14 +66,14 @@
       position: absolute;
       top: 14px;
       right: 14px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--harbor-border);
       border-radius: 20px;
       padding: 4px 12px;
       font-size: 0.72rem;
       font-weight: 800;
-      color: var(--harbor-cyan);
+      color: #92400e;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -76,10 +90,19 @@
       font-family: var(--font-serif);
       font-size: 1.45rem;
       color: var(--harbor-text-main);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    .service-duration-tag {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--harbor-text-dim);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .service-card-desc {
@@ -96,68 +119,107 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
+    }
+
+    .service-price-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--harbor-emerald-dark);
+    }
+
+    .service-price-val span {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--harbor-gold-dark);
     }
 
     .btn-book-service {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
-      background: #d1fae5;
-      border: 1px solid var(--harbor-emerald);
-      border-radius: 8px;
-      color: #065f46;
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-decoration: none;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--harbor-emerald) 0%, var(--harbor-emerald-dark) 100%);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
       transition: var(--transition);
     }
 
     .btn-book-service:hover {
-      background: var(--harbor-emerald);
-      color: #ffffff;
-      box-shadow: 0 2px 12px rgba(5, 150, 105, 0.3);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45);
+      filter: brightness(1.08);
+    }
+
+    .btn-delete-service {
+      background: none;
+      border: 1px solid rgba(225, 29, 72, 0.3);
+      color: var(--harbor-danger);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-delete-service:hover {
+      background: #ffe4e6;
     }
 
     /* Why Choose Us Grid */
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
       margin-top: 24px;
     }
 
     .feature-card {
       background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 14px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 26px;
       box-shadow: var(--harbor-card-shadow);
       transition: var(--transition);
     }
 
     .feature-card:hover {
-      border-color: var(--harbor-cyan);
-      transform: translateY(-3px);
+      border-color: var(--harbor-gold);
+      transform: translateY(-4px);
+      box-shadow: var(--harbor-gold-shadow);
     }
 
     .feature-icon {
-      font-size: 1.6rem;
-      color: var(--harbor-cyan);
+      font-size: 2rem;
       margin-bottom: 12px;
     }
 
     .feature-card h4 {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       color: var(--harbor-text-main);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      font-family: var(--font-serif);
     }
 
     .feature-card p {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--harbor-text-muted);
-      line-height: 1.55;
+      line-height: 1.6;
+    }
+
+    .booking-step-panel {
+      display: none;
+      animation: fadeInDown 0.3s ease both;
+    }
+
+    .booking-step-panel.active {
+      display: block;
     }
   </style>
 </head>
@@ -170,7 +232,7 @@
         <div class="harbor-logo-badge">🌿</div>
         <div class="harbor-brand-text">
           <div class="harbor-brand-title">HARBOR <span>GARDEN</span></div>
-          <div class="harbor-brand-subtitle">Botanical Living</div>
+          <div class="harbor-brand-subtitle">Royal Botanical Living &amp; Services</div>
         </div>
       </a>
 
@@ -197,247 +259,424 @@
   <!-- Hero Section -->
   <section class="harbor-hero">
     <div class="harbor-badge-pill">
-      <span>❀</span> Professional Botanical Solutions
+      <span>❀</span> Certified Horticultural Architecture &amp; Garden Care
     </div>
-    <h1>Comprehensive <em>Gardening &amp; Landscape</em> Services</h1>
+    <h1>Artisanal Botanical Services for <em>Distinguished</em> Estates</h1>
     <p>
-      From bespoke terrace design to seasonal organic soil enrichment, we deliver customized botanical care backed by verified digital records.
+      From master landscape blueprints to organic nutrition and automated drip systems, our horticultural artisans elevate your outdoor living sanctuary.
     </p>
+
+    <!-- Stats row -->
+    <div class="harbor-stats-row">
+      <div class="harbor-stat-item">
+        <span class="harbor-stat-num">6+</span>
+        <span class="harbor-stat-label">Specialist Services</span>
+      </div>
+      <div class="harbor-stat-item">
+        <span class="harbor-stat-num">100%</span>
+        <span class="harbor-stat-label">Customer Satisfaction</span>
+      </div>
+      <div class="harbor-stat-item">
+        <span class="harbor-stat-num">3-Step</span>
+        <span class="harbor-stat-label">Instant Scheduling</span>
+      </div>
+    </div>
   </section>
 
-  <!-- Main Services Grid -->
-  <main style="max-width: 1240px; margin: 0 auto; padding: 0 24px 80px;">
-    
-    <div class="services-grid-wrapper">
-      
-      <!-- 1. Garden Design -->
-      <article class="service-card">
-        <div class="service-card-img-box">
-          <img
-            src="https://media.istockphoto.com/id/164963728/photo/beautiful-summer-garden.jpg?b=1&s=612x612&w=0&k=20&c=om8DPBSzGPA7KzSCk06rPy55LjNapE0LYXtAMJsK1ss="
-            alt="Garden Design"
-            loading="lazy"
-          />
-          <span class="service-card-badge">Architecture</span>
-        </div>
-        <div class="service-card-body">
-          <h2 class="service-card-title">Garden Design</h2>
-          <p class="service-card-desc">
-            We help you architect beautiful, sustainable gardens aligned with your topography, sunlight orientation, and lifestyle preferences. Full blueprints for rooftop terraces, estate courtyards, and cottage borders.
-          </p>
-          <div class="service-card-footer">
-            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Custom Blueprint</span>
-            <a href="contact.html?service=garden-design" class="btn-book-service">
-              <span>📅</span> Request Design &rarr;
-            </a>
-          </div>
-        </div>
-      </article>
+  <!-- Main Content Area -->
+  <main style="max-width: 1280px; margin: 0 auto; padding: 40px 24px 80px;">
 
-      <!-- 2. Planting Services -->
-      <article class="service-card">
-        <div class="service-card-img-box">
-          <img
-            src="https://images.pexels.com/photos/5830973/pexels-photo-5830973.jpeg"
-            alt="Planting Services"
-            loading="lazy"
-          />
-          <span class="service-card-badge">Horticulture</span>
-        </div>
-        <div class="service-card-body">
-          <h2 class="service-card-title">Planting Services</h2>
-          <p class="service-card-desc">
-            We curate and plant climate-resilient flowers, ornamental trees, therapeutic herbs, and perennial bulbs suited to local soil chemistry and microclimates.
-          </p>
-          <div class="service-card-footer">
-            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Certified Stems</span>
-            <a href="contact.html?service=planting" class="btn-book-service">
-              <span>📅</span> Book Planting &rarr;
-            </a>
-          </div>
-        </div>
-      </article>
+    <!-- Top Action Bar for Author -->
+    <div class="services-top-bar">
+      <div>
+        <h2 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--harbor-text-main);">
+          Available Botanical Services
+        </h2>
+        <p style="font-size: 0.88rem; color: var(--harbor-text-muted);">
+          Select any service to begin our seamless 3-step booking with custom flower pairing.
+        </p>
+      </div>
 
-      <!-- 3. Garden Maintenance -->
-      <article class="service-card">
-        <div class="service-card-img-box">
-          <img
-            src="https://media.istockphoto.com/id/1352450355/photo/trimming-hedge-with-power-saw.jpg?b=1&s=612x612&w=0&k=20&c=kKrjAfvaV9wgrg_rMRq0fJo4UVy0aJ4fy3tilGNqPuk="
-            alt="Garden Maintenance"
-            loading="lazy"
-          />
-          <span class="service-card-badge">Routine Care</span>
-        </div>
-        <div class="service-card-body">
-          <h2 class="service-card-title">Garden Maintenance</h2>
-          <p class="service-card-desc">
-            Reliable scheduled maintenance packages covering deep root hydration, precision pruning, weed eradication, and seasonal bed cleaning to keep your property immaculate.
-          </p>
-          <div class="service-card-footer">
-            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Monthly / Weekly</span>
-            <a href="contact.html?service=maintenance" class="btn-book-service">
-              <span>📅</span> Schedule Care &rarr;
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 4. Lawn Care -->
-      <article class="service-card">
-        <div class="service-card-img-box">
-          <img
-            src="https://images.pexels.com/photos/7031593/pexels-photo-7031593.jpeg"
-            alt="Lawn Care"
-            loading="lazy"
-          />
-          <span class="service-card-badge">Turf Management</span>
-        </div>
-        <div class="service-card-body">
-          <h2 class="service-card-title">Lawn Care &amp; Turf Revitalization</h2>
-          <p class="service-card-desc">
-            We nurture lush, uniform emerald lawns through precision blade mowing, deep core aeration, slow-release bio-fertilization, and gentle moss &amp; weed removal.
-          </p>
-          <div class="service-card-footer">
-            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Deep Aeration</span>
-            <a href="contact.html?service=lawn-care" class="btn-book-service">
-              <span>📅</span> Revitalize Lawn &rarr;
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 5. Tree and Plant Care -->
-      <article class="service-card">
-        <div class="service-card-img-box">
-          <img
-            src="https://media.istockphoto.com/id/1188009316/photo/tree-cutting-tree-care.jpg?b=1&s=612x612&w=0&k=20&c=28Lu97xVmSqT7et8I8UvxStWnzP5xY2dPw2RRm4l5cc="
-            alt="Tree Care"
-            loading="lazy"
-          />
-          <span class="service-card-badge">Arboriculture</span>
-        </div>
-        <div class="service-card-body">
-          <h2 class="service-card-title">Tree and Plant Care</h2>
-          <p class="service-card-desc">
-            Expert diagnostic tree health assessments, structural crown thinning, root flare remediation, and fungal treatment for mature heritage shade trees and fruit orchards.
-          </p>
-          <div class="service-card-footer">
-            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">Certified Arborists</span>
-            <a href="contact.html?service=plant-care" class="btn-book-service">
-              <span>📅</span> Tree Inspection &rarr;
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 6. Organic Gardening -->
-      <article class="service-card">
-        <div class="service-card-img-box">
-          <img
-            src="https://images.pexels.com/photos/36812277/pexels-photo-36812277.jpeg"
-            alt="Organic Gardening"
-            loading="lazy"
-          />
-          <span class="service-card-badge">Eco-Certified</span>
-        </div>
-        <div class="service-card-body">
-          <h2 class="service-card-title">Organic Gardening</h2>
-          <p class="service-card-desc">
-            Zero chemical synthetic pesticides. We pioneer closed-loop composting, companion planting, natural worm castings, and rainwater conservation systems.
-          </p>
-          <div class="service-card-footer">
-            <span style="font-size: 0.8rem; color: var(--harbor-text-dim);">100% Bio-Friendly</span>
-            <a href="contact.html?service=organic-gardening" class="btn-book-service">
-              <span>📅</span> Book Organic Care &rarr;
-            </a>
-          </div>
-        </div>
-      </article>
-
+      <!-- Author Add Service Button (Rendered dynamically if Author) -->
+      <div id="authorServiceActionContainer">
+        <button type="button" class="btn-primary" id="btnOpenAddServiceModal" style="display: none; padding: 10px 22px;">
+          <span>👑</span> + Add New Service (Author)
+        </button>
+      </div>
     </div>
 
-    <!-- Why Choose Our Services -->
-    <section style="margin-top: 40px;">
-      <h2 style="font-family: var(--font-serif); font-size: 2rem; color: #ffffff; margin-bottom: 8px;">
-        Why Entrust Your Landscape to Harbor Garden?
+    <!-- Services Cards Grid -->
+    <div class="services-grid-wrapper" id="servicesGrid">
+      <!-- Populated dynamically by renderServices() -->
+    </div>
+
+    <!-- Why Choose Us -->
+    <section style="margin-top: 60px; margin-bottom: 60px;">
+      <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--harbor-text-main); margin-bottom: 8px; text-align: center;">
+        Why Choose Harbor Horticultural Services?
       </h2>
-      <p style="font-size: 1rem; color: var(--harbor-text-muted); margin-bottom: 24px;">
-        Every client engagement is tracked with transparent records, certified horticultural standards, and responsive support.
+      <p style="color: var(--harbor-text-muted); text-align: center; max-width: 600px; margin: 0 auto 36px; font-size: 0.95rem;">
+        We combine time-tested horticultural heritage with precision soil science and responsive service delivery.
       </p>
 
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">🌿</div>
-          <h4>Master Horticulturalists</h4>
-          <p>Decades of collective experience working with Himalayan and subtropical perennial flora.</p>
+          <h4>100% Organic &amp; Bee-Safe</h4>
+          <p>Zero toxic synthetic pesticides. We nourish soil biomes with bio-dynamic compost and organic botanical extracts.</p>
         </div>
-
+        <div class="feature-card">
+          <div class="feature-icon">📐</div>
+          <h4>Architectural Precision</h4>
+          <p>Every planting layout is calibrated to your regional climate, seasonal sunlight angles, and drainage conditions.</p>
+        </div>
         <div class="feature-card">
           <div class="feature-icon">🛡️</div>
-          <h4>Local Data Security</h4>
-          <p>Your property address, service history, and notes are securely stored on your local device.</p>
+          <h4>Plant Health Warranty</h4>
+          <p>All specimens installed through our service program include a 30-day root establishment care guarantee.</p>
         </div>
-
         <div class="feature-card">
-          <div class="feature-icon">🌱</div>
-          <h4>Eco-Certified Materials</h4>
-          <p>We strictly utilize organic compost, non-invasive species, and biologically active soil inoculants.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">⏱️</div>
-          <h4>Predictable Schedules</h4>
-          <p>Punctual seasonal maintenance with timely progress reports and digital status updates.</p>
+          <div class="feature-icon">💳</div>
+          <h4>Transparent Billing</h4>
+          <p>Clear, fixed pricing with flexible payment options including UPI, Cards, Net Banking, or Pay After Completion.</p>
         </div>
       </div>
     </section>
 
-    <!-- Bottom CTA Banner -->
-    <div style="margin-top: 60px; text-align: center; background: var(--harbor-bg-glass-card); border: 1px solid var(--harbor-border); border-radius: 18px; padding: 44px 28px;">
-      <h3 style="font-size: 1.6rem; color: #ffffff; margin-bottom: 10px;">Ready to Elevate Your Garden?</h3>
-      <p style="color: var(--harbor-text-muted); max-width: 580px; margin: 0 auto 24px;">
-        Send us your property specifications and we will formulate a personalized proposal within 24 hours.
+    <!-- Consultation CTA -->
+    <div class="harbor-card" style="text-align: center; padding: 48px 30px; background: linear-gradient(135deg, rgba(5, 150, 105, 0.08), rgba(217, 119, 6, 0.08)); border-color: var(--harbor-gold-border);">
+      <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 10px; color: var(--harbor-text-main);">
+        Need Custom Landscape Architecture or Estate Planning?
+      </h3>
+      <p style="color: var(--harbor-text-muted); max-width: 580px; margin: 0 auto 24px; font-size: 0.95rem;">
+        Speak directly with our senior horticulturist in Haldwani to discuss tailored garden renovations or large commercial projects.
       </p>
-      <a href="contact.html" class="btn-primary" style="font-size: 0.95rem; padding: 13px 30px;">
-        Contact Our Garden Specialists &rarr;
+      <a href="contact.html" class="btn-primary" style="padding: 12px 30px;">
+        Book Complimentary Phone Consultation &rarr;
       </a>
     </div>
 
   </main>
+
+  <!-- ==========================================================================
+       MODAL 1: 3-STEP SERVICE BOOKING MODAL (CUSTOMER SATISFACTION)
+       ========================================================================== -->
+  <div class="harbor-modal-overlay" id="serviceBookingModal">
+    <div class="harbor-modal-card" style="max-width: 740px;">
+
+      <!-- Stepper Header -->
+      <div class="booking-stepper">
+        <div class="booking-step active" id="svcStep1Dot">
+          <div class="booking-step-dot">1</div>
+          <div class="booking-step-label">Service &amp; Flowers</div>
+        </div>
+        <div class="booking-step" id="svcStep2Dot">
+          <div class="booking-step-dot">2</div>
+          <div class="booking-step-label">Site Address</div>
+        </div>
+        <div class="booking-step" id="svcStep3Dot">
+          <div class="booking-step-dot">3</div>
+          <div class="booking-step-label">Total &amp; Billing</div>
+        </div>
+      </div>
+
+      <!-- Close Button & Modal Title -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+        <div>
+          <h3 id="svcModalTitle" style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--harbor-text-main);">
+            Service Booking &amp; Flower Pairing
+          </h3>
+          <span id="selectedServiceNameSubtitle" style="font-size: 0.82rem; color: var(--harbor-gold-dark); font-weight: 700;"></span>
+        </div>
+        <button type="button" class="harbor-modal-close" id="btnCloseSvcBookingModal">&times;</button>
+      </div>
+
+      <!-- STEP 1 PANEL: Confirm Service & Add Flower Section -->
+      <div class="booking-step-panel active" id="svcStep1Panel">
+        <!-- Confirmed Service Summary Box -->
+        <div style="background: #f1f8f3; border: 1.5px solid rgba(5, 150, 105, 0.25); border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div id="confirmedSvcIcon" style="font-size: 2.2rem;">🎨</div>
+            <div>
+              <div id="confirmedSvcName" style="font-size: 1.15rem; font-weight: 800; color: var(--harbor-text-main);">Garden Design</div>
+              <div id="confirmedSvcDuration" style="font-size: 0.8rem; color: var(--harbor-text-dim);">Estimated Duration: 2-3 Days</div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim); text-transform: uppercase;">Service Base Fee</div>
+            <div id="confirmedSvcPrice" style="font-size: 1.35rem; font-weight: 800; color: var(--harbor-emerald-dark);">₹4,999</div>
+          </div>
+        </div>
+
+        <!-- Add Flower Section -->
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+            <label class="harbor-label" style="margin-bottom: 0;">
+              🌸 Add Botanical Specimens &amp; Flowers to this Service (Optional)
+            </label>
+            <span style="font-size: 0.76rem; color: var(--harbor-text-dim);">Select plants to plant during this service</span>
+          </div>
+          <p style="font-size: 0.84rem; color: var(--harbor-text-muted); margin-bottom: 12px;">
+            Our specialists will bring fresh nursery specimens directly to your garden site for planting.
+          </p>
+
+          <!-- Add-on Plants Grid -->
+          <div class="service-addon-plants" id="serviceAddonPlantsList">
+            <!-- Dynamically populated from HarborDB.getPlants() -->
+          </div>
+        </div>
+
+        <!-- Step 1 Live Total Preview -->
+        <div style="background: #f8faf8; border: 1px solid var(--harbor-border); border-radius: 12px; padding: 12px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 700; font-size: 0.9rem; color: var(--harbor-text-main);">
+            Service + Added Plants (<span id="addonCountDisplay">0</span> selected):
+          </span>
+          <span id="step1LiveTotalDisplay" style="font-weight: 800; font-size: 1.15rem; color: var(--harbor-emerald-dark);">₹0</span>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <button type="button" class="btn-secondary" id="btnCancelSvcBooking">Cancel</button>
+          <button type="button" class="btn-primary" id="btnGoToStep2Address">
+            Continue to Address &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2 PANEL: Address Section -->
+      <div class="booking-step-panel" id="svcStep2Panel">
+        <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 18px;">
+          Provide the estate location and preferred timing for our gardening specialist team.
+        </p>
+
+        <form id="svcAddressForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="harbor-label" for="svcCustName">Full Name *</label>
+              <input type="text" id="svcCustName" class="harbor-input" placeholder="e.g. Rahul Verma" required />
+            </div>
+            <div class="form-group">
+              <label class="harbor-label" for="svcCustPhone">Mobile Number *</label>
+              <input type="tel" id="svcCustPhone" class="harbor-input" placeholder="e.g. 9876543210" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="svcCustEmail">Email Address (for appointment confirmation) *</label>
+            <input type="email" id="svcCustEmail" class="harbor-input" placeholder="e.g. rahul@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label class="harbor-label" for="svcSiteAddress">Service Site / Garden Address *</label>
+            <textarea id="svcSiteAddress" class="harbor-input" rows="2" placeholder="House/Villa No., Street, Area, Landmark" required></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="harbor-label" for="svcDate">Preferred Service Date *</label>
+              <input type="date" id="svcDate" class="harbor-input" required />
+            </div>
+            <div class="form-group">
+              <label class="harbor-label" for="svcTimeSlot">Preferred Time Slot *</label>
+              <select id="svcTimeSlot" class="harbor-input">
+                <option value="Morning (08:00 AM - 12:00 PM)">Morning (08:00 AM - 12:00 PM)</option>
+                <option value="Afternoon (12:00 PM - 04:00 PM)">Afternoon (12:00 PM - 04:00 PM)</option>
+                <option value="Evening (04:00 PM - 07:00 PM)">Evening (04:00 PM - 07:00 PM)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 18px;">
+            <button type="button" class="btn-outline" id="btnBackToStep1Flowers">&larr; Back to Flowers</button>
+            <button type="submit" class="btn-primary">
+              Continue to Total &amp; Billing &rarr;
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 3 PANEL: Total & Billing Section with Choice of Payment -->
+      <div class="booking-step-panel" id="svcStep3Panel">
+        <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 16px;">
+          Review the complete itemized breakdown and choose your preferred settlement gateway.
+        </p>
+
+        <!-- Detailed Itemized Billing Card -->
+        <div style="background: #f8faf8; border: 1.5px solid var(--harbor-border); border-radius: 14px; padding: 20px; margin-bottom: 22px;">
+          <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--harbor-text-main); margin-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 8px;">
+            Botanical Service Billing Breakdown
+          </h4>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.92rem; color: var(--harbor-text-main); margin-bottom: 8px;">
+            <span><strong id="billSvcName">Garden Design</strong> Base Service:</span>
+            <span id="billSvcPrice" style="font-weight: 700;">₹4,999</span>
+          </div>
+
+          <div id="billFlowersContainer" style="display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 8px;">
+            <span>Add-on Nursery Flora (<span id="billFlowerCount">0</span> plants):</span>
+            <span id="billFlowersPrice" style="font-weight: 700;">₹0</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 12px;">
+            <span>Specialist Dispatch &amp; Soil Equipment:</span>
+            <span style="color: var(--harbor-emerald); font-weight: 700;">Complimentary (₹0)</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 800; color: var(--harbor-emerald-dark); border-top: 1.5px dashed var(--harbor-border); padding-top: 12px;">
+            <span>Total Payable Amount:</span>
+            <span id="billGrandTotal">₹4,999</span>
+          </div>
+        </div>
+
+        <!-- Choice of Payment Section -->
+        <label class="harbor-label">Select Payment Choice *</label>
+        <div class="payment-grid" id="svcPaymentChoiceGrid">
+          <div class="payment-option selected" data-method="UPI">
+            <div class="payment-option-icon">📱</div>
+            <div class="payment-option-label">UPI / QR</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">Instant confirmation</div>
+          </div>
+          <div class="payment-option" data-method="Card">
+            <div class="payment-option-icon">💳</div>
+            <div class="payment-option-label">Debit / Credit</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">Visa, Master, RuPay</div>
+          </div>
+          <div class="payment-option" data-method="NetBanking">
+            <div class="payment-option-icon">🏦</div>
+            <div class="payment-option-label">Net Banking</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">Major Indian Banks</div>
+          </div>
+          <div class="payment-option" data-method="COD">
+            <div class="payment-option-icon">💵</div>
+            <div class="payment-option-label">Pay After Service</div>
+            <div style="font-size: 0.72rem; color: var(--harbor-text-dim);">Inspect work first</div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+          <button type="button" class="btn-outline" id="btnBackToStep2Address">&larr; Back to Address</button>
+          <button type="button" class="btn-primary" id="btnConfirmPlaceServiceBooking" style="padding: 12px 28px; font-size: 0.92rem;">
+            <span>✅</span> Confirm &amp; Schedule Service
+          </button>
+        </div>
+      </div>
+
+      <!-- SUCCESS CONFIRMATION PANEL -->
+      <div id="svcSuccessPanel" style="display: none;">
+        <div class="order-success-box">
+          <div class="order-success-icon">✓</div>
+          <h2 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--harbor-text-main); margin-bottom: 6px;">
+            Service Booking Confirmed!
+          </h2>
+          <p style="color: var(--harbor-text-muted); font-size: 0.95rem; margin-bottom: 12px;">
+            Our lead horticultural specialist has been scheduled for your estate.
+          </p>
+
+          <div class="order-id-badge" id="confirmedBookingRef">HBR-SVC-SUCCESS</div>
+
+          <div style="background: #f8faf8; border: 1px solid var(--harbor-border); border-radius: 14px; padding: 18px; margin: 20px 0; text-align: left; font-size: 0.88rem;">
+            <div style="margin-bottom: 8px;"><strong>Reserved Service:</strong> <span id="confSvcName">Garden Design</span></div>
+            <div style="margin-bottom: 8px;"><strong>Client &amp; Site:</strong> <span id="confSvcClient">Rahul Verma &bull; Haldwani</span></div>
+            <div style="margin-bottom: 8px;"><strong>Appointment Schedule:</strong> <span id="confSvcSchedule">Tomorrow Morning</span></div>
+            <div style="margin-bottom: 8px;"><strong>Payment Method:</strong> <span id="confSvcPayment">Pay After Service</span> &bull; <strong>Total Billing:</strong> <span id="confSvcTotal" style="color: var(--harbor-emerald-dark); font-weight: 800;">₹4,999</span></div>
+          </div>
+
+          <button type="button" class="btn-primary" id="btnCloseSvcSuccessModal" style="padding: 12px 30px;">
+            Done &amp; Return to Services &rarr;
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: ADD NEW SERVICE (AUTHOR ONLY)
+       ========================================================================== -->
+  <div class="harbor-modal-overlay" id="addServiceModal">
+    <div class="harbor-modal-card">
+      <div class="harbor-modal-header">
+        <div>
+          <h3><span>👑</span> Add New Botanical Service</h3>
+          <div style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 800; color: #92400e; background: #fef3c7; border: 1px solid var(--harbor-gold); padding: 3px 10px; border-radius: 20px;">
+            Author Publishing Access
+          </div>
+        </div>
+        <button type="button" class="harbor-modal-close" id="btnCloseAddServiceModal">&times;</button>
+      </div>
+
+      <form id="addServiceForm">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="harbor-label" for="newSvcName">Service Title *</label>
+            <input type="text" id="newSvcName" class="harbor-input" placeholder="e.g. Bonsai Styling &amp; Pruning" required />
+          </div>
+          <div class="form-group">
+            <label class="harbor-label" for="newSvcIcon">Icon Emoji</label>
+            <input type="text" id="newSvcIcon" class="harbor-input" value="🌿" placeholder="e.g. 🌿, 🌳, ✂️" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="harbor-label" for="newSvcPrice">Price (₹ INR) *</label>
+            <input type="number" id="newSvcPrice" class="harbor-input" placeholder="e.g. 2999" min="1" required />
+          </div>
+          <div class="form-group">
+            <label class="harbor-label" for="newSvcDuration">Estimated Duration *</label>
+            <input type="text" id="newSvcDuration" class="harbor-input" placeholder="e.g. 1-2 Days or Monthly" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="harbor-label" for="newSvcImage">Cover Image URL *</label>
+          <input type="url" id="newSvcImage" class="harbor-input" placeholder="https://images.pexels.com/..." required />
+        </div>
+
+        <div class="form-group">
+          <label class="harbor-label" for="newSvcBadge">Badge Label</label>
+          <input type="text" id="newSvcBadge" class="harbor-input" placeholder="e.g. Specialized, Popular, Seasonal" value="Bespoke" />
+        </div>
+
+        <div class="form-group">
+          <label class="harbor-label" for="newSvcDesc">Comprehensive Description *</label>
+          <textarea id="newSvcDesc" class="harbor-input" rows="4" placeholder="Detail what is included in this horticultural service: soil testing, pruning, plant transplanting..." required></textarea>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 14px;">
+          <button type="button" class="btn-secondary" id="btnCancelAddService">Cancel</button>
+          <button type="submit" class="btn-primary">
+            <span>💾</span> Publish Service to Catalog
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="harbor-footer">
     <div class="harbor-footer-grid">
       <div class="harbor-footer-col">
         <h3>Harbor Garden</h3>
-        <p>
-          Bringing nature closer to your home with healthy perennials, eco-friendly garden architecture, and enterprise-grade data management.
-        </p>
+        <p>Bringing nature closer to your home with healthy perennials, eco-friendly garden architecture, and enterprise-grade data management.</p>
         <div class="harbor-footer-security-badge">
           <span class="icon">🛡️</span>
-          <div>
-            Connected to Harbor Security Portal
-            <small>Local Storage Persistence &bull; 2FA Support</small>
-          </div>
+          <div>Connected to Harbor Security Portal<small>Local Storage Persistence &bull; 2FA Support</small></div>
         </div>
       </div>
-
       <div class="harbor-footer-col">
         <h3>Quick Links</h3>
-        <a href="index.html">Home</a>
+        <a href="index.html">Home &amp; Flower Shop</a>
         <a href="about.html">About My Garden</a>
         <a href="services.html">Services &amp; Care</a>
         <a href="contact.html">Contact Us</a>
         <a href="database.html">Local Database</a>
       </div>
-
       <div class="harbor-footer-col">
         <h3>Contact Info</h3>
         <p><strong>Address:</strong> 123 Green Garden Road, Haldwani, Uttarakhand, India</p>
         <p><strong>Phone:</strong> +91 98765 43210</p>
         <p><strong>Email:</strong> info@mygarden.com</p>
       </div>
-
       <div class="harbor-footer-col">
         <h3>Security &amp; Portal</h3>
         <a href="login.html">Sign In to Portal</a>
@@ -446,11 +685,10 @@
         <a href="database.html">Inquiries Management DB</a>
       </div>
     </div>
-
     <div class="harbor-footer-bottom">
       <p>&copy; 2026 Harbor &bull; My Garden. All Rights Reserved.</p>
       <div style="display: flex; gap: 16px;">
-        <a href="login.html" style="color: var(--harbor-emerald);">Portal Login</a>
+        <a href="login.html" style="color: var(--harbor-gold);">Portal Login</a>
         <a href="forgot-password.html" style="color: var(--harbor-cyan);">Forgot Password</a>
       </div>
     </div>
@@ -459,5 +697,371 @@
   <!-- Scripts -->
   <script src="db.js"></script>
   <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const servicesGrid = document.getElementById('servicesGrid');
+      const authorServiceActionContainer = document.getElementById('authorServiceActionContainer');
+      const btnOpenAddServiceModal = document.getElementById('btnOpenAddServiceModal');
+      const addServiceModal = document.getElementById('addServiceModal');
+      const btnCloseAddServiceModal = document.getElementById('btnCloseAddServiceModal');
+      const btnCancelAddService = document.getElementById('btnCancelAddService');
+      const addServiceForm = document.getElementById('addServiceForm');
+
+      // Booking Modal Elements
+      const serviceBookingModal = document.getElementById('serviceBookingModal');
+      const btnCloseSvcBookingModal = document.getElementById('btnCloseSvcBookingModal');
+      const btnCancelSvcBooking = document.getElementById('btnCancelSvcBooking');
+      const svcStep1Dot = document.getElementById('svcStep1Dot');
+      const svcStep2Dot = document.getElementById('svcStep2Dot');
+      const svcStep3Dot = document.getElementById('svcStep3Dot');
+      const svcStep1Panel = document.getElementById('svcStep1Panel');
+      const svcStep2Panel = document.getElementById('svcStep2Panel');
+      const svcStep3Panel = document.getElementById('svcStep3Panel');
+      const svcSuccessPanel = document.getElementById('svcSuccessPanel');
+      const serviceAddonPlantsList = document.getElementById('serviceAddonPlantsList');
+      const btnGoToStep2Address = document.getElementById('btnGoToStep2Address');
+      const btnBackToStep1Flowers = document.getElementById('btnBackToStep1Flowers');
+      const svcAddressForm = document.getElementById('svcAddressForm');
+      const btnBackToStep2Address = document.getElementById('btnBackToStep2Address');
+      const btnConfirmPlaceServiceBooking = document.getElementById('btnConfirmPlaceServiceBooking');
+      const btnCloseSvcSuccessModal = document.getElementById('btnCloseSvcSuccessModal');
+
+      // Active state for booking
+      let activeSelectedService = null;
+      let selectedAddonPlants = []; // array of plant objects
+      let serviceCustomerAddress = {};
+      let selectedServicePaymentMethod = 'UPI';
+
+      // Author clearance visibility
+      function checkAuthorClearance() {
+        if (HarborDB.isAuthor()) {
+          btnOpenAddServiceModal.style.display = 'inline-flex';
+        } else {
+          btnOpenAddServiceModal.style.display = 'none';
+        }
+      }
+      checkAuthorClearance();
+
+      // Render Services Grid
+      function renderServices() {
+        const services = HarborDB.getServices();
+        const isAuthor = HarborDB.isAuthor();
+
+        servicesGrid.innerHTML = services.map(svc => `
+          <div class="service-card" data-id="${svc.id}">
+            <div class="service-card-img-box">
+              <img src="${svc.image}" alt="${svc.name}" loading="lazy" />
+              <span class="service-card-badge">${svc.badge || 'Bespoke'}</span>
+            </div>
+            <div class="service-card-body">
+              <h3 class="service-card-title">
+                <span>${svc.icon || '🌿'}</span> ${svc.name}
+              </h3>
+              <div class="service-duration-tag">⏱️ ${svc.duration}</div>
+              <p class="service-card-desc">${svc.description}</p>
+              
+              <div class="service-card-footer">
+                <div class="service-price-val">
+                  <span>₹</span>${svc.price.toLocaleString()}
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button type="button" class="btn-book-service" data-id="${svc.id}">
+                    <span>🗓️</span> Book Service
+                  </button>
+                  ${(svc.isCustom && isAuthor) ? `
+                    <button type="button" class="btn-delete-service" data-id="${svc.id}" title="Remove custom service">
+                      Delete
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Attach Book Service click listener
+        document.querySelectorAll('.btn-book-service').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            const target = HarborDB.getServices().find(s => s.id === id);
+            if (target) {
+              openServiceBookingModal(target);
+            }
+          });
+        });
+
+        // Attach Delete Service click listener
+        document.querySelectorAll('.btn-delete-service').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            if (confirm('Are you sure you want to delete this custom service?')) {
+              try {
+                HarborDB.deleteService(id);
+                HarborAuth.showToast('Service removed from catalog.', 'info', 'Service Deleted');
+                renderServices();
+              } catch (err) {
+                HarborAuth.showToast(err.message, 'error', 'Error');
+              }
+            }
+          });
+        });
+      }
+
+      renderServices();
+
+      // Open Service Booking Modal (3-step flow)
+      function openServiceBookingModal(service) {
+        activeSelectedService = service;
+        selectedAddonPlants = [];
+
+        // Pre-fill Step 1 Header
+        document.getElementById('selectedServiceNameSubtitle').textContent = `Target: ${service.name} (Base: ₹${service.price})`;
+        document.getElementById('confirmedSvcIcon').textContent = service.icon || '🌿';
+        document.getElementById('confirmedSvcName').textContent = service.name;
+        document.getElementById('confirmedSvcDuration').textContent = `Estimated Duration: ${service.duration}`;
+        document.getElementById('confirmedSvcPrice').textContent = `₹${service.price.toLocaleString()}`;
+
+        // Populate Add Flower Section with available catalog plants
+        const plants = HarborDB.getPlants();
+        serviceAddonPlantsList.innerHTML = plants.map(p => `
+          <div class="addon-plant-item" data-id="${p.id}">
+            <img src="${p.image}" alt="${p.name}" class="addon-plant-img" />
+            <div class="addon-plant-details">
+              <div class="addon-plant-name">${p.name}</div>
+              <div class="addon-plant-price">+₹${p.price}</div>
+            </div>
+            <input type="checkbox" class="addon-checkbox" style="margin-left: 4px; accent-color: var(--harbor-emerald);" />
+          </div>
+        `).join('');
+
+        // Addon Plant click listeners
+        serviceAddonPlantsList.querySelectorAll('.addon-plant-item').forEach(item => {
+          item.addEventListener('click', (e) => {
+            const checkbox = item.querySelector('.addon-checkbox');
+            if (e.target !== checkbox) {
+              checkbox.checked = !checkbox.checked;
+            }
+            item.classList.toggle('selected', checkbox.checked);
+
+            const pid = item.getAttribute('data-id');
+            const plantObj = plants.find(p => p.id === pid);
+
+            if (checkbox.checked) {
+              if (!selectedAddonPlants.find(p => p.id === pid)) {
+                selectedAddonPlants.push(plantObj);
+              }
+            } else {
+              selectedAddonPlants = selectedAddonPlants.filter(p => p.id !== pid);
+            }
+
+            updateStep1Totals();
+          });
+        });
+
+        // Set default date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const yyyy = tomorrow.getFullYear();
+        const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+        const dd = String(tomorrow.getDate()).padStart(2, '0');
+        document.getElementById('svcDate').value = `${yyyy}-${mm}-${dd}`;
+        document.getElementById('svcDate').min = `${yyyy}-${mm}-${dd}`;
+
+        // Pre-fill user if logged in
+        const currentUser = HarborDB.getCurrentUser();
+        if (currentUser) {
+          const nameInp = document.getElementById('svcCustName');
+          const emailInp = document.getElementById('svcCustEmail');
+          if (nameInp && !nameInp.value) nameInp.value = currentUser.name || '';
+          if (emailInp && !emailInp.value) emailInp.value = currentUser.email || '';
+        }
+
+        updateStep1Totals();
+
+        // Switch to Step 1
+        svcStep1Panel.className = 'booking-step-panel active';
+        svcStep2Panel.className = 'booking-step-panel';
+        svcStep3Panel.className = 'booking-step-panel';
+        svcSuccessPanel.style.display = 'none';
+
+        svcStep1Dot.className = 'booking-step active';
+        svcStep2Dot.className = 'booking-step';
+        svcStep3Dot.className = 'booking-step';
+
+        serviceBookingModal.classList.add('active');
+      }
+
+      function updateStep1Totals() {
+        const flowerSum = selectedAddonPlants.reduce((sum, p) => sum + (p.price || 0), 0);
+        const total = (activeSelectedService ? activeSelectedService.price : 0) + flowerSum;
+
+        document.getElementById('addonCountDisplay').textContent = selectedAddonPlants.length;
+        document.getElementById('step1LiveTotalDisplay').textContent = `₹${total.toLocaleString()}`;
+      }
+
+      function closeServiceBookingModal() {
+        serviceBookingModal.classList.remove('active');
+      }
+
+      btnCloseSvcBookingModal.addEventListener('click', closeServiceBookingModal);
+      btnCancelSvcBooking.addEventListener('click', closeServiceBookingModal);
+      btnCloseSvcSuccessModal.addEventListener('click', closeServiceBookingModal);
+
+      // STEP 1 -> STEP 2: Address Section
+      btnGoToStep2Address.addEventListener('click', () => {
+        svcStep1Panel.className = 'booking-step-panel';
+        svcStep2Panel.className = 'booking-step-panel active';
+
+        svcStep1Dot.className = 'booking-step completed';
+        svcStep2Dot.className = 'booking-step active';
+      });
+
+      // STEP 2 -> STEP 1 Back
+      btnBackToStep1Flowers.addEventListener('click', () => {
+        svcStep2Panel.className = 'booking-step-panel';
+        svcStep1Panel.className = 'booking-step-panel active';
+
+        svcStep1Dot.className = 'booking-step active';
+        svcStep2Dot.className = 'booking-step';
+      });
+
+      // STEP 2 -> STEP 3: Total & Billing Section
+      svcAddressForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        serviceCustomerAddress = {
+          name: document.getElementById('svcCustName').value.trim(),
+          phone: document.getElementById('svcCustPhone').value.trim(),
+          email: document.getElementById('svcCustEmail').value.trim(),
+          address: document.getElementById('svcSiteAddress').value.trim(),
+          date: document.getElementById('svcDate').value,
+          timeSlot: document.getElementById('svcTimeSlot').value
+        };
+
+        // Populate Step 3 Billing Breakdown
+        const flowerSum = selectedAddonPlants.reduce((sum, p) => sum + (p.price || 0), 0);
+        const grandTotal = activeSelectedService.price + flowerSum;
+
+        document.getElementById('billSvcName').textContent = activeSelectedService.name;
+        document.getElementById('billSvcPrice').textContent = `₹${activeSelectedService.price.toLocaleString()}`;
+        document.getElementById('billFlowerCount').textContent = selectedAddonPlants.length;
+        document.getElementById('billFlowersPrice').textContent = `₹${flowerSum.toLocaleString()}`;
+        document.getElementById('billGrandTotal').textContent = `₹${grandTotal.toLocaleString()}`;
+
+        svcStep2Panel.className = 'booking-step-panel';
+        svcStep3Panel.className = 'booking-step-panel active';
+
+        svcStep2Dot.className = 'booking-step completed';
+        svcStep3Dot.className = 'booking-step active';
+      });
+
+      // STEP 3 -> STEP 2 Back
+      btnBackToStep2Address.addEventListener('click', () => {
+        svcStep3Panel.className = 'booking-step-panel';
+        svcStep2Panel.className = 'booking-step-panel active';
+
+        svcStep2Dot.className = 'booking-step active';
+        svcStep3Dot.className = 'booking-step';
+      });
+
+      // Payment choice listener
+      const svcPaymentOptions = document.querySelectorAll('#svcPaymentChoiceGrid .payment-option');
+      svcPaymentOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          svcPaymentOptions.forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          selectedServicePaymentMethod = opt.getAttribute('data-method');
+        });
+      });
+
+      // Final Confirm Booking Button
+      btnConfirmPlaceServiceBooking.addEventListener('click', () => {
+        const flowerSum = selectedAddonPlants.reduce((sum, p) => sum + (p.price || 0), 0);
+        const grandTotal = activeSelectedService.price + flowerSum;
+
+        try {
+          const bookingOrder = HarborDB.placeOrder({
+            items: selectedAddonPlants.map(p => ({
+              id: p.id,
+              name: p.name,
+              price: p.price,
+              qty: 1
+            })),
+            serviceDetails: {
+              id: activeSelectedService.id,
+              name: activeSelectedService.name,
+              price: activeSelectedService.price,
+              duration: activeSelectedService.duration,
+              appointmentDate: serviceCustomerAddress.date,
+              timeSlot: serviceCustomerAddress.timeSlot
+            },
+            address: serviceCustomerAddress,
+            paymentMethod: selectedServicePaymentMethod,
+            orderType: 'SERVICE_BOOKING',
+            notes: `Appointment on ${serviceCustomerAddress.date} (${serviceCustomerAddress.timeSlot}).`
+          });
+
+          // Show Confirmation Panel
+          document.getElementById('confirmedBookingRef').textContent = bookingOrder.id;
+          document.getElementById('confSvcName').textContent = `${activeSelectedService.name} (+${selectedAddonPlants.length} companion plants)`;
+          document.getElementById('confSvcClient').textContent = `${serviceCustomerAddress.name} &bull; ${serviceCustomerAddress.address}`;
+          document.getElementById('confSvcSchedule').textContent = `${serviceCustomerAddress.date} (${serviceCustomerAddress.timeSlot})`;
+          document.getElementById('confSvcPayment').textContent = selectedServicePaymentMethod;
+          document.getElementById('confSvcTotal').textContent = `₹${bookingOrder.totalAmount.toLocaleString()}`;
+
+          svcStep3Panel.className = 'booking-step-panel';
+          svcSuccessPanel.style.display = 'block';
+
+          svcStep3Dot.className = 'booking-step completed';
+
+          HarborAuth.showToast(`Service "${activeSelectedService.name}" booked successfully! Ref: ${bookingOrder.id}`, 'success', 'Booking Confirmed');
+        } catch (err) {
+          HarborAuth.showToast(err.message, 'error', 'Booking Failed');
+        }
+      });
+
+      // Author: Add Service Modal Logic
+      btnOpenAddServiceModal.addEventListener('click', () => {
+        if (!HarborDB.isAuthor()) {
+          HarborAuth.showToast('Author clearance required to introduce services.', 'warning', 'Access Denied');
+          return;
+        }
+        addServiceModal.classList.add('active');
+      });
+
+      btnCloseAddServiceModal.addEventListener('click', () => addServiceModal.classList.remove('active'));
+      btnCancelAddService.addEventListener('click', () => addServiceModal.classList.remove('active'));
+
+      addServiceForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        try {
+          const name = document.getElementById('newSvcName').value.trim();
+          const icon = document.getElementById('newSvcIcon').value.trim();
+          const price = document.getElementById('newSvcPrice').value;
+          const duration = document.getElementById('newSvcDuration').value.trim();
+          const image = document.getElementById('newSvcImage').value.trim();
+          const badge = document.getElementById('newSvcBadge').value.trim();
+          const description = document.getElementById('newSvcDesc').value.trim();
+
+          const created = HarborDB.saveService({
+            name,
+            icon,
+            price,
+            duration,
+            image,
+            badge,
+            description
+          });
+
+          HarborAuth.showToast(`Service "${created.name}" published at ₹${created.price}!`, 'success', '👑 Service Added');
+          addServiceForm.reset();
+          addServiceModal.classList.remove('active');
+          renderServices();
+        } catch (err) {
+          HarborAuth.showToast(err.message, 'error', 'Publish Failed');
+        }
+      });
+
+    });
+  </script>
 </body>
 </html>

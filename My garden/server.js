@@ -14,6 +14,12 @@ const CONTACTS_FILE = path.join(DATA_DIR, 'contacts.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const AUDIT_FILE = path.join(DATA_DIR, 'audit.json');
 const PLANTS_FILE = path.join(DATA_DIR, 'plants.json');
+const SERVICES_FILE = path.join(DATA_DIR, 'services.json');
+const ABOUT_CARDS_FILE = path.join(DATA_DIR, 'about-cards.json');
+const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
+
+// In-memory OTP storage for password recovery simulation
+const otpStore = new Map(); // email -> { code, expiry }
 
 // Ensure data folder and files exist
 if (!fs.existsSync(DATA_DIR)) {
@@ -87,13 +93,16 @@ initJsonFile(AUDIT_FILE, [
     id: 'aud_1',
     timestamp: new Date().toISOString(),
     event: 'SERVER_BOOT',
-    details: 'Harbor Node.js server started with Author vs User RBAC & Plants catalog.',
+    details: 'Harbor Node.js server started with Flower Shop, 3-Step Service Booking & OTP Gateway.',
     status: 'SUCCESS',
     ip: '127.0.0.1'
   }
 ]);
 
 initJsonFile(PLANTS_FILE, []);
+initJsonFile(SERVICES_FILE, []);
+initJsonFile(ABOUT_CARDS_FILE, []);
+initJsonFile(ORDERS_FILE, []);
 
 // Helper: read and write JSON safely
 function readJson(filePath) {
@@ -165,7 +174,87 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    // 2. GET & POST /api/contacts
+    // 2. GET & POST /api/services
+    if (pathname === '/api/services' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(readJson(SERVICES_FILE)));
+      return;
+    }
+
+    if (pathname === '/api/services' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const service = JSON.parse(body);
+          const list = readJson(SERVICES_FILE);
+          if (!service.id) service.id = 'svc_' + Date.now().toString(36);
+          list.unshift(service);
+          writeJson(SERVICES_FILE, list);
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, service }));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid service payload' }));
+        }
+      });
+      return;
+    }
+
+    // 3. GET & POST /api/about-cards
+    if (pathname === '/api/about-cards' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(readJson(ABOUT_CARDS_FILE)));
+      return;
+    }
+
+    if (pathname === '/api/about-cards' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const card = JSON.parse(body);
+          const list = readJson(ABOUT_CARDS_FILE);
+          if (!card.id) card.id = 'abt_' + Date.now().toString(36);
+          list.unshift(card);
+          writeJson(ABOUT_CARDS_FILE, list);
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, card }));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid about-card payload' }));
+        }
+      });
+      return;
+    }
+
+    // 4. GET & POST /api/orders
+    if (pathname === '/api/orders' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(readJson(ORDERS_FILE)));
+      return;
+    }
+
+    if (pathname === '/api/orders' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const order = JSON.parse(body);
+          const list = readJson(ORDERS_FILE);
+          list.unshift(order);
+          writeJson(ORDERS_FILE, list);
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, order }));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid order payload' }));
+        }
+      });
+      return;
+    }
+
+    // 5. GET & POST /api/contacts
     if (pathname === '/api/contacts' && req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(readJson(CONTACTS_FILE)));
@@ -194,7 +283,7 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    // 3. GET /api/users
+    // 6. GET /api/users
     if (pathname === '/api/users' && req.method === 'GET') {
       const users = readJson(USERS_FILE).map(u => ({ ...u, password: '***' }));
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -202,7 +291,7 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    // 4. POST /api/auth/register
+    // 7. POST /api/auth/register
     if (pathname === '/api/auth/register' && req.method === 'POST') {
       let body = '';
       req.on('data', chunk => body += chunk);
@@ -222,7 +311,43 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    // 5. POST /api/auth/reset-password
+    // 8. POST /api/auth/send-otp (Password Recovery Dispatch)
+    if (pathname === '/api/auth/send-otp' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const { email } = JSON.parse(body);
+          const cleanEmail = (email || '').trim().toLowerCase();
+          const users = readJson(USERS_FILE);
+          const userExists = users.some(u => u.email.toLowerCase() === cleanEmail);
+
+          if (!userExists) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'No account registered with this email address.' }));
+            return;
+          }
+
+          const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+          otpStore.set(cleanEmail, { code: otpCode, expiry: Date.now() + 15 * 60 * 1000 });
+
+          console.log(`\n[EMAIL GATEWAY] 📧 Dispatched OTP to ${cleanEmail}: ${otpCode}`);
+
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({
+            success: true,
+            message: `Verification code dispatched to ${cleanEmail}`,
+            code: otpCode
+          }));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Failed to dispatch verification code' }));
+        }
+      });
+      return;
+    }
+
+    // 9. POST /api/auth/reset-password
     if (pathname === '/api/auth/reset-password' && req.method === 'POST') {
       let body = '';
       req.on('data', chunk => body += chunk);
@@ -230,7 +355,7 @@ const server = http.createServer((req, res) => {
         try {
           const { email, newPassword } = JSON.parse(body);
           const users = readJson(USERS_FILE);
-          const target = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+          const target = users.find(u => u.email.toLowerCase() === (email || '').toLowerCase());
           if (target) {
             target.password = newPassword;
             writeJson(USERS_FILE, users);
@@ -248,7 +373,7 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    // 6. GET /api/audit
+    // 10. GET /api/audit
     if (pathname === '/api/audit' && req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(readJson(AUDIT_FILE)));
@@ -278,9 +403,9 @@ const server = http.createServer((req, res) => {
       <head><title>404 Not Found &bull; Harbor</title><link rel="stylesheet" href="/harbor-theme.css"></head>
       <body style="display:flex;align-items:center;justify-content:center;height:100vh;text-align:center;">
         <div>
-          <h1 style="font-size:3rem;color:#f43f5e;margin-bottom:12px;">404</h1>
-          <p style="color:#94a3b8;margin-bottom:24px;">The requested file or endpoint could not be found.</p>
-          <a href="/index.html" class="btn-primary">Return to My Garden Home &rarr;</a>
+          <h1 style="font-size:3rem;color:#e11d48;margin-bottom:12px;">404</h1>
+          <p style="color:#64748b;margin-bottom:24px;">The requested file or botanical endpoint could not be found.</p>
+          <a href="/index.html" class="btn-primary">Return to Harbor Garden Home &rarr;</a>
         </div>
       </body>
       </html>
@@ -291,9 +416,12 @@ const server = http.createServer((req, res) => {
 function startListening(port) {
   server.listen(port, () => {
     console.log(`\n======================================================`);
-    console.log(`🌿 HARBOR ROYAL GARDEN &bull; WEB & DATABASE SERVER`);
+    console.log(`🌿 HARBOR ROYAL GARDEN &bull; WEB & DATABASE SERVER v3.0`);
     console.log(`======================================================`);
     console.log(`📍 Web Application:  http://localhost:${port}/`);
+    console.log(`🛍️ Flower Shop:      http://localhost:${port}/index.html`);
+    console.log(`🛠️ Garden Services:  http://localhost:${port}/services.html`);
+    console.log(`📖 About Heritage:   http://localhost:${port}/about.html`);
     console.log(`🛡️ Harbor Login:     http://localhost:${port}/login.html`);
     console.log(`🔑 Forgot Password:  http://localhost:${port}/forgot-password.html`);
     console.log(`📊 Local Database:   http://localhost:${port}/database.html`);
