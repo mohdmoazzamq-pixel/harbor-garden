@@ -2,6 +2,19 @@
 
 > A full-featured, luxury botanical e-commerce and garden management platform with built-in authentication portal, role-based access control, shopping cart, multi-step delivery & payment checkout, 3-step service bookings with flower pairing, author management controls, local database, and a zero-dependency Node.js REST API server.
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live_Website-10b981?style=for-the-badge&logo=githubpages&logoColor=white)](https://mohdmoazzamq-pixel.github.io/harbor-garden/)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/mohdmoazzamq-pixel/harbor-garden)
+
+---
+
+## 🌐 Live Demo & Shareable Link
+
+Experience Harbor Garden live directly in your browser:
+
+👉 **Live Demo:** [https://mohdmoazzamq-pixel.github.io/harbor-garden/](https://mohdmoazzamq-pixel.github.io/harbor-garden/)
+
+You can share this link with anyone to explore the botanical catalog, services, shopping cart, and security portal without any local setup or installation!
+
 ---
 
 ## 📸 Preview & Highlights
