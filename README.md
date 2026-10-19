@@ -13,7 +13,7 @@ Experience Harbor Garden live directly in your browser:
 
 👉 **Live Demo:** [https://mohdmoazzamq-pixel.github.io/harbor-garden/](https://mohdmoazzamq-pixel.github.io/harbor-garden/)
 
-You can share this link with anyone to explore the botanical catalog, services, shopping cart, and security portal without any local setup or installation!
+You can open this link to explore the botanical catalog, services, shopping cart, and security portal without any local setup or installation!
 
 ---
 
