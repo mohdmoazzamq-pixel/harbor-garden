@@ -48,29 +48,29 @@ initJsonFile(CONTACTS_FILE, [
 
 initJsonFile(USERS_FILE, [
   {
-    id: 'usr_author_alex',
-    name: 'Alex Morgan',
-    email: 'alex.morgan@harbor.io',
-    password: 'Harbor@2026',
-    role: 'Author',
-    title: 'Lead Security & Botanical Author',
-    twoFactorEnabled: true,
-    securityScore: 98,
-    avatarInitials: 'AM',
-    createdAt: '2026-01-15T09:30:00.000Z',
-    lastLogin: new Date().toISOString()
-  },
-  {
     id: 'usr_author_moazzam',
     name: 'Moazzam Qureshi',
     email: 'moazzam@mygarden.com',
     password: 'Garden@2026',
     role: 'Author',
-    title: 'Botanical Estate Author',
+    title: 'Master Botanical Author',
     twoFactorEnabled: true,
-    securityScore: 94,
+    securityScore: 98,
     avatarInitials: 'MQ',
     createdAt: '2026-02-10T11:00:00.000Z',
+    lastLogin: new Date().toISOString()
+  },
+  {
+    id: 'usr_member_alex',
+    name: 'Alex Morgan',
+    email: 'alex.morgan@harbor.io',
+    password: 'Harbor@2026',
+    role: 'User',
+    title: 'Security Member',
+    twoFactorEnabled: true,
+    securityScore: 92,
+    avatarInitials: 'AM',
+    createdAt: '2026-01-15T09:30:00.000Z',
     lastLogin: new Date().toISOString()
   },
   {
@@ -299,6 +299,11 @@ const server = http.createServer((req, res) => {
         try {
           const user = JSON.parse(body);
           const users = readJson(USERS_FILE);
+          // Only Moazzam Qureshi can be Author; all other accounts are strictly User
+          if ((user.email || '').trim().toLowerCase() !== 'moazzam@mygarden.com') {
+            user.role = 'User';
+            user.title = 'Garden Member';
+          }
           users.push(user);
           writeJson(USERS_FILE, users);
           res.writeHead(201, { 'Content-Type': 'application/json' });

@@ -61,8 +61,8 @@
     /* Tabs Switcher */
     .auth-tabs {
       display: flex;
-      background: #f1f5f0;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface-elevated);
+      border: 1px solid var(--harbor-border);
       border-radius: 14px;
       padding: 4px;
       margin-bottom: 24px;
@@ -84,10 +84,10 @@
     }
 
     .auth-tab-btn.active {
-      background: #ffffff;
-      color: var(--harbor-gold-dark);
-      border: 1px solid var(--harbor-gold-border);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface);
+      color: var(--harbor-terracotta);
+      border: 1px solid var(--harbor-gold);
+      box-shadow: var(--harbor-card-shadow);
     }
 
     .auth-form {
@@ -138,8 +138,8 @@
     .demo-access-box {
       margin-top: 24px;
       padding: 18px;
-      background: #fefce8;
-      border: 1.5px dashed var(--harbor-gold);
+      background: var(--harbor-bg-surface-elevated);
+      border: 1.5px dashed var(--harbor-gold-border);
       border-radius: 14px;
       text-align: center;
     }
@@ -158,10 +158,10 @@
 
     .btn-demo-author {
       padding: 10px 14px;
-      background: #fef3c7;
+      background: var(--harbor-bg-surface-elevated);
       border: 1.5px solid var(--harbor-gold);
       border-radius: 10px;
-      color: #92400e;
+      color: var(--harbor-terracotta);
       font-size: 0.8rem;
       font-weight: 800;
       cursor: pointer;
@@ -173,17 +173,17 @@
     }
 
     .btn-demo-author:hover {
-      background: #fde68a;
-      box-shadow: 0 4px 16px rgba(217, 119, 6, 0.25);
+      background: var(--harbor-bg-glass-hover);
+      box-shadow: var(--harbor-gold-shadow);
       transform: translateY(-2px);
     }
 
     .btn-demo-user {
       padding: 10px 14px;
-      background: #d1fae5;
-      border: 1.5px solid var(--harbor-emerald);
+      background: rgba(244, 174, 82, 0.15);
+      border: 1.5px solid var(--harbor-gold);
       border-radius: 10px;
-      color: #065f46;
+      color: var(--harbor-terracotta);
       font-size: 0.8rem;
       font-weight: 800;
       cursor: pointer;
@@ -195,8 +195,8 @@
     }
 
     .btn-demo-user:hover {
-      background: #a7f3d0;
-      box-shadow: 0 4px 16px rgba(5, 150, 105, 0.25);
+      background: rgba(212, 98, 26, 0.22);
+      box-shadow: var(--harbor-gold-shadow);
       transform: translateY(-2px);
     }
 
@@ -208,7 +208,7 @@
 
     .strength-track {
       height: 6px;
-      background: #e2e8f0;
+      background: var(--harbor-border);
       border-radius: 4px;
       overflow: hidden;
       margin-bottom: 6px;
@@ -316,26 +316,18 @@
             Sign In to Harbor Portal &rarr;
           </button>
 
-          <!-- Quick Role Selection Demo Access Box -->
+          <!-- Quick Member Access Demo Box (Author login button removed for security) -->
           <div class="demo-access-box">
-            <p><strong>Test Role Rules Instantly:</strong></p>
-            <div class="demo-buttons-grid">
-              
-              <!-- Author Role Button -->
-              <button type="button" class="btn-demo-author" id="btnDemoAuthor" title="Author has full access to whole project, database, audit logs, and plant listing">
-                <span>👑 Sign In as Author</span>
-                <small style="font-size: 0.68rem; opacity: 0.85;">Full Access (Alex Morgan)</small>
-              </button>
-
+            <p><strong>Quick Test Member Sign In:</strong></p>
+            <div style="display: flex; justify-content: center;">
               <!-- Regular User Role Button -->
-              <button type="button" class="btn-demo-user" id="btnDemoUser" title="User cannot access database or audit trail logs">
-                <span>👤 Sign In as User</span>
-                <small style="font-size: 0.68rem; opacity: 0.85;">Restricted (Elena Vance)</small>
+              <button type="button" class="btn-demo-user" id="btnDemoUser" title="User access with shopping, inquiry and account features" style="max-width: 300px; width: 100%;">
+                <span>👤 Quick Sign In as Member</span>
+                <small style="font-size: 0.72rem; opacity: 0.85;">Test User Account (Elena Vance)</small>
               </button>
-
             </div>
             <div style="font-size: 0.72rem; color: var(--harbor-text-dim); margin-top: 10px;">
-              Rules: Authors access whole project; Users cannot access Database or Audit logs.
+              Author access is protected. Sign in above with Author credentials to access the Database.
             </div>
           </div>
 
@@ -420,22 +412,6 @@
                 required 
                 autocomplete="new-password"
               />
-            </div>
-          </div>
-
-          <!-- Account Role Selection (Author vs User) -->
-          <div class="form-group">
-            <label class="harbor-label" for="registerRole">Register As (Account Role) *</label>
-            <div class="harbor-input-wrapper has-icon">
-              <span class="harbor-input-icon">👑</span>
-              <select id="registerRole" name="role" class="harbor-input" required>
-                <option value="Author">👑 Author &mdash; Full Access (List Plants/Trees, DB, Audit Logs)</option>
-                <option value="User" selected>👤 User &mdash; Standard Member (Browse &amp; Inquire)</option>
-              </select>
-            </div>
-            <div style="font-size: 0.74rem; color: var(--harbor-text-dim); margin-top: 6px; line-height: 1.45;">
-              <strong>👑 Author:</strong> Full access to list flowers/trees on Home page, view Inquiries Database, and inspect Audit Logs.<br/>
-              <strong>👤 User:</strong> Standard member access. Database, audit trail, and plant listing are restricted.
             </div>
           </div>
 
@@ -534,15 +510,13 @@
         });
       }
 
-      // Quick Demo: Author Login
-      document.getElementById('btnDemoAuthor').addEventListener('click', () => {
-        HarborAuth.quickAuthorLogin();
-      });
-
       // Quick Demo: Regular User Login
-      document.getElementById('btnDemoUser').addEventListener('click', () => {
-        HarborAuth.quickUserLogin();
-      });
+      const btnDemoUser = document.getElementById('btnDemoUser');
+      if (btnDemoUser) {
+        btnDemoUser.addEventListener('click', () => {
+          HarborAuth.quickUserLogin();
+        });
+      }
 
       // Handle Sign In submission
       signInForm.addEventListener('submit', (e) => {
@@ -575,15 +549,14 @@
           return;
         }
 
-        const roleSelect = document.getElementById('registerRole');
-        const role = roleSelect ? roleSelect.value : 'User';
+        const role = 'User';
 
         try {
           const user = HarborDB.registerUser({ name, email, password, role });
-          HarborAuth.showToast(`Account created successfully as ${role}!`, 'success', 'Harbor Registration');
+          HarborAuth.showToast('Account created successfully! Welcome to Harbor Garden.', 'success', 'Harbor Registration');
           HarborDB.loginUser(email, password, true);
           setTimeout(() => {
-            window.location.href = user.role === 'Author' ? 'portal.html' : 'index.html';
+            window.location.href = 'index.html';
           }, 800);
         } catch (err) {
           HarborAuth.showToast(err.message, 'error', 'Registration Failed');

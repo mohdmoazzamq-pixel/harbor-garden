@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Local Database &bull; Author Portal &bull; Harbor</title>
+  <title>Author Master Database Center &bull; Harbor Garden</title>
   <link rel="stylesheet" href="harbor-theme.css" />
   <style>
     .db-container {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 40px auto 80px;
-      padding: 0 28px;
+      padding: 0 24px;
     }
 
     .db-header-bar {
@@ -18,9 +18,9 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
       padding-bottom: 24px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid var(--harbor-border);
     }
 
     .db-title-meta h1 {
@@ -31,24 +31,42 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
     }
 
     .db-badge-author {
       font-size: 0.74rem;
       font-weight: 800;
       padding: 4px 12px;
-      background: #fef3c7;
+      background: var(--badge-bg);
       border: 1px solid var(--harbor-gold);
-      color: #92400e;
-      border-radius: 20px;
+      color: var(--harbor-gold-dark);
+      border-radius: 9999px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+      box-shadow: 0 2px 8px rgba(244, 174, 82, 0.2);
+    }
+
+    html[data-theme="dark"] .db-badge-author {
+      color: #F4AE52;
+    }
+
+    .db-badge-restricted {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .db-title-meta p {
       font-size: 0.9rem;
       color: var(--harbor-text-muted);
+      margin-top: 6px;
     }
 
     .db-top-actions {
@@ -61,65 +79,139 @@
     /* Stats Grid */
     .db-stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin-bottom: 32px;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
     }
 
     .db-stat-card {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface);
+      border: 1.5px solid var(--harbor-border);
       border-radius: 16px;
-      padding: 22px;
+      padding: 18px 20px;
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
       box-shadow: var(--harbor-card-shadow);
       transition: var(--transition);
     }
 
     .db-stat-card:hover {
-      border-color: var(--harbor-gold-border);
-      transform: translateY(-3px);
+      border-color: var(--harbor-gold);
+      transform: translateY(-2px);
       box-shadow: var(--harbor-gold-shadow);
     }
 
     .db-stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
+      flex-shrink: 0;
     }
 
     .db-stat-val {
-      font-size: 1.6rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: var(--harbor-text-main);
       line-height: 1.1;
     }
 
     .db-stat-lbl {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--harbor-text-muted);
+      margin-top: 2px;
     }
 
-    /* Filter & Search Bar */
+    /* Master Database Navigation Tabs */
+    .db-nav-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--harbor-border);
+    }
+
+    .db-tab-btn {
+      padding: 10px 18px;
+      background: var(--harbor-bg-surface);
+      border: 1.5px solid var(--harbor-border);
+      border-radius: 9999px;
+      color: var(--harbor-text-muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .db-tab-btn:hover {
+      border-color: var(--harbor-gold);
+      color: var(--harbor-terracotta);
+      background: var(--harbor-bg-surface-elevated);
+    }
+
+    .db-tab-btn.active {
+      background: var(--badge-bg);
+      border-color: var(--harbor-gold);
+      color: var(--harbor-terracotta);
+      box-shadow: 0 2px 10px rgba(244, 174, 82, 0.22);
+    }
+
+    html[data-theme="dark"] .db-tab-btn.active {
+      color: #F4AE52;
+    }
+
+    .db-tab-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(42, 26, 14, 0.08);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    html[data-theme="dark"] .db-tab-badge {
+      background: rgba(244, 174, 82, 0.2);
+      color: #FEF3E2;
+    }
+
+    .db-tab-btn.active .db-tab-badge {
+      background: rgba(212, 98, 26, 0.16);
+      color: var(--harbor-terracotta);
+    }
+
+    /* Tab Panels */
+    .db-panel {
+      display: none;
+    }
+
+    .db-panel.active {
+      display: block;
+      animation: fadeInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Controls Bar */
     .db-controls-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .db-search-box {
       flex: 1;
-      min-width: 280px;
-      max-width: 420px;
+      min-width: 260px;
+      max-width: 440px;
     }
 
     .db-filter-pills {
@@ -129,12 +221,12 @@
     }
 
     .filter-pill {
-      padding: 7px 16px;
-      border-radius: 20px;
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: var(--harbor-bg-surface);
+      border: 1.5px solid var(--harbor-border);
       color: var(--harbor-text-muted);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
       transition: var(--transition);
@@ -142,88 +234,114 @@
 
     .filter-pill:hover,
     .filter-pill.active {
-      background: #fef3c7;
+      background: var(--badge-bg);
       border-color: var(--harbor-gold);
-      color: #92400e;
-      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15);
+      color: var(--harbor-terracotta);
+      box-shadow: 0 2px 8px rgba(244, 174, 82, 0.2);
     }
 
-    /* Database Table */
+    html[data-theme="dark"] .filter-pill.active {
+      color: #F4AE52;
+    }
+
+    /* Database Table Styling */
     .db-table-wrapper {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 18px;
+      background: var(--harbor-bg-surface);
+      border: 1.5px solid var(--harbor-border);
+      border-radius: 16px;
       box-shadow: var(--harbor-card-shadow);
       overflow-x: auto;
-      margin-bottom: 44px;
+      margin-bottom: 30px;
     }
 
     .db-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       text-align: left;
     }
 
     .db-table th {
-      padding: 15px 20px;
-      background: #f1f5f0;
+      padding: 14px 18px;
+      background: var(--harbor-bg-surface-elevated);
       color: var(--harbor-text-main);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid var(--harbor-border);
+      white-space: nowrap;
     }
 
     .db-table td {
-      padding: 15px 20px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--harbor-border);
       color: var(--harbor-text-main);
       vertical-align: middle;
     }
 
     .db-table tr:hover td {
-      background: #f9fbf9;
+      background: var(--harbor-bg-glass-hover);
     }
 
     .status-select {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--harbor-bg-surface);
+      border: 1.5px solid var(--harbor-border);
       color: var(--harbor-text-main);
-      padding: 5px 10px;
+      padding: 4px 8px;
       border-radius: 8px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       cursor: pointer;
       outline: none;
     }
 
     .status-select:focus {
       border-color: var(--harbor-gold);
-      box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
     }
 
     .btn-action-delete {
       background: none;
       border: 1px solid rgba(244, 63, 94, 0.3);
       color: var(--harbor-danger);
-      padding: 5px 12px;
-      border-radius: 8px;
-      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.74rem;
       font-weight: 700;
       cursor: pointer;
       transition: var(--transition);
     }
 
     .btn-action-delete:hover {
-      background: rgba(244, 63, 94, 0.15);
+      background: rgba(244, 63, 94, 0.12);
       border-color: var(--harbor-danger);
     }
 
     .empty-db-state {
-      padding: 60px 20px;
+      padding: 50px 20px;
       text-align: center;
       color: var(--harbor-text-dim);
+    }
+
+    .notice-author-banner {
+      background: var(--harbor-bg-surface-elevated);
+      border: 1.5px solid var(--harbor-gold-border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.84rem;
+      color: var(--harbor-text-main);
+    }
+
+    .table-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(0, 0, 0, 0.08);
     }
   </style>
 </head>
@@ -260,130 +378,337 @@
   <!-- Database Main Container -->
   <main class="db-container" id="dbMainContent">
     
-    <!-- Top Header Bar -->
-    <div class="db-header-bar">
-      <div class="db-title-meta">
-        <h1>
-          <span>Client Inquiries &amp; Account Storage</span>
-          <span class="db-badge-author">👑 Author Clearance</span>
-        </h1>
-        <p>Complete control center for local client submissions, inquiries, and registered members.</p>
+    <!-- Rendered dynamically by JavaScript (Locked screen for non-author; Full database dashboard for Author) -->
+    <div id="dbAuthorizedView" style="display: none;">
+
+      <!-- Top Header Bar -->
+      <div class="db-header-bar">
+        <div class="db-title-meta">
+          <h1>
+            <span>Master Botanical Database</span>
+            <span class="db-badge-author">👑 Author Clearance</span>
+            <span class="db-badge-restricted">Author Only</span>
+          </h1>
+          <p>
+            Sole Author Account: <strong>Moazzam Qureshi</strong> (<a href="mailto:moazzam@mygarden.com" style="color:var(--harbor-gold);">moazzam@mygarden.com</a>). 
+            All other users have standard membership with database access restricted.
+          </p>
+        </div>
+
+        <div class="db-top-actions">
+          <button type="button" class="btn-secondary" id="btnExportCSV" style="font-size: 0.82rem; padding: 9px 16px;">
+            <span>📥</span> Export Inquiries CSV
+          </button>
+          <button type="button" class="btn-secondary" id="btnExportJSON" style="font-size: 0.82rem; padding: 9px 16px;">
+            <span>📦</span> Export Full Database JSON
+          </button>
+          <button type="button" class="btn-outline" id="btnAddSample" style="font-size: 0.82rem;">
+            <span>+</span> Add Test Inquiry
+          </button>
+        </div>
       </div>
 
-      <div class="db-top-actions">
-        <button type="button" class="btn-secondary" id="btnExportCSV" style="font-size: 0.84rem; padding: 10px 18px;">
-          <span>📥</span> Export CSV
+      <!-- Stats Grid (Across All Collections) -->
+      <div class="db-stats-grid">
+        <div class="db-stat-card">
+          <div class="db-stat-icon" style="background: rgba(230, 202, 101, 0.14); color: var(--harbor-gold);">✉</div>
+          <div>
+            <div class="db-stat-val" id="statInquiries">0</div>
+            <div class="db-stat-lbl">Client Inquiries</div>
+          </div>
+        </div>
+
+        <div class="db-stat-card">
+          <div class="db-stat-icon" style="background: rgba(16, 185, 129, 0.14); color: var(--harbor-emerald);">🛍️</div>
+          <div>
+            <div class="db-stat-val" id="statOrders">0</div>
+            <div class="db-stat-lbl">Customer Orders</div>
+          </div>
+        </div>
+
+        <div class="db-stat-card">
+          <div class="db-stat-icon" style="background: rgba(245, 158, 11, 0.14); color: var(--harbor-warning);">₹</div>
+          <div>
+            <div class="db-stat-val" id="statRevenue">₹0</div>
+            <div class="db-stat-lbl">Total Store Revenue</div>
+          </div>
+        </div>
+
+        <div class="db-stat-card">
+          <div class="db-stat-icon" style="background: rgba(139, 92, 246, 0.14); color: #8b5cf6;">🌿</div>
+          <div>
+            <div class="db-stat-val" id="statPlants">0</div>
+            <div class="db-stat-lbl">Plants in Catalog</div>
+          </div>
+        </div>
+
+        <div class="db-stat-card">
+          <div class="db-stat-icon" style="background: rgba(6, 182, 212, 0.14); color: var(--harbor-cyan);">🛠️</div>
+          <div>
+            <div class="db-stat-val" id="statServices">0</div>
+            <div class="db-stat-lbl">Active Services</div>
+          </div>
+        </div>
+
+        <div class="db-stat-card">
+          <div class="db-stat-icon" style="background: rgba(236, 72, 153, 0.14); color: #ec4899;">👥</div>
+          <div>
+            <div class="db-stat-val" id="statUsers">0</div>
+            <div class="db-stat-lbl">Registered Accounts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master Database Tabs -->
+      <div class="db-nav-tabs">
+        <button type="button" class="db-tab-btn active" data-tab="tabInquiries">
+          <span>✉️</span> Client Inquiries <span class="db-tab-badge" id="badgeInquiries">0</span>
         </button>
-        <button type="button" class="btn-secondary" id="btnExportJSON" style="font-size: 0.84rem; padding: 10px 18px;">
-          <span>📦</span> Export JSON
+        <button type="button" class="db-tab-btn" data-tab="tabOrders">
+          <span>🛍️</span> Customer Orders <span class="db-tab-badge" id="badgeOrders">0</span>
         </button>
-        <button type="button" class="btn-outline" id="btnAddSample" style="font-size: 0.84rem;">
-          <span>+</span> Add Test Record
+        <button type="button" class="db-tab-btn" data-tab="tabPlants">
+          <span>🌿</span> Plant Catalog <span class="db-tab-badge" id="badgePlants">0</span>
+        </button>
+        <button type="button" class="db-tab-btn" data-tab="tabServices">
+          <span>🛠️</span> Gardening Services <span class="db-tab-badge" id="badgeServices">0</span>
+        </button>
+        <button type="button" class="db-tab-btn" data-tab="tabAbout">
+          <span>📖</span> About Cards <span class="db-tab-badge" id="badgeAbout">0</span>
+        </button>
+        <button type="button" class="db-tab-btn" data-tab="tabUsers">
+          <span>👥</span> User Accounts (RBAC) <span class="db-tab-badge" id="badgeUsers">0</span>
+        </button>
+        <button type="button" class="db-tab-btn" data-tab="tabAudit">
+          <span>🛡️</span> Audit Trail <span class="db-tab-badge" id="badgeAudit">0</span>
         </button>
       </div>
-    </div>
 
-    <!-- Stats Grid -->
-    <div class="db-stats-grid">
-      <div class="db-stat-card">
-        <div class="db-stat-icon" style="background: rgba(230, 202, 101, 0.12); color: var(--harbor-gold);">✉</div>
-        <div>
-          <div class="db-stat-val" id="statTotal">0</div>
-          <div class="db-stat-lbl">Total Inquiries Stored</div>
+      <!-- PANEL 1: CLIENT INQUIRIES -->
+      <div class="db-panel active" id="panelInquiries">
+        <div class="db-controls-row">
+          <div class="db-search-box">
+            <input 
+              type="text" 
+              id="searchInquiries" 
+              class="harbor-input" 
+              placeholder="Search inquiries by client name, email, or service..." 
+              style="padding: 10px 14px; font-size: 0.86rem;"
+            />
+          </div>
+
+          <div class="db-filter-pills">
+            <button class="filter-pill active" data-filter="All">All Inquiries</button>
+            <button class="filter-pill" data-filter="New">New</button>
+            <button class="filter-pill" data-filter="Contacted">Contacted</button>
+            <button class="filter-pill" data-filter="In Progress">In Progress</button>
+            <button class="filter-pill" data-filter="Resolved">Resolved</button>
+          </div>
+        </div>
+
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Date / ID</th>
+                <th>Client Name</th>
+                <th>Contact Details</th>
+                <th>Botanical Service</th>
+                <th>Message Preview</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="contactsTableBody"></tbody>
+          </table>
         </div>
       </div>
 
-      <div class="db-stat-card">
-        <div class="db-stat-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--harbor-emerald);">⚡</div>
-        <div>
-          <div class="db-stat-val" id="statNew">0</div>
-          <div class="db-stat-lbl">New Unread Queries</div>
+      <!-- PANEL 2: CUSTOMER ORDERS -->
+      <div class="db-panel" id="panelOrders">
+        <div class="notice-author-banner">
+          <div>
+            <strong>🛍️ E-Commerce &amp; Service Orders Database:</strong> Real-time customer orders, checkout addresses, payment modes, and order fulfillment states.
+          </div>
+        </div>
+
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Order ID &amp; Date</th>
+                <th>Customer &amp; Address</th>
+                <th>Order Type</th>
+                <th>Purchased Items</th>
+                <th>Amount (₹)</th>
+                <th>Payment Mode</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody"></tbody>
+          </table>
         </div>
       </div>
 
-      <div class="db-stat-card">
-        <div class="db-stat-icon" style="background: rgba(245, 158, 11, 0.12); color: var(--harbor-warning);">⏳</div>
-        <div>
-          <div class="db-stat-val" id="statInProgress">0</div>
-          <div class="db-stat-lbl">In Progress / Contacted</div>
+      <!-- PANEL 3: PLANT CATALOG -->
+      <div class="db-panel" id="panelPlants">
+        <div class="notice-author-banner">
+          <div>
+            <strong>🌿 Botanical Plant Catalog &amp; Inventory:</strong> Listed flowers and perennials available in the store. Only the Author can list or delete flowers.
+          </div>
+          <a href="index.html#plantListingSection" class="btn-primary" style="font-size:0.78rem; padding: 6px 14px;">
+            + Add New Flower on Home
+          </a>
+        </div>
+
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Flower</th>
+                <th>Botanical Name</th>
+                <th>Price (₹)</th>
+                <th>Bloom Season</th>
+                <th>Category</th>
+                <th>Listing Origin</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="plantsTableBody"></tbody>
+          </table>
         </div>
       </div>
 
-      <div class="db-stat-card">
-        <div class="db-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: var(--harbor-cyan);">👥</div>
-        <div>
-          <div class="db-stat-val" id="statUsers">0</div>
-          <div class="db-stat-lbl">Registered Accounts</div>
+      <!-- PANEL 4: GARDENING SERVICES -->
+      <div class="db-panel" id="panelServices">
+        <div class="notice-author-banner">
+          <div>
+            <strong>🛠️ Botanical Services Catalog:</strong> Professional garden architecture, planting, and estate maintenance offerings.
+          </div>
+          <a href="services.html#serviceAddForm" class="btn-primary" style="font-size:0.78rem; padding: 6px 14px;">
+            + Add Service on Services Page
+          </a>
+        </div>
+
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Icon &amp; Service</th>
+                <th>Price (₹)</th>
+                <th>Duration</th>
+                <th>Badge</th>
+                <th>Description</th>
+                <th>Origin</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="servicesTableBody"></tbody>
+          </table>
         </div>
       </div>
-    </div>
 
-    <!-- Filter & Search Controls -->
-    <div class="db-controls-row">
-      <div class="db-search-box">
-        <input 
-          type="text" 
-          id="dbSearchInput" 
-          class="harbor-input" 
-          placeholder="Search inquiries by client name, email, or service..." 
-          style="padding: 11px 16px; font-size: 0.88rem;"
-        />
+      <!-- PANEL 5: ABOUT CARDS -->
+      <div class="db-panel" id="panelAbout">
+        <div class="notice-author-banner">
+          <div>
+            <strong>📖 About &amp; Heritage Story Cards:</strong> Himalayan estate history, sustainable philosophies, and master horticulturist cards.
+          </div>
+          <a href="about.html#storyAddForm" class="btn-primary" style="font-size:0.78rem; padding: 6px 14px;">
+            + Add Story Card on About Page
+          </a>
+        </div>
+
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Icon &amp; Title</th>
+                <th>Subtitle</th>
+                <th>Description Preview</th>
+                <th>Origin</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="aboutTableBody"></tbody>
+          </table>
+        </div>
       </div>
 
-      <div class="db-filter-pills">
-        <button class="filter-pill active" data-filter="All">All Inquiries</button>
-        <button class="filter-pill" data-filter="New">New</button>
-        <button class="filter-pill" data-filter="Contacted">Contacted</button>
-        <button class="filter-pill" data-filter="In Progress">In Progress</button>
-        <button class="filter-pill" data-filter="Resolved">Resolved</button>
+      <!-- PANEL 6: REGISTERED USERS -->
+      <div class="db-panel" id="panelUsers">
+        <div class="notice-author-banner">
+          <div>
+            <strong>👑 Role-Based Access Control (RBAC):</strong> Sole Author is <strong>Moazzam Qureshi</strong>. All other accounts are strictly regular <strong>User</strong> members. New registrations are automatically locked to User.
+          </div>
+        </div>
+
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Email Address</th>
+                <th>Assigned Role</th>
+                <th>2FA Status</th>
+                <th>Security Score</th>
+                <th>Member Since</th>
+                <th>Last Active</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
       </div>
+
+      <!-- PANEL 7: AUDIT LOGS -->
+      <div class="db-panel" id="panelAudit">
+        <div class="notice-author-banner">
+          <div>
+            <strong>🛡️ Cryptographic Security &amp; Activity Audit Trail:</strong> Complete log of server boots, logins, order placements, catalog updates, and status alterations.
+          </div>
+        </div>
+
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Event Type</th>
+                <th>Details &amp; Action</th>
+                <th>Status</th>
+                <th>IP Origin</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Inquiries Table -->
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <thead>
-          <tr>
-            <th>Date / ID</th>
-            <th>Client Name</th>
-            <th>Contact Details</th>
-            <th>Botanical Service</th>
-            <th>Message Preview</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="contactsTableBody">
-          <!-- Populated by JavaScript -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Registered Accounts Section -->
-    <div style="margin-top: 50px;">
-      <h2 style="font-family: var(--font-serif); font-size: 1.6rem; color: #ffffff; margin-bottom: 8px;">
-        Registered Harbor Accounts (RBAC)
-      </h2>
-      <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 22px;">
-        Author and Member accounts with cryptographic 2FA status and security ratings.
-      </p>
-
-      <div class="db-table-wrapper">
-        <table class="db-table">
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>2FA Status</th>
-              <th>Security Score</th>
-              <th>Last Active</th>
-            </tr>
-          </thead>
-          <tbody id="usersTableBody">
-            <!-- Populated by JavaScript -->
-          </tbody>
-        </table>
+    <!-- LOCKED SCREEN FOR NON-AUTHOR / GUESTS ("all data show author not anyone") -->
+    <div id="dbLockedView" style="display: none;">
+      <div class="access-restricted-card" style="background: var(--harbor-bg-surface); border: 1px solid var(--harbor-border); border-radius: 20px; padding: 48px 24px; text-align: center; max-width: 640px; margin: 40px auto; box-shadow: var(--harbor-card-shadow);">
+        <div style="font-size: 3.5rem; margin-bottom: 16px;">🔒</div>
+        <h2 style="font-family: var(--font-serif); font-size: 2rem; color: var(--harbor-text-main); margin-bottom: 12px;">
+          Author Clearance Required
+        </h2>
+        <div style="margin-bottom: 20px;">
+          <span class="db-badge-restricted" style="font-size: 0.8rem; padding: 6px 14px;">Restricted to Author Only</span>
+        </div>
+        <p id="lockReasonText" style="font-size: 0.96rem; color: var(--harbor-text-muted); line-height: 1.7; margin-bottom: 24px;">
+          All database collections (Inquiries, Orders, Plant Catalog, Services, Accounts, and Audit Trail) are confidential and viewable strictly by the Author (<strong>Moazzam Qureshi</strong>).
+        </p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <a href="login.html" class="btn-primary" id="btnLockSignInAuthor" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+            <span>👑</span> Sign In with Author Account
+          </a>
+          <a href="index.html" class="btn-secondary" style="text-decoration:none;">
+            &larr; Return to Garden Home
+          </a>
+        </div>
       </div>
     </div>
 
@@ -403,7 +728,7 @@
   <!-- Footer -->
   <footer class="harbor-footer">
     <div class="harbor-footer-bottom">
-      <p>&copy; 2026 Harbor &bull; Author Database Manager &bull; Local Storage Persistent</p>
+      <p>&copy; 2026 Harbor &bull; Author Master Database &bull; Local Storage Persistent &bull; Author: Moazzam Qureshi</p>
       <a href="index.html" style="color: var(--harbor-gold); text-decoration: none;">Return to Home</a>
     </div>
   </footer>
@@ -413,32 +738,116 @@
   <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Enforce RBAC guard
+      const authorizedView = document.getElementById('dbAuthorizedView');
+      const lockedView = document.getElementById('dbLockedView');
+      const lockReasonText = document.getElementById('lockReasonText');
+      const btnLockSignInAuthor = document.getElementById('btnLockSignInAuthor');
+
+      // STRICT AUTHOR CHECK: Only Moazzam Qureshi can view database data
       if (!HarborDB.canAccessDatabase()) {
-        HarborAuth.enforceDatabaseAccess();
+        const currentUser = HarborDB.getCurrentUser();
+        authorizedView.style.display = 'none';
+        lockedView.style.display = 'block';
+
+        if (currentUser) {
+          lockReasonText.innerHTML = `
+            You are currently signed in as <strong>${currentUser.name}</strong> (${currentUser.email}) with role: <strong style="color:var(--harbor-emerald);">${currentUser.role}</strong>.<br/><br/>
+            All database collections (Inquiries, Customer Orders, Inventory, Users, and Audit Logs) are restricted strictly to <strong>Author Moazzam Qureshi</strong>. Regular users cannot access database data.
+          `;
+        } else {
+          lockReasonText.innerHTML = `
+            You are currently not signed in.<br/><br/>
+            All database collections (Inquiries, Customer Orders, Inventory, Users, and Audit Logs) are restricted strictly to <strong>Author Moazzam Qureshi</strong>.
+          `;
+        }
+
         return;
       }
 
+      // If Author is authenticated, show full database
+      lockedView.style.display = 'none';
+      authorizedView.style.display = 'block';
+
+      // Tab switcher
+      const tabButtons = document.querySelectorAll('.db-tab-btn');
+      const panels = {
+        tabInquiries: document.getElementById('panelInquiries'),
+        tabOrders: document.getElementById('panelOrders'),
+        tabPlants: document.getElementById('panelPlants'),
+        tabServices: document.getElementById('panelServices'),
+        tabAbout: document.getElementById('panelAbout'),
+        tabUsers: document.getElementById('panelUsers'),
+        tabAudit: document.getElementById('panelAudit')
+      };
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          Object.values(panels).forEach(p => p.classList.remove('active'));
+
+          btn.classList.add('active');
+          const targetKey = btn.getAttribute('data-tab');
+          if (panels[targetKey]) {
+            panels[targetKey].classList.add('active');
+          }
+        });
+      });
+
+      // Filter & Search for Inquiries
       let activeFilter = 'All';
       let searchQuery = '';
-
-      const contactsTableBody = document.getElementById('contactsTableBody');
-      const usersTableBody = document.getElementById('usersTableBody');
-      const searchInput = document.getElementById('dbSearchInput');
       const filterPills = document.querySelectorAll('.filter-pill');
+      const searchInput = document.getElementById('searchInquiries');
 
-      function updateStats() {
-        const contacts = HarborDB.getContacts();
-        const users = HarborDB.getUsers();
+      filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          filterPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          activeFilter = pill.getAttribute('data-filter');
+          renderInquiries();
+        });
+      });
 
-        document.getElementById('statTotal').textContent = contacts.length;
-        document.getElementById('statNew').textContent = contacts.filter(c => c.status === 'New').length;
-        document.getElementById('statInProgress').textContent = contacts.filter(c => c.status === 'Contacted' || c.status === 'In Progress').length;
-        document.getElementById('statUsers').textContent = users.length;
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value.trim().toLowerCase();
+          renderInquiries();
+        });
       }
 
-      function renderContacts() {
-        updateStats();
+      function updateDashboardCounters() {
+        const contacts = HarborDB.getContacts();
+        const orders = HarborDB.getOrders();
+        const plants = HarborDB.getPlants();
+        const services = HarborDB.getServices();
+        const aboutCards = HarborDB.getAboutCards();
+        const users = HarborDB.getUsers();
+        const audit = HarborDB.getAuditLogs();
+
+        const totalRevenue = orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+
+        // Header Stats
+        document.getElementById('statInquiries').textContent = contacts.length;
+        document.getElementById('statOrders').textContent = orders.length;
+        document.getElementById('statRevenue').textContent = '₹' + totalRevenue.toLocaleString('en-IN');
+        document.getElementById('statPlants').textContent = plants.length;
+        document.getElementById('statServices').textContent = services.length;
+        document.getElementById('statUsers').textContent = users.length;
+
+        // Tab Badges
+        document.getElementById('badgeInquiries').textContent = contacts.length;
+        document.getElementById('badgeOrders').textContent = orders.length;
+        document.getElementById('badgePlants').textContent = plants.length;
+        document.getElementById('badgeServices').textContent = services.length;
+        document.getElementById('badgeAbout').textContent = aboutCards.length;
+        document.getElementById('badgeUsers').textContent = users.length;
+        document.getElementById('badgeAudit').textContent = audit.length;
+      }
+
+      // Render 1: Inquiries
+      function renderInquiries() {
+        updateDashboardCounters();
+        const tbody = document.getElementById('contactsTableBody');
         let contacts = HarborDB.getContacts();
 
         if (activeFilter !== 'All') {
@@ -446,23 +855,22 @@
         }
 
         if (searchQuery) {
-          const q = searchQuery.toLowerCase();
           contacts = contacts.filter(c => 
-            (c.name && c.name.toLowerCase().includes(q)) ||
-            (c.email && c.email.toLowerCase().includes(q)) ||
-            (c.serviceLabel && c.serviceLabel.toLowerCase().includes(q)) ||
-            (c.mobile && c.mobile.includes(q)) ||
-            (c.message && c.message.toLowerCase().includes(q))
+            (c.name && c.name.toLowerCase().includes(searchQuery)) ||
+            (c.email && c.email.toLowerCase().includes(searchQuery)) ||
+            (c.serviceLabel && c.serviceLabel.toLowerCase().includes(searchQuery)) ||
+            (c.mobile && c.mobile.includes(searchQuery)) ||
+            (c.message && c.message.toLowerCase().includes(searchQuery))
           );
         }
 
         if (!contacts.length) {
-          contactsTableBody.innerHTML = `
+          tbody.innerHTML = `
             <tr>
               <td colspan="7">
                 <div class="empty-db-state">
                   <div style="font-size: 2.2rem; margin-bottom: 8px;">📭</div>
-                  <h4 style="color: #ffffff; margin-bottom: 4px;">No inquiries found</h4>
+                  <h4 style="color: var(--harbor-text-main); margin-bottom: 4px;">No inquiries found</h4>
                   <p>No records match the current filter or search criteria.</p>
                 </div>
               </td>
@@ -471,21 +879,21 @@
           return;
         }
 
-        contactsTableBody.innerHTML = contacts.map(c => `
+        tbody.innerHTML = contacts.map(c => `
           <tr>
             <td>
-              <div style="font-weight: 700; color: #ffffff;">${new Date(c.createdAt).toLocaleDateString()}</div>
+              <div style="font-weight: 700; color: var(--harbor-text-main);">${new Date(c.createdAt).toLocaleDateString()}</div>
               <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--harbor-text-dim);">${c.id}</div>
             </td>
             <td>
-              <strong style="color: #ffffff;">${c.name}</strong>
+              <strong style="color: var(--harbor-text-main);">${c.name}</strong>
             </td>
             <td>
               <div>✉ ${c.email}</div>
               <div style="font-size: 0.76rem; color: var(--harbor-text-dim);">☎ ${c.mobile}</div>
             </td>
             <td>
-              <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; background: rgba(230, 202, 101, 0.08); font-size: 0.8rem; border: 1px solid var(--harbor-gold-border); color: var(--harbor-gold-light);">
+              <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; background: rgba(230, 202, 101, 0.12); font-size: 0.8rem; border: 1px solid var(--harbor-gold-border); color: #92400e;">
                 🌿 ${c.serviceLabel}
               </span>
             </td>
@@ -498,7 +906,7 @@
               </button>
             </td>
             <td>
-              <select class="status-select" data-id="${c.id}">
+              <select class="status-select inquiry-status-select" data-id="${c.id}">
                 <option value="New" ${c.status === 'New' ? 'selected' : ''}>New</option>
                 <option value="Contacted" ${c.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
                 <option value="In Progress" ${c.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
@@ -513,31 +921,28 @@
           </tr>
         `).join('');
 
-        // Listeners for Status update
-        document.querySelectorAll('.status-select').forEach(select => {
+        tbody.querySelectorAll('.inquiry-status-select').forEach(select => {
           select.addEventListener('change', (e) => {
             const cid = e.target.getAttribute('data-id');
             const newStatus = e.target.value;
             HarborDB.updateContactStatus(cid, newStatus);
             HarborAuth.showToast(`Inquiry #${cid} updated to "${newStatus}"`, 'info', 'Status Updated');
-            updateStats();
+            updateDashboardCounters();
           });
         });
 
-        // Listeners for Delete
-        document.querySelectorAll('.delete-contact-btn').forEach(btn => {
+        tbody.querySelectorAll('.delete-contact-btn').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const cid = e.target.getAttribute('data-id');
             if (confirm(`Are you sure you want to delete inquiry ${cid}?`)) {
               HarborDB.deleteContact(cid);
               HarborAuth.showToast(`Inquiry #${cid} deleted.`, 'warning', 'Deleted');
-              renderContacts();
+              renderInquiries();
             }
           });
         });
 
-        // Listeners for Details Modal
-        document.querySelectorAll('.view-details-btn').forEach(btn => {
+        tbody.querySelectorAll('.view-details-btn').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const cid = e.target.getAttribute('data-id');
             const contact = HarborDB.getContacts().find(x => x.id === cid);
@@ -546,20 +951,233 @@
         });
       }
 
+      // Render 2: Orders
+      function renderOrders() {
+        const tbody = document.getElementById('ordersTableBody');
+        const orders = HarborDB.getOrders();
+
+        if (!orders.length) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="8">
+                <div class="empty-db-state">
+                  <div style="font-size: 2.2rem; margin-bottom: 8px;">🛍️</div>
+                  <h4 style="color: var(--harbor-text-main); margin-bottom: 4px;">No customer orders placed yet</h4>
+                  <p>When clients purchase flowers or book garden services, orders appear here automatically.</p>
+                </div>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = orders.map(o => {
+          const itemsSummary = o.items && o.items.length
+            ? o.items.map(it => `${it.qty}x ${it.name} (₹${it.price})`).join(', ')
+            : (o.serviceDetails ? o.serviceDetails.name : 'Custom Booking');
+
+          const addressText = o.address
+            ? `${o.address.name || o.customer}<br/><small style="color:var(--harbor-text-dim);">${o.address.mobile || ''} &bull; ${o.address.city || ''}</small>`
+            : o.customer;
+
+          return `
+            <tr>
+              <td>
+                <strong style="color:var(--harbor-text-main); font-family:var(--font-mono); font-size:0.8rem;">${o.id}</strong>
+                <div style="font-size:0.74rem; color:var(--harbor-text-dim);">${new Date(o.createdAt).toLocaleString()}</div>
+              </td>
+              <td>${addressText}</td>
+              <td>
+                <span style="font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:6px; background:var(--harbor-bg-surface-elevated); color:var(--harbor-text-main); border:1px solid var(--harbor-border);">
+                  ${o.orderType === 'FLOWER_PURCHASE' ? '🛍️ Flower Order' : '🛠️ Service Booking'}
+                </span>
+              </td>
+              <td>
+                <div style="max-width:240px; font-size:0.82rem; color:var(--harbor-text-main);">${itemsSummary}</div>
+              </td>
+              <td>
+                <strong style="color:var(--harbor-emerald); font-size:0.95rem;">₹${(o.totalAmount || 0).toLocaleString('en-IN')}</strong>
+              </td>
+              <td>
+                <span style="font-size:0.76rem; font-weight:700; color:var(--harbor-text-muted);">${o.paymentMethod || 'COD'}</span>
+              </td>
+              <td>
+                <select class="status-select order-status-select" data-id="${o.id}">
+                  <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                  <option value="Dispatched" ${o.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
+                  <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                  <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn-action-delete delete-order-btn" data-id="${o.id}">Delete</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        tbody.querySelectorAll('.order-status-select').forEach(select => {
+          select.addEventListener('change', (e) => {
+            const oid = e.target.getAttribute('data-id');
+            const newStatus = e.target.value;
+            HarborDB.updateOrderStatus(oid, newStatus);
+            HarborAuth.showToast(`Order #${oid} status changed to ${newStatus}`, 'info', 'Order Status');
+            updateDashboardCounters();
+          });
+        });
+
+        tbody.querySelectorAll('.delete-order-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const oid = e.target.getAttribute('data-id');
+            if (confirm(`Are you sure you want to delete order #${oid}?`)) {
+              HarborDB.deleteOrder(oid);
+              HarborAuth.showToast(`Order #${oid} deleted.`, 'warning', 'Deleted');
+              renderOrders();
+              updateDashboardCounters();
+            }
+          });
+        });
+      }
+
+      // Render 3: Plants
+      function renderPlants() {
+        const tbody = document.getElementById('plantsTableBody');
+        const plants = HarborDB.getPlants();
+
+        tbody.innerHTML = plants.map(p => `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <img src="${p.image}" alt="${p.name}" class="table-thumb" onerror="this.src='https://images.pexels.com/photos/7694761/pexels-photo-7694761.jpeg'" />
+                <strong style="color:var(--harbor-text-main); font-size:0.92rem;">${p.name}</strong>
+              </div>
+            </td>
+            <td><em style="color:var(--harbor-text-muted); font-size:0.84rem;">${p.scientific || '-'}</em></td>
+            <td><strong style="color:var(--harbor-emerald); font-size:0.92rem;">₹${p.price || 299}</strong></td>
+            <td>${p.bloomSeason || '-'}</td>
+            <td><span style="font-size:0.75rem; text-transform:capitalize; padding:3px 8px; border-radius:6px; background:var(--harbor-bg-surface-elevated); color:var(--harbor-text-main); border:1px solid var(--harbor-border);">${p.seasonCategory || 'Spring'}</span></td>
+            <td>
+              ${p.isCustom 
+                ? '<span style="font-size:0.74rem; font-weight:800; color:var(--harbor-terracotta); background:rgba(244, 174, 82, 0.18); border:1px solid var(--harbor-gold-border); padding:2px 8px; border-radius:6px;">👑 Author Listed</span>' 
+                : '<span style="font-size:0.74rem; color:var(--harbor-text-dim);">Heirloom Preset</span>'}
+            </td>
+            <td>
+              ${p.isCustom ? `
+                <button type="button" class="btn-action-delete delete-plant-btn" data-id="${p.id}">Delete</button>
+              ` : '<span style="font-size:0.74rem; color:var(--harbor-text-dim);">Protected</span>'}
+            </td>
+          </tr>
+        `).join('');
+
+        tbody.querySelectorAll('.delete-plant-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const pid = e.target.getAttribute('data-id');
+            if (confirm(`Remove this plant from the catalog?`)) {
+              HarborDB.deletePlant(pid);
+              HarborAuth.showToast('Plant deleted from collection', 'warning', 'Deleted');
+              renderPlants();
+              updateDashboardCounters();
+            }
+          });
+        });
+      }
+
+      // Render 4: Services
+      function renderServices() {
+        const tbody = document.getElementById('servicesTableBody');
+        const services = HarborDB.getServices();
+
+        tbody.innerHTML = services.map(s => `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.4rem;">${s.icon || '🌿'}</span>
+                <strong style="color:var(--harbor-text-main); font-size:0.9rem;">${s.name}</strong>
+              </div>
+            </td>
+            <td><strong style="color:var(--harbor-emerald); font-size:0.92rem;">₹${(s.price || 0).toLocaleString('en-IN')}</strong></td>
+            <td>${s.duration || '1-2 Days'}</td>
+            <td><span style="font-size:0.74rem; font-weight:800; padding:2px 8px; border-radius:6px; background:rgba(244, 174, 82, 0.18); border:1px solid var(--harbor-gold-border); color:var(--harbor-terracotta);">${s.badge || 'Bespoke'}</span></td>
+            <td><div style="max-width:240px; font-size:0.8rem; color:var(--harbor-text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.description}</div></td>
+            <td>${s.isCustom ? '<span style="font-size:0.74rem; font-weight:700; color:var(--harbor-gold);">Author Added</span>' : '<span style="font-size:0.74rem; color:var(--harbor-text-dim);">Standard</span>'}</td>
+            <td>
+              ${s.isCustom ? `
+                <button type="button" class="btn-action-delete delete-service-btn" data-id="${s.id}">Delete</button>
+              ` : '<span style="font-size:0.74rem; color:var(--harbor-text-dim);">Protected</span>'}
+            </td>
+          </tr>
+        `).join('');
+
+        tbody.querySelectorAll('.delete-service-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const sid = e.target.getAttribute('data-id');
+            if (confirm('Delete this service?')) {
+              HarborDB.deleteService(sid);
+              HarborAuth.showToast('Service deleted.', 'warning', 'Deleted');
+              renderServices();
+              updateDashboardCounters();
+            }
+          });
+        });
+      }
+
+      // Render 5: About Cards
+      function renderAbout() {
+        const tbody = document.getElementById('aboutTableBody');
+        const cards = HarborDB.getAboutCards();
+
+        tbody.innerHTML = cards.map(c => `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.4rem;">${c.icon || '🌿'}</span>
+                <strong style="color:var(--harbor-text-main); font-size:0.9rem;">${c.title}</strong>
+              </div>
+            </td>
+            <td>${c.subtitle || '-'}</td>
+            <td><div style="max-width:280px; font-size:0.8rem; color:var(--harbor-text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.description}</div></td>
+            <td>${c.isCustom ? '<span style="font-size:0.74rem; font-weight:700; color:var(--harbor-gold);">Author Added</span>' : '<span style="font-size:0.74rem; color:var(--harbor-text-dim);">Core Story</span>'}</td>
+            <td>
+              ${c.isCustom ? `
+                <button type="button" class="btn-action-delete delete-about-btn" data-id="${c.id}">Delete</button>
+              ` : '<span style="font-size:0.74rem; color:var(--harbor-text-dim);">Protected</span>'}
+            </td>
+          </tr>
+        `).join('');
+
+        tbody.querySelectorAll('.delete-about-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const aid = e.target.getAttribute('data-id');
+            if (confirm('Delete this about card?')) {
+              HarborDB.deleteAboutCard(aid);
+              HarborAuth.showToast('About card deleted.', 'warning', 'Deleted');
+              renderAbout();
+              updateDashboardCounters();
+            }
+          });
+        });
+      }
+
+      // Render 6: Users & RBAC
       function renderUsers() {
+        const tbody = document.getElementById('usersTableBody');
         const users = HarborDB.getUsers();
-        usersTableBody.innerHTML = users.map(u => `
+
+        tbody.innerHTML = users.map(u => `
           <tr>
             <td>
               <div style="display: flex; align-items: center; gap: 10px;">
                 <div class="harbor-avatar">${u.avatarInitials || 'U'}</div>
-                <strong style="color: #ffffff;">${u.name}</strong>
+                <div>
+                  <strong style="color: var(--harbor-text-main);">${u.name}</strong>
+                  <div style="font-size:0.74rem; color:var(--harbor-text-dim);">${u.title || 'Member'}</div>
+                </div>
               </div>
             </td>
             <td>${u.email}</td>
             <td>
               ${u.role === 'Author' 
-                ? '<span class="role-badge-author">👑 Author</span>' 
+                ? '<span class="role-badge-author">👑 Author (Sole)</span>' 
                 : '<span class="role-badge-user">👤 Member</span>'}
             </td>
             <td>
@@ -571,13 +1189,37 @@
               <span style="font-weight: 800; color: var(--harbor-gold);">${u.securityScore || 85}%</span>
             </td>
             <td style="font-size: 0.78rem; color: var(--harbor-text-dim);">
+              ${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'Original'}
+            </td>
+            <td style="font-size: 0.78rem; color: var(--harbor-text-dim);">
               ${u.lastLogin ? new Date(u.lastLogin).toLocaleString() : 'Recently'}
             </td>
           </tr>
         `).join('');
       }
 
-      // Modal helpers
+      // Render 7: Audit Logs
+      function renderAudit() {
+        const tbody = document.getElementById('auditTableBody');
+        const logs = HarborDB.getAuditLogs();
+
+        if (!logs.length) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px;">No audit trail events found.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = logs.map(l => `
+          <tr>
+            <td style="font-family:var(--font-mono); font-size:0.78rem;">${new Date(l.timestamp).toLocaleString()}</td>
+            <td><strong style="color:var(--harbor-text-main); font-size:0.84rem;">${l.event}</strong></td>
+            <td><div style="max-width:320px; font-size:0.82rem; color:var(--harbor-text-muted);">${l.details}</div></td>
+            <td><span class="audit-badge ${l.status}">${l.status}</span></td>
+            <td style="font-family:var(--font-mono); font-size:0.78rem; color:var(--harbor-text-dim);">${l.ip || '127.0.0.1'}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Modal helpers for Inquiries
       const modal = document.getElementById('inquiryModal');
       const modalClientName = document.getElementById('modalClientName');
       const modalBody = document.getElementById('modalBodyContent');
@@ -592,9 +1234,9 @@
             <p><strong>Received:</strong> ${new Date(c.createdAt).toLocaleString()}</p>
             <p><strong>Current Status:</strong> <span style="font-weight: 700; color: var(--harbor-emerald);">${c.status}</span></p>
           </div>
-          <div style="background: rgba(6, 10, 18, 0.75); border: 1px solid var(--harbor-border); border-radius: 12px; padding: 18px; margin-bottom: 22px;">
-            <strong style="display: block; font-size: 0.8rem; color: var(--harbor-gold-light); text-transform: uppercase; margin-bottom: 8px;">Client Message</strong>
-            <p style="white-space: pre-line; color: #ffffff; font-size: 0.94rem; line-height: 1.7;">${c.message}</p>
+          <div style="background: var(--harbor-bg-surface-elevated); border: 1px solid var(--harbor-border); border-radius: 12px; padding: 18px; margin-bottom: 22px;">
+            <strong style="display: block; font-size: 0.8rem; color: var(--harbor-gold-dark); text-transform: uppercase; margin-bottom: 8px;">Client Message</strong>
+            <p style="white-space: pre-line; color: var(--harbor-text-main); font-size: 0.94rem; line-height: 1.7;">${c.message}</p>
           </div>
           <div style="display: flex; justify-content: flex-end; gap: 12px;">
             <a href="mailto:${c.email}?subject=Regarding your My Garden inquiry (${c.serviceLabel})" class="btn-primary" style="font-size: 0.86rem; padding: 10px 20px;">
@@ -605,25 +1247,16 @@
         modal.classList.add('active');
       }
 
-      btnCloseModal.addEventListener('click', () => modal.classList.remove('active'));
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-      });
-
-      filterPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          filterPills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          activeFilter = pill.getAttribute('data-filter');
-          renderContacts();
+      if (btnCloseModal) {
+        btnCloseModal.addEventListener('click', () => modal.classList.remove('active'));
+      }
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.classList.remove('active');
         });
-      });
+      }
 
-      searchInput.addEventListener('input', (e) => {
-        searchQuery = e.target.value.trim();
-        renderContacts();
-      });
-
+      // Top Actions: Exports
       document.getElementById('btnExportCSV').addEventListener('click', () => {
         try {
           const csv = HarborDB.exportContactsCSV();
@@ -635,10 +1268,10 @@
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `my_garden_contacts_${Date.now()}.csv`;
+          a.download = `my_garden_inquiries_${Date.now()}.csv`;
           a.click();
           URL.revokeObjectURL(url);
-          HarborAuth.showToast('CSV database exported successfully!', 'success', 'Export Complete');
+          HarborAuth.showToast('CSV inquiries exported successfully!', 'success', 'Export Complete');
         } catch (err) {
           HarborAuth.showToast(err.message, 'error', 'Export Failed');
         }
@@ -651,17 +1284,17 @@
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `my_garden_database_${Date.now()}.json`;
+          a.download = `my_garden_full_database_${Date.now()}.json`;
           a.click();
           URL.revokeObjectURL(url);
-          HarborAuth.showToast('JSON database exported successfully!', 'success', 'Export Complete');
+          HarborAuth.showToast('Full database JSON exported successfully!', 'success', 'Export Complete');
         } catch (err) {
           HarborAuth.showToast(err.message, 'error', 'Export Failed');
         }
       });
 
       document.getElementById('btnAddSample').addEventListener('click', () => {
-        const sampleNames = ['Siddharth Sen', 'Meera Kapoor', 'Arjun Rawat', 'Rohan Mathur'];
+        const sampleNames = ['Siddharth Sen', 'Meera Kapoor', 'Arjun Rawat', 'Rohan Mathur', 'Ananya Deshmukh'];
         const sampleServices = ['garden-design', 'planting', 'maintenance', 'lawn-care', 'organic-gardening'];
         const rName = sampleNames[Math.floor(Math.random() * sampleNames.length)];
         const rService = sampleServices[Math.floor(Math.random() * sampleServices.length)];
@@ -674,13 +1307,18 @@
           message: 'Author testing inquiry entry saved to local database.'
         });
 
-        HarborAuth.showToast(`Test record for ${rName} added!`, 'success', 'Record Inserted');
-        renderContacts();
+        HarborAuth.showToast(`Test inquiry for ${rName} added!`, 'success', 'Record Inserted');
+        renderInquiries();
       });
 
-      renderContacts();
+      // Initial Renders for All Collections
+      renderInquiries();
+      renderOrders();
+      renderPlants();
+      renderServices();
+      renderAbout();
       renderUsers();
-
+      renderAudit();
     });
   </script>
 </body>

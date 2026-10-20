@@ -48,8 +48,8 @@
     }
 
     .plant-card {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface);
+      border: 1px solid var(--harbor-border);
       border-radius: 18px;
       overflow: hidden;
       box-shadow: var(--harbor-card-shadow);
@@ -109,21 +109,21 @@
     }
 
     .tip-item {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface);
+      border: 1px solid var(--harbor-border);
       border-radius: 14px;
       padding: 20px;
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 2px 10px rgba(42, 26, 14, 0.04);
       transition: var(--transition);
     }
 
     .tip-item:hover {
       border-color: var(--harbor-emerald);
       transform: translateX(4px);
-      box-shadow: 0 4px 16px rgba(5, 150, 105, 0.12);
+      box-shadow: 0 4px 16px rgba(212, 98, 26, 0.15);
     }
 
     .tip-icon {
@@ -168,7 +168,7 @@
     }
 
     .btn-delete-card:hover {
-      background: #ffe4e6;
+      background: rgba(225, 29, 72, 0.12);
     }
   </style>
 </head>
@@ -364,7 +364,7 @@
       <div class="harbor-modal-header">
         <div>
           <h3><span>👑</span> Add New Heritage / About Card</h3>
-          <div style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 800; color: #92400e; background: #fef3c7; border: 1px solid var(--harbor-gold); padding: 3px 10px; border-radius: 20px;">
+          <div style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 800; color: var(--harbor-terracotta); background: var(--harbor-bg-surface-elevated); border: 1px solid var(--harbor-gold); padding: 3px 10px; border-radius: 20px;">
             Author Publishing Clearance
           </div>
         </div>

@@ -25,7 +25,7 @@
     }
 
     .service-card {
-      background: #ffffff;
+      background: var(--harbor-bg-surface);
       border: 1px solid var(--harbor-border);
       border-radius: 20px;
       overflow: hidden;
@@ -38,8 +38,8 @@
     }
 
     .service-card:hover {
-      border-color: var(--harbor-emerald-border);
-      box-shadow: 0 22px 48px -12px rgba(25, 40, 32, 0.15), var(--harbor-glow-shadow);
+      border-color: var(--harbor-gold-border);
+      box-shadow: 0 22px 48px -12px rgba(42, 26, 14, 0.18), var(--harbor-gold-shadow);
       transform: translateY(-6px);
     }
 
@@ -48,7 +48,7 @@
       width: 100%;
       overflow: hidden;
       position: relative;
-      background: #f1f5f0;
+      background: var(--harbor-bg-surface-elevated);
     }
 
     .service-card-img-box img {
@@ -66,17 +66,17 @@
       position: absolute;
       top: 14px;
       right: 14px;
-      background: rgba(255, 255, 255, 0.94);
+      background: var(--harbor-bg-glass);
       backdrop-filter: blur(8px);
-      border: 1px solid var(--harbor-border);
+      border: 1px solid var(--harbor-gold-border);
       border-radius: 20px;
       padding: 4px 12px;
       font-size: 0.72rem;
       font-weight: 800;
-      color: #92400e;
+      color: var(--harbor-terracotta);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 8px rgba(42, 26, 14, 0.1);
     }
 
     .service-card-body {
@@ -139,20 +139,20 @@
       align-items: center;
       gap: 8px;
       padding: 10px 20px;
-      background: linear-gradient(135deg, var(--harbor-emerald) 0%, var(--harbor-emerald-dark) 100%);
+      background: linear-gradient(135deg, var(--harbor-terracotta) 0%, var(--harbor-gold) 100%);
       border: none;
       border-radius: 12px;
-      color: #ffffff;
+      color: #FEF3E2;
       font-size: 0.86rem;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+      box-shadow: 0 4px 14px rgba(212, 98, 26, 0.3);
       transition: var(--transition);
     }
 
     .btn-book-service:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45);
+      box-shadow: 0 6px 20px rgba(244, 174, 82, 0.45);
       filter: brightness(1.08);
     }
 
@@ -169,7 +169,7 @@
     }
 
     .btn-delete-service:hover {
-      background: #ffe4e6;
+      background: rgba(225, 29, 72, 0.12);
     }
 
     /* Why Choose Us Grid */
@@ -181,8 +181,8 @@
     }
 
     .feature-card {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface);
+      border: 1px solid var(--harbor-border);
       border-radius: 16px;
       padding: 26px;
       box-shadow: var(--harbor-card-shadow);
@@ -427,7 +427,7 @@
         </div>
 
         <!-- Step 1 Live Total Preview -->
-        <div style="background: #f8faf8; border: 1px solid var(--harbor-border); border-radius: 12px; padding: 12px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="background: var(--harbor-bg-surface-elevated); border: 1px solid var(--harbor-border); border-radius: 12px; padding: 12px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
           <span style="font-weight: 700; font-size: 0.9rem; color: var(--harbor-text-main);">
             Service + Added Plants (<span id="addonCountDisplay">0</span> selected):
           </span>
@@ -501,8 +501,8 @@
         </p>
 
         <!-- Detailed Itemized Billing Card -->
-        <div style="background: #f8faf8; border: 1.5px solid var(--harbor-border); border-radius: 14px; padding: 20px; margin-bottom: 22px;">
-          <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--harbor-text-main); margin-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 8px;">
+        <div style="background: var(--harbor-bg-surface-elevated); border: 1.5px solid var(--harbor-border); border-radius: 14px; padding: 20px; margin-bottom: 22px;">
+          <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--harbor-text-main); margin-bottom: 12px; border-bottom: 1px solid var(--harbor-border); padding-bottom: 8px;">
             Botanical Service Billing Breakdown
           </h4>
 
@@ -573,7 +573,7 @@
 
           <div class="order-id-badge" id="confirmedBookingRef">HBR-SVC-SUCCESS</div>
 
-          <div style="background: #f8faf8; border: 1px solid var(--harbor-border); border-radius: 14px; padding: 18px; margin: 20px 0; text-align: left; font-size: 0.88rem;">
+          <div style="background: var(--harbor-bg-surface-elevated); border: 1px solid var(--harbor-border); border-radius: 14px; padding: 18px; margin: 20px 0; text-align: left; font-size: 0.88rem;">
             <div style="margin-bottom: 8px;"><strong>Reserved Service:</strong> <span id="confSvcName">Garden Design</span></div>
             <div style="margin-bottom: 8px;"><strong>Client &amp; Site:</strong> <span id="confSvcClient">Rahul Verma &bull; Haldwani</span></div>
             <div style="margin-bottom: 8px;"><strong>Appointment Schedule:</strong> <span id="confSvcSchedule">Tomorrow Morning</span></div>
@@ -597,7 +597,7 @@
       <div class="harbor-modal-header">
         <div>
           <h3><span>👑</span> Add New Botanical Service</h3>
-          <div style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 800; color: #92400e; background: #fef3c7; border: 1px solid var(--harbor-gold); padding: 3px 10px; border-radius: 20px;">
+          <div style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 800; color: var(--harbor-terracotta); background: var(--harbor-bg-surface-elevated); border: 1px solid var(--harbor-gold); padding: 3px 10px; border-radius: 20px;">
             Author Publishing Access
           </div>
         </div>

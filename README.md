@@ -2,7 +2,7 @@
 
 > A full-featured, luxury botanical management web application with a built-in authentication portal, role-based access control, local JSON database, and a Node.js API server.
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live_Website-10b981?style=for-the-badge&logo=githubpages&logoColor=white)](https://mohdmoazzamq-pixel.github.io/harbor-garden/)
+[![Live Demo](https://img.shields.io/badge/Demo-Live_Website-10b981?style=for-the-badge&logo=githubpages&logoColor=white)](https://mohdmoazzamq-pixel.github.io/harbor-garden/My%20garden/index.html)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/mohdmoazzamq-pixel/harbor-garden)
 
 ---
@@ -11,7 +11,7 @@
 
 Experience Harbor Garden live directly in your browser:
 
-👉 **Live Demo:** [https://mohdmoazzamq-pixel.github.io/harbor-garden/](https://mohdmoazzamq-pixel.github.io/harbor-garden/)
+👉 **Live Demo:** [https://mohdmoazzamq-pixel.github.io/harbor-garden/My%20garden/index.html](https://mohdmoazzamq-pixel.github.io/harbor-garden/My%20garden/index.html)
 
 You can open this link to explore the botanical catalog, services, shopping cart, and security portal without any local setup or installation!
 

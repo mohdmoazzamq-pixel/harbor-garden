@@ -19,32 +19,32 @@
     ABOUT_CARDS: 'harbor_garden_about_cards'
   };
 
-  // Default seed users with explicit Author vs User roles
+  // Default seed users: Sole Author is Moazzam Qureshi; all others are Users
   const SEED_USERS = [
-    {
-      id: 'usr_author_alex',
-      name: 'Alex Morgan',
-      email: 'alex.morgan@harbor.io',
-      password: 'Harbor@2026',
-      role: 'Author',
-      title: 'Lead Security & Botanical Author',
-      twoFactorEnabled: true,
-      securityScore: 98,
-      avatarInitials: 'AM',
-      createdAt: '2026-01-15T09:30:00.000Z',
-      lastLogin: new Date().toISOString()
-    },
     {
       id: 'usr_author_moazzam',
       name: 'Moazzam Qureshi',
       email: 'moazzam@mygarden.com',
       password: 'Garden@2026',
       role: 'Author',
-      title: 'Botanical Estate Author',
+      title: 'Master Botanical Author',
       twoFactorEnabled: true,
-      securityScore: 94,
+      securityScore: 98,
       avatarInitials: 'MQ',
       createdAt: '2026-02-10T11:00:00.000Z',
+      lastLogin: new Date().toISOString()
+    },
+    {
+      id: 'usr_member_alex',
+      name: 'Alex Morgan',
+      email: 'alex.morgan@harbor.io',
+      password: 'Harbor@2026',
+      role: 'User',
+      title: 'Security Member',
+      twoFactorEnabled: true,
+      securityScore: 92,
+      avatarInitials: 'AM',
+      createdAt: '2026-01-15T09:30:00.000Z',
       lastLogin: new Date().toISOString()
     },
     {
@@ -357,7 +357,7 @@
       id: 'aud_seed_2',
       timestamp: new Date(Date.now() - 3600000 * 6).toISOString(),
       event: 'AUTHOR_LOGIN',
-      details: 'Author Alex Morgan authenticated with full administrative clearance.',
+      details: 'Author Moazzam Qureshi authenticated with full master administrative clearance.',
       status: 'SUCCESS',
       ip: '192.168.1.104'
     }
@@ -372,21 +372,40 @@
       if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
         localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(SEED_USERS));
       } else {
-        // Ensure Alex Morgan and Elena Vance roles are refreshed if existing cache had old roles
+        // Enforce: ONLY Moazzam Qureshi is Author; all other accounts are strictly User
         const users = this.getUsers();
         let changed = false;
         users.forEach(u => {
-          if (u.email === 'alex.morgan@harbor.io' && u.role !== 'Author') {
-            u.role = 'Author';
-            changed = true;
-          }
-          if (u.email === 'user@mygarden.com' && u.role !== 'User') {
-            u.role = 'User';
-            changed = true;
+          if (u.email && u.email.toLowerCase() === 'moazzam@mygarden.com') {
+            if (u.role !== 'Author') {
+              u.role = 'Author';
+              u.title = 'Master Botanical Author';
+              changed = true;
+            }
+          } else {
+            if (u.role === 'Author') {
+              u.role = 'User';
+              u.title = 'Garden Member';
+              changed = true;
+            }
           }
         });
+        if (!users.some(u => u.email && u.email.toLowerCase() === 'moazzam@mygarden.com')) {
+          users.unshift(SEED_USERS[0]);
+          changed = true;
+        }
         if (changed) {
           localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+        }
+
+        // Also check active session: ensure non-Moazzam cannot retain Author role in session
+        const activeSession = this.getCurrentSession();
+        if (activeSession && activeSession.user) {
+          if (activeSession.user.email.toLowerCase() !== 'moazzam@mygarden.com' && activeSession.user.role === 'Author') {
+            activeSession.user.role = 'User';
+            activeSession.user.title = 'Garden Member';
+            localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(activeSession));
+          }
         }
       }
 
@@ -472,7 +491,9 @@
 
     isAuthor() {
       const user = this.getCurrentUser();
-      return !!(user && (user.role === 'Author' || user.role === 'Admin'));
+      if (!user) return false;
+      // Strictly Author: user role is Author and must be Moazzam Qureshi
+      return (user.role === 'Author' || user.role === 'Admin') && (user.email || '').toLowerCase() === 'moazzam@mygarden.com';
     }
 
     canAccessDatabase() {
@@ -672,6 +693,33 @@
       this.syncToServer('POST', '/api/orders', newOrder);
 
       return newOrder;
+    }
+
+    updateOrderStatus(orderId, newStatus) {
+      if (!this.isAuthor()) {
+        throw new Error('Author clearance required to alter order status.');
+      }
+      const orders = this.getOrders();
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        order.status = newStatus;
+        order.updatedAt = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+        this.addAuditLog('ORDER_STATUS_UPDATE', `Order #${orderId} status set to "${newStatus}"`, 'INFO');
+        return order;
+      }
+      return null;
+    }
+
+    deleteOrder(orderId) {
+      if (!this.isAuthor()) {
+        throw new Error('Author clearance required to delete orders.');
+      }
+      const orders = this.getOrders();
+      const filtered = orders.filter(o => o.id !== orderId);
+      localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(filtered));
+      this.addAuditLog('ORDER_DELETED', `Order #${orderId} deleted from database`, 'WARNING');
+      return true;
     }
 
     // ==========================================
@@ -881,13 +929,17 @@
         ? cleanName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
         : 'U';
 
+      // Strictly enforce: Only Moazzam Qureshi can be Author; all other accounts are Users
+      const finalRole = (cleanEmail === 'moazzam@mygarden.com') ? 'Author' : 'User';
+      const finalTitle = (finalRole === 'Author') ? 'Master Botanical Author' : 'Garden Member';
+
       const newUser = {
         id: this.generateId('usr'),
         name: cleanName || 'Harbor User',
         email: cleanEmail,
         password: password,
-        role: role === 'Author' ? 'Author' : 'User', // default to User
-        title: role === 'Author' ? 'Botanical Author' : 'Garden Member',
+        role: finalRole,
+        title: finalTitle,
         twoFactorEnabled: false,
         securityScore: 85,
         avatarInitials: initials,

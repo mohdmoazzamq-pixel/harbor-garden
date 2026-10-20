@@ -79,11 +79,11 @@
       display: flex;
       align-items: center;
       gap: 18px;
-      background: #ffffff;
+      background: var(--harbor-bg-surface);
       border: 1.5px solid var(--harbor-gold-border);
       border-radius: 16px;
       padding: 14px 24px;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--harbor-card-shadow);
     }
 
     .score-circle {
@@ -96,8 +96,8 @@
       justify-content: center;
       font-size: 1.25rem;
       font-weight: 800;
-      color: #92400e;
-      background: #fef3c7;
+      color: var(--harbor-terracotta);
+      background: var(--harbor-bg-surface-elevated);
       box-shadow: var(--harbor-gold-shadow);
     }
 
@@ -116,7 +116,7 @@
     .portal-nav-tabs {
       display: flex;
       gap: 10px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid var(--harbor-border);
       margin-bottom: 30px;
       overflow-x: auto;
       padding-bottom: 8px;
@@ -139,15 +139,15 @@
     }
 
     .portal-tab-btn:hover {
-      color: var(--harbor-text-main);
-      background: #f1f5f0;
+      color: var(--harbor-terracotta);
+      background: var(--harbor-bg-surface-elevated);
     }
 
     .portal-tab-btn.active {
-      background: #fef3c7;
+      background: var(--harbor-bg-surface-elevated);
       border-color: var(--harbor-gold);
-      color: #92400e;
-      box-shadow: 0 2px 10px rgba(217, 119, 6, 0.15);
+      color: var(--harbor-terracotta);
+      box-shadow: var(--harbor-gold-shadow);
     }
 
     /* Portal Panels */
@@ -169,8 +169,8 @@
     }
 
     .metric-card {
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface);
+      border: 1px solid var(--harbor-border);
       border-radius: 16px;
       padding: 24px;
       display: flex;
@@ -183,8 +183,8 @@
       width: 50px;
       height: 50px;
       border-radius: 14px;
-      background: #f8faf8;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--harbor-bg-surface-elevated);
+      border: 1px solid var(--harbor-border);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -279,9 +279,9 @@
     .audit-table th {
       text-align: left;
       padding: 14px 18px;
-      background: #f1f5f0;
+      background: var(--harbor-bg-surface-elevated);
       color: var(--harbor-text-main);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid var(--harbor-border);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -290,7 +290,7 @@
 
     .audit-table td {
       padding: 14px 18px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      border-bottom: 1px solid var(--harbor-border);
       color: var(--harbor-text-muted);
     }
 
@@ -347,13 +347,13 @@
     <!-- Identity Header Banner -->
     <div class="portal-identity-card">
       <div class="portal-user-meta">
-        <div class="portal-big-avatar" id="portalAvatar">AM</div>
+        <div class="portal-big-avatar" id="portalAvatar">MQ</div>
         <div class="portal-user-info">
           <h2>
-            <span id="portalName">Alex Morgan</span>
+            <span id="portalName">Moazzam Qureshi</span>
             <span id="portalRoleBadge"></span>
           </h2>
-          <p><span id="portalEmail">alex.morgan@harbor.io</span> &bull; <span id="portalRoleTitle">Lead Security Architect</span></p>
+          <p><span id="portalEmail">moazzam@mygarden.com</span> &bull; <span id="portalRoleTitle">Master Botanical Author</span></p>
         </div>
       </div>
 
@@ -414,7 +414,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
         
         <div class="harbor-card" id="cardAuthorDatabaseBox">
-          <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 10px;">Botanical Inquiries Database</h3>
+          <h3 style="font-size: 1.2rem; color: var(--harbor-text-main); margin-bottom: 10px;">Botanical Inquiries Database</h3>
           <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 22px;">
             Access all client inquiries, garden maintenance requests, and service submissions stored locally in the persistent database.
           </p>
@@ -424,7 +424,7 @@
         </div>
 
         <div class="harbor-card">
-          <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 10px;">Plant Listing Manager</h3>
+          <h3 style="font-size: 1.2rem; color: var(--harbor-text-main); margin-bottom: 10px;">Plant Listing Manager</h3>
           <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 22px;">
             Add new flower specimens, specify blooming seasons, and write step-by-step growing guides on the home page.
           </p>
@@ -441,7 +441,7 @@
       <div class="harbor-card" style="margin-bottom: 24px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
           <div>
-            <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 4px;">Two-Factor Authentication (2FA)</h3>
+            <h3 style="font-size: 1.2rem; color: var(--harbor-text-main); margin-bottom: 4px;">Two-Factor Authentication (2FA)</h3>
             <p style="font-size: 0.86rem; color: var(--harbor-text-muted);">
               Add an additional layer of cryptographic verification when signing in.
             </p>
@@ -457,7 +457,7 @@
       </div>
 
       <div class="harbor-card">
-        <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 18px;">Update Password</h3>
+        <h3 style="font-size: 1.2rem; color: var(--harbor-text-main); margin-bottom: 18px;">Update Password</h3>
         <form id="changePasswordForm" style="max-width: 440px;">
           <div class="form-group">
             <label class="harbor-label" for="currentPass">Current Password</label>
@@ -479,7 +479,7 @@
     <!-- PANEL 3: Active Devices -->
     <div class="portal-panel" id="panelDevices">
       <div class="harbor-card">
-        <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 20px;">Authenticated Devices &amp; Active Sessions</h3>
+        <h3 style="font-size: 1.2rem; color: var(--harbor-text-main); margin-bottom: 20px;">Authenticated Devices &amp; Active Sessions</h3>
 
         <div class="device-item">
           <div class="device-details">
@@ -576,11 +576,11 @@
       const dbCard = document.getElementById('cardAuthorDatabaseBox');
       if (dbCard && !isAuthor) {
         dbCard.innerHTML = `
-          <h3 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 10px;">Inquiries Database</h3>
+          <h3 style="font-size: 1.2rem; color: var(--harbor-text-main); margin-bottom: 10px;">Inquiries Database</h3>
           <p style="font-size: 0.88rem; color: var(--harbor-text-muted); margin-bottom: 22px;">
             Client inquiry records and admin persistence are reserved for verified <strong>Author</strong> accounts.
           </p>
-          <span style="font-size: 0.82rem; color: var(--harbor-text-dim); padding: 8px 14px; background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px dashed var(--harbor-border);">
+          <span style="font-size: 0.82rem; color: var(--harbor-text-dim); padding: 8px 14px; background: var(--harbor-bg-surface-elevated); border-radius: 8px; border: 1px dashed var(--harbor-border);">
             🔒 Author Clearance Required
           </span>
         `;
@@ -615,7 +615,7 @@
       if (isAuthor) {
         auditContainer.innerHTML = `
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 10px;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: #ffffff;">Cryptographic Security Audit Trail</h3>
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--harbor-text-main);">Cryptographic Security Audit Trail</h3>
             <span class="db-badge-author">Author Clearance</span>
           </div>
           <div style="overflow-x: auto;">
@@ -645,7 +645,7 @@
           tbody.innerHTML = logs.map(log => `
             <tr>
               <td style="font-family: var(--font-mono); font-size: 0.78rem;">${new Date(log.timestamp).toLocaleString()}</td>
-              <td><strong style="color: #ffffff;">${log.event}</strong></td>
+              <td><strong style="color: var(--harbor-text-main);">${log.event}</strong></td>
               <td>${log.details}</td>
               <td><span class="audit-badge ${log.status}">${log.status}</span></td>
               <td style="font-family: var(--font-mono); font-size: 0.78rem;">${log.ip}</td>
@@ -661,21 +661,17 @@
         auditContainer.innerHTML = `
           <div style="text-align: center; padding: 48px 20px;">
             <div style="font-size: 2.4rem; color: var(--harbor-danger); margin-bottom: 14px;">🔒</div>
-            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: #ffffff; margin-bottom: 10px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--harbor-text-main); margin-bottom: 10px;">
               Audit Trail Logs Restricted
             </h3>
             <p style="color: var(--harbor-text-muted); max-width: 520px; margin: 0 auto 24px; font-size: 0.92rem; line-height: 1.65;">
               Audit trail logs, access origins, and credential security traces are reserved strictly for <strong>Author</strong> accounts.
             </p>
-            <button type="button" class="btn-primary" id="btnSwitchAuditToAuthor">
-              <span>👑</span> Sign In as Author (Alex Morgan)
-            </button>
+            <a href="login.html" class="btn-primary" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+              <span>👑</span> Sign In with Author Account
+            </a>
           </div>
         `;
-        const switchBtn = document.getElementById('btnSwitchAuditToAuthor');
-        if (switchBtn) {
-          switchBtn.addEventListener('click', () => HarborAuth.quickAuthorLogin());
-        }
       }
 
       // Tab Switcher

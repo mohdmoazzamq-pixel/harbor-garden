@@ -1,11 +1,78 @@
 /**
- * HarborAuth — Authentication, Role-Based Access Control & Navbar Session Manager
- * Enforces Author vs User access rules, dynamic navbar state, and floating luxury notifications.
+ * HarborAuth — Authentication, Role-Based Access Control, Theme Engine & Navbar Session Manager
+ * Enforces Author vs User access rules, dynamic navbar state, dark/light theme switching, and notifications.
  */
 (function(window) {
   'use strict';
 
+  // Immediate theme application to prevent Flash of Unstyled Theme (FOUC)
+  const initialTheme = localStorage.getItem('harbor_theme_mode') || 'light';
+  document.documentElement.setAttribute('data-theme', initialTheme);
+
   const HarborAuth = {
+    // ==========================================
+    // Dark / Light Theme Controller
+    // ==========================================
+    getTheme() {
+      return localStorage.getItem('harbor_theme_mode') || 'light';
+    },
+
+    setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('harbor_theme_mode', theme);
+      this.updateThemeButtons(theme);
+    },
+
+    toggleTheme() {
+      const nextTheme = this.getTheme() === 'dark' ? 'light' : 'dark';
+      this.setTheme(nextTheme);
+      this.showToast(`Switched to ${nextTheme === 'dark' ? 'Dark Espresso' : 'Light Cream'} luxury mode`, 'info', 'Theme Updated');
+    },
+
+    updateThemeButtons(theme) {
+      const isDark = theme === 'dark';
+      document.querySelectorAll('.btn-theme-toggle').forEach(btn => {
+        btn.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} mode`);
+        btn.title = `Switch to ${isDark ? 'Light Cream' : 'Dark Espresso'} mode`;
+        btn.innerHTML = `
+          <span class="theme-toggle-icon">${isDark ? '☀️' : '🌙'}</span>
+          <span class="theme-toggle-text">${isDark ? 'Light' : 'Dark'}</span>
+        `;
+      });
+    },
+
+    initTheme() {
+      const currentTheme = this.getTheme();
+      document.documentElement.setAttribute('data-theme', currentTheme);
+
+      // Inject theme toggle button into header navigation actions if present
+      const navActions = document.querySelector('.harbor-nav-actions');
+      if (navActions && !document.getElementById('harborThemeToggleBtn')) {
+        const toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.id = 'harborThemeToggleBtn';
+        toggleBtn.className = 'btn-theme-toggle';
+        toggleBtn.addEventListener('click', () => this.toggleTheme());
+        navActions.insertBefore(toggleBtn, navActions.firstChild);
+      }
+
+      // Standalone pages (login, forgot-password) get a floating luxury theme toggle
+      if (!navActions && !document.getElementById('harborFloatingThemeBtn')) {
+        const floatingBtn = document.createElement('button');
+        floatingBtn.type = 'button';
+        floatingBtn.id = 'harborFloatingThemeBtn';
+        floatingBtn.className = 'btn-theme-toggle harbor-floating-theme-toggle';
+        floatingBtn.style.position = 'fixed';
+        floatingBtn.style.top = '18px';
+        floatingBtn.style.right = '20px';
+        floatingBtn.style.zIndex = '9999';
+        floatingBtn.addEventListener('click', () => this.toggleTheme());
+        document.body.appendChild(floatingBtn);
+      }
+
+      this.updateThemeButtons(currentTheme);
+    },
+
     // Show a floating luxury toast alert
     showToast(message, type = 'success', title = '') {
       let container = document.getElementById('harborToastContainer');
@@ -59,7 +126,7 @@
     },
 
     calculatePasswordStrength(password) {
-      if (!password) return { score: 0, label: 'Empty', color: '#64748b' };
+      if (!password) return { score: 0, label: 'Empty', color: '#8c7362' };
       let score = 0;
       if (password.length >= 8) score += 30;
       if (password.length >= 12) score += 15;
@@ -68,17 +135,17 @@
       if (/[^A-Za-z0-9]/.test(password)) score += 20;
 
       if (score < 40) return { score, label: 'Weak', color: '#f43f5e' };
-      if (score < 70) return { score, label: 'Moderate', color: '#f59e0b' };
+      if (score < 70) return { score, label: 'Moderate', color: '#F4AE52' };
       if (score < 90) return { score, label: 'Strong', color: '#10b981' };
-      return { score, label: 'Royal Grade', color: '#e6ca65' };
+      return { score, label: 'Royal Grade', color: '#D4621A' };
     },
 
-    // Quick Login as Author (Alex Morgan) — Full Access
+    // Quick Login as Sole Author (Moazzam Qureshi) — Full Access
     quickAuthorLogin() {
       if (!window.HarborDB) return;
       try {
-        const session = window.HarborDB.loginUser('alex.morgan@harbor.io', 'Harbor@2026', true);
-        this.showToast('Logged in as Author Alex Morgan with full administrative clearance.', 'success', '👑 Author Access Granted');
+        const session = window.HarborDB.loginUser('moazzam@mygarden.com', 'Garden@2026', true);
+        this.showToast('Logged in as Author Moazzam Qureshi with full administrative clearance.', 'success', '👑 Author Access Granted');
         setTimeout(() => {
           window.location.href = 'index.html';
         }, 500);
@@ -116,7 +183,7 @@
       }, 400);
     },
 
-    // Render navigation bar with strict RBAC rules
+    // Render navigation bar with strict RBAC rules and sculpted button designs
     renderNavbar() {
       const authContainer = document.getElementById('harborNavAuth');
       const navLinksContainer = document.getElementById('harborNavLinks');
@@ -126,26 +193,39 @@
       const user = window.HarborDB.getCurrentUser();
       const isAuthor = window.HarborDB.isAuthor();
 
-      // Show/hide or manage the header Database shortcut button
+      // Show/hide and shape the header Database button
       if (navDbBtn) {
         if (isAuthor) {
           navDbBtn.style.display = 'inline-flex';
-          navDbBtn.innerHTML = `<span>📊</span> Inquiries DB`;
+          navDbBtn.innerHTML = `<span class="btn-db-icon">📊</span> Database`;
+          navDbBtn.title = 'Access Author Master Database Center';
         } else {
           // Regular users or guests cannot see the Database quick action button
           navDbBtn.style.display = 'none';
         }
       }
 
-      // Check "Database" nav link in the main links list
+      // Check navigation links and give Service Portal and Database links perfect sculpted shapes
       if (navLinksContainer) {
+        // Portal button shape
+        const portalLink = navLinksContainer.querySelector('a[href="portal.html"]');
+        if (portalLink) {
+          portalLink.classList.add('nav-portal-btn');
+          if (!portalLink.querySelector('.portal-icon-span')) {
+            portalLink.innerHTML = `<span class="portal-icon-span">🛡️</span> Security Portal`;
+          }
+        }
+
+        // Database nav link (Author only)
         const dbNavLink = navLinksContainer.querySelector('a[href="database.html"]');
         if (dbNavLink && dbNavLink.parentElement) {
           if (!isAuthor) {
-            // Hide database navigation item for regular users and guests
             dbNavLink.parentElement.style.display = 'none';
           } else {
             dbNavLink.parentElement.style.display = 'list-item';
+            if (!dbNavLink.querySelector('.db-nav-icon-span')) {
+              dbNavLink.innerHTML = `<span class="db-nav-icon-span">📊</span> Database`;
+            }
           }
         }
       }
@@ -159,13 +239,13 @@
           : `<span class="role-badge-user">👤 Member</span>`;
 
         authContainer.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 10px; position: relative;">
+          <div style="display: flex; align-items: center; gap: 8px; position: relative;">
             ${rolePill}
             <button class="harbor-user-badge" id="harborUserMenuBtn" aria-label="User Account">
               <span class="harbor-status-dot"></span>
               <span class="harbor-avatar">${user.avatarInitials || 'U'}</span>
               <span>${user.name.split(' ')[0]}</span>
-              <span style="font-size: 0.68rem; color: var(--harbor-gold-light);">▼</span>
+              <span style="font-size: 0.68rem; color: var(--harbor-gold);">▼</span>
             </button>
             
             <div class="harbor-user-dropdown" id="harborUserDropdown">
@@ -180,14 +260,14 @@
 
               ${isAuthorUser ? `
                 <a href="database.html" class="harbor-dropdown-item">
-                  <span>📊</span> Inquiries Database
+                  <span>📊</span> Master Database Center
                 </a>
                 <a href="index.html#plantListingSection" class="harbor-dropdown-item" id="navAddPlantTrigger">
                   <span>🌿</span> Add Plant to Catalog
                 </a>
               ` : `
-                <div style="padding: 6px 12px; font-size: 0.72rem; color: var(--harbor-text-dim); border-top: 1px dashed rgba(0,0,0,0.08);">
-                  🔒 Database &amp; Audit Logs restricted to Author role
+                <div style="padding: 8px 14px; font-size: 0.72rem; color: var(--harbor-text-dim); border-top: 1px dashed var(--harbor-border);">
+                  🔒 Database &amp; Audit Logs restricted to Author
                 </div>
               `}
 
@@ -241,35 +321,11 @@
       const isAuthor = window.HarborDB.isAuthor();
 
       if (!isAuthor) {
-        const mainContainer = document.querySelector('main.db-container');
-        if (mainContainer) {
-          mainContainer.innerHTML = `
-            <div class="access-restricted-card">
-              <div class="lock-shield-icon">🔒</div>
-              <h2 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--harbor-text-main); margin-bottom: 12px;">
-                Author Clearance Required
-              </h2>
-              <p style="font-size: 0.95rem; color: var(--harbor-text-muted); line-height: 1.65; margin-bottom: 24px;">
-                Access to the <strong>Client Inquiries Database</strong> and registered user credentials is restricted to <strong>Author</strong> accounts.
-                ${user ? `<br>Your current role is <strong style="color:var(--harbor-emerald);">${user.role}</strong>.` : '<br>You are currently not logged in.'}
-              </p>
-              <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-                <button type="button" class="btn-primary" id="btnSwitchToAuthor">
-                  <span>👑</span> Sign In as Author (Alex Morgan)
-                </button>
-                <a href="index.html" class="btn-secondary">
-                  &larr; Return to Garden Home
-                </a>
-              </div>
-            </div>
-          `;
-
-          const switchBtn = document.getElementById('btnSwitchToAuthor');
-          if (switchBtn) {
-            switchBtn.addEventListener('click', () => {
-              this.quickAuthorLogin();
-            });
-          }
+        const authorizedView = document.getElementById('dbAuthorizedView');
+        const lockedView = document.getElementById('dbLockedView');
+        if (authorizedView && lockedView) {
+          authorizedView.style.display = 'none';
+          lockedView.style.display = 'block';
         }
       }
     },
@@ -296,18 +352,11 @@
             <p style="color: var(--harbor-text-muted); max-width: 520px; margin: 0 auto 20px; font-size: 0.9rem;">
               Security audit trail logs, IP access origins, and credential modification logs are only viewable by verified <strong>Author</strong> accounts.
             </p>
-            <button type="button" class="btn-primary" id="btnUnlockAuditAuthor">
-              <span>👑</span> Switch to Author Clearance (Alex Morgan)
-            </button>
+            <a href="login.html" class="btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+              <span>👑</span> Sign In with Author Account
+            </a>
           </div>
         `;
-
-        const unlockBtn = document.getElementById('btnUnlockAuditAuthor');
-        if (unlockBtn) {
-          unlockBtn.addEventListener('click', () => {
-            this.quickAuthorLogin();
-          });
-        }
       }
     },
 
@@ -322,6 +371,7 @@
     },
 
     init() {
+      this.initTheme();
       this.renderNavbar();
       this.setupMobileMenu();
       this.enforceDatabaseAccess();
